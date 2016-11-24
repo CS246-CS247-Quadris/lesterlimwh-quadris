@@ -1,4 +1,4 @@
 struct BlockCell{
 	int count;
-	char n;
+	char letter;
 }
