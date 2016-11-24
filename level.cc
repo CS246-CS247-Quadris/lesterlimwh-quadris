@@ -12,7 +12,7 @@ Block *Level::diff1Block(){
  if (y == 0 || y == 1){
   return new IBlock(b, false, g);
  }
- else if (y == 2 || y == 3){
+ else if (y == 2 || y == 3){ 
   return new JBlock(b, false, g);
  }
  else if (y == 4 || y == 5){
