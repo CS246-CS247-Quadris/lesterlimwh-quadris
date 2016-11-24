@@ -1,10 +1,8 @@
+#include "coord.h"
+
 struct BlockCoord{
-	int x1;
-	int x2;
-	int y1;
-	int y2;
-	int w1;
-	int w2;
-	int z1;
-	int z2;
+	Coord x1; // (x1.x, x1.y)
+	Coord x2;
+	Coord x3;
+	Coord x4;
 }
