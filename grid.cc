@@ -1,0 +1,70 @@
+#include "grid.h"
+#include <vector>
+#include <iostream>
+#include <map>
+Grid::Grid(int height, int width): height{height}, width{width}, blockNum{0},
+                                   display{std::vector<std::vector<BlockCell> >(height, std::vector<BlockCell>(width, {blockNum, ' '}))}{
+
+	/*for (int i = 0; i < height; ++i){
+		for (int j = 0; j < width; ++j){
+			display[i][j] = {' ', 0};
+		}
+	} If MIL creation for display works then this section is not needed. OTHERWISE, remove comment markers */
+
+}
+
+Grid::~Grid(){}
+
+void addToCount(){ blockNum++; } // WHEN DROP IS CALLED, AFTER UPDATE IS CALLED, CALL THIS FUNCTION TO INCREASE COUNT
+
+void Grid::update(const BlockCoord &b, const char c){
+	// CAN BE CHANGED IF WE WANT TO IMPLEMENT BLOCKS OF DIFFERENT SIZES
+    display[b.x1.y][b.x1.x] = {blockNum, c};
+    display[b.x2.y][b.x2.x] = {blockNum, c};
+    display[b.x3.y][b.x3.x] = {blockNum, c};
+    display[b.x4.y][b.x4.x] = {blockNum, c};
+}
+
+bool Grid::check(const BlockCoord &b){
+	if (b.x1.x < 0 || b.x2.x < 0 || b.x3.x < 0 || b.x4.x < 0) { return false; }
+	if (b.x1.y < 0 || b.x2.y < 0 || b.x3.y < 0 || b.x4.y < 0) { return false; }
+	if (b.x1.x >= width || b.x2.x >= width || b.x3.x >= width || b.x4.x >= width){ return false; }
+	if (b.x1.y >= height || b.x2.y >= height || b.x3.y >= height || b.x4.y >= height){ return false; }
+	if (display[b.x1.y][b.x1.x].letter != ' '){ return false; }
+	if (display[b.x2.y][b.x2.x].letter != ' '){ return false; }
+	if (display[b.x3.y][b.x3.x].letter != ' '){ return false; }
+	if (display[b.x4.y][b.x4.x].letter != ' '){ return false; }
+	return true;
+}
+
+void Grid::rowHelper(int &row1, int &row2, int &row3, int &row4, const BlockCoord &b){
+	// Use Vector to  store the rows of each coordinate and sort from smallest to greatest
+
+}
+
+void Grid::rowClear(const BlockCoord &b){
+	int isFull;
+	int row1 = -1;
+	int row2 = -1;
+	int row3 = -1;
+	int row4 = -1;
+	if (b.x1.y > b.x2.y && b.x2.y > b.x3.y && b.x3.y > b.x4.y){
+		row1 = x1.y;
+		row2 = x2.y;
+		row3 = x3.y;
+		row4 = x4.y;
+	}
+	else if (b.x4.y > b.x3.y && b.x3.y > b.x2.y && b.x2.y > b.x1.y){
+		row1 = x4.y;
+
+	for (int i = 0; i < height; ++i){
+		isFull = 1;
+		for(int j = 0; j < width; ++j){
+         if (display[i][j].letter = ' '){ 
+         	isFull = 0;
+         	break; 
+         }
+		}
+	}
+}
+

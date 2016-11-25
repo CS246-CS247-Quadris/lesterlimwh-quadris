@@ -5,4 +5,4 @@ struct BlockCoord{
 	Coord x2;
 	Coord x3;
 	Coord x4;
-}
+};
