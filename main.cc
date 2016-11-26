@@ -9,6 +9,8 @@ int main() {
   cin.exceptions(ios::eofbit|ios::failbit);
   string cmd;
 
+  // WHY IS THERE A SEG FAULT
+
   try {
     cout << "Please enter a level: ";
     int n; 
