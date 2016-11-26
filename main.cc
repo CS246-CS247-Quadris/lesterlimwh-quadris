@@ -29,6 +29,7 @@ int main() {
       blockType = b->getBlockType(); // FIRST SEG FAULT HERE. CODE DOES NOT REACH PRINT STATEMENT
       coords = b->getBlockCoord();
       lvl.g->update(coords, blockType); // update the grid to see the new block
+      cout << blockType << " " << coords.x1.x << " " << coords.x1.y << endl; // Just to see output
       cin >> cmd;
       if (cmd == "left"){
         b->left();
