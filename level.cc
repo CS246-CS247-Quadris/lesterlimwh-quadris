@@ -6,7 +6,7 @@ Level::Level(int n): dif{n}{ g = new Grid(n); } // Constructor for Level 1 -4
 
 Level::Level(int n, std::string &file): dif{n}, file{file}{ 
  f.open(file);
- g = new Grid(n); 
+ g = new Grid(); 
 } // Constructor for Level 0
 
 Level::~Level(){ delete g; }
@@ -24,14 +24,14 @@ void Level::readInFile(){ // This is to be called when a Level 0 object is made 
 } // Call it in the form Level* level = new Level(0, f); Followed by level->readInFile(); followed by level->makeblock()
 
 Block *Level::diff0Block(){
-	if ( seqInput[count] == "I") { return new Iblock(false, g); }
-	else if (seqInput[count] == "J") { return new Jblock(false, g); }
-	else if (seqInput[count] == "O") { return new Oblock(false, g); }
-	else if (seqInput[count] == "S") { return new Sblock(false, g); }
-	else if (seqInput[count] == "Z") { return new Zblock(false, g); }
-	//else if (seqInput[count] == "T") { return new Tblock(false, g); }
-	else if (seqInput[count] == "Z") { return new Zblock(false, g); }
-	count++;
+	if (count >= seqInput.size()) { throw "outofbounds"; }
+	if ( seqInput[count] == "I") { count++; return new Iblock(false, g); }
+	else if (seqInput[count] == "J") { count++; return new Jblock(false, g); }
+	else if (seqInput[count] == "O") { count++; return new Oblock(false, g); }
+	else if (seqInput[count] == "S") { count++; return new Sblock(false, g); }
+	else if (seqInput[count] == "Z") { count++; return new Zblock(false, g); }
+	//else if (seqInput[count] == "T") { count++; return new Tblock(false, g); }
+	else if (seqInput[count] == "Z") { count++; return new Zblock(false, g); }
 }
 
 Block *Level::diff1Block(){

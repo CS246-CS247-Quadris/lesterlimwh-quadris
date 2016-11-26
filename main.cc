@@ -24,8 +24,7 @@ int main() {
 
     while (true) { // change true to !isGameOver later
       //Block * b = lvl.makeBlock(); // generate a random block depending on level and store it in a Block pointer
-      const char blockType = b->getBlockType(); // FIRST SEG FAULT HERE. CODE DOES NOT REACH PRINT STATEMENT
-      cout << "here";
+      char blockType = b->getBlockType(); // FIRST SEG FAULT HERE. CODE DOES NOT REACH PRINT STATEMENT
       BlockCoord coords = b->getBlockCoord();
       lvl.g->update(coords, blockType); // update the grid to see the new block
       cin >> cmd;
