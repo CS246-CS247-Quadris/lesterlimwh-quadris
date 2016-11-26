@@ -52,6 +52,7 @@ int main() {
         b->counterclockwise();
         lvl.g->update(coords, blockType); // update the grid to rotate the block counter-clockwise
       }
+      cout << lvl.g;
       
     }
   }
