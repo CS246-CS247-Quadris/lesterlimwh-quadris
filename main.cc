@@ -15,6 +15,8 @@ int main() {
     cin >> n;
     cout << endl;
     string file = "test.txt";
+    char blockType;
+    BlockCoord coords;
     // WARNING!!! SOME COMMENTS AHEAD. RIGHT NOW, LEVEL WILL AUTOMATICALLY BE INITIALIZED WITH A FILE REGARDLESS OF
     // WHAT THE LEVEL IS. THIS WILL BE ADJUSTED AFTER SEG FAULTS ARE FIXED
      Level lvl(n, file);
@@ -24,8 +26,8 @@ int main() {
 
     while (true) { // change true to !isGameOver later
       //Block * b = lvl.makeBlock(); // generate a random block depending on level and store it in a Block pointer
-      char blockType = b->getBlockType(); // FIRST SEG FAULT HERE. CODE DOES NOT REACH PRINT STATEMENT
-      BlockCoord coords = b->getBlockCoord();
+      blockType = b->getBlockType(); // FIRST SEG FAULT HERE. CODE DOES NOT REACH PRINT STATEMENT
+      coords = b->getBlockCoord();
       lvl.g->update(coords, blockType); // update the grid to see the new block
       cin >> cmd;
       if (cmd == "left"){
