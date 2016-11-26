@@ -1,7 +1,9 @@
 #include <iostream>
+#include <fstream>
 #include <string>
 #include "level.h"
 using namespace std;
+
 
 int main() {
   cin.exceptions(ios::eofbit|ios::failbit);
@@ -12,11 +14,18 @@ int main() {
     int n; 
     cin >> n;
     cout << endl;
-    Level lvl{n}; // create a new level with dif = n (this initialize a grid too)
+    string file = "test.txt";
+    // WARNING!!! SOME COMMENTS AHEAD. RIGHT NOW, LEVEL WILL AUTOMATICALLY BE INITIALIZED WITH A FILE REGARDLESS OF
+    // WHAT THE LEVEL IS. THIS WILL BE ADJUSTED AFTER SEG FAULTS ARE FIXED
+     Level lvl(n, file);
+     lvl.readInFile(); // READS IN FILE
+    Block *b = lvl.makeBlock();
+    //Level lvl{n}; // create a new level with dif = n (this initialize a grid too)
 
     while (true) { // change true to !isGameOver later
-      Block * b = lvl.makeBlock(); // generate a random block depending on level and store it in a Block pointer
-      const char blockType = b->getBlockType();
+      //Block * b = lvl.makeBlock(); // generate a random block depending on level and store it in a Block pointer
+      const char blockType = b->getBlockType(); // FIRST SEG FAULT HERE. CODE DOES NOT REACH PRINT STATEMENT
+      cout << "here";
       BlockCoord coords = b->getBlockCoord();
       lvl.g->update(coords, blockType); // update the grid to see the new block
       cin >> cmd;
@@ -32,6 +41,8 @@ int main() {
       } else if (cmd == "drop"){
         b->drop();
         lvl.g->update(coords, blockType); // update the grid to place the block
+        delete b;
+        b = lvl.makeBlock();
       } else if (cmd == "clockwise"){
         b->clockwise();
         lvl.g->update(coords, blockType); // update the grid to rotate the block clockwise
@@ -39,7 +50,7 @@ int main() {
         b->counterclockwise();
         lvl.g->update(coords, blockType); // update the grid to rotate the block counter-clockwise
       }
-      delete b;
+      
     }
   }
   catch (ios::failure &) {

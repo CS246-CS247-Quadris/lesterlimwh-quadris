@@ -4,7 +4,10 @@
 
 Level::Level(int n): dif{n}{ g = new Grid(n); } // Constructor for Level 1 -4
 
-//Level::Level(int n, std::ifstream &f): dif{n}, f{f}{ g = new Grid(n); } // Constructor for Level 0
+Level::Level(int n, std::string &file): dif{n}, file{file}{ 
+ f.open(file);
+ g = new Grid(n); 
+} // Constructor for Level 0
 
 Level::~Level(){ delete g; }
 
