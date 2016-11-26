@@ -2,9 +2,9 @@
 #define __JBLOCK_H__
 #include "grid.h"
 #include "block.h"
-#include "blockCoord.h"
+#include "blockcoord.h"
 
-class Jblock{ 
+class Jblock:public Block { 
 	BlockCoord coords;
 	bool isHeavy;
 	Grid *g;
@@ -19,6 +19,8 @@ public:
 	void counterclockwise() override;
 	void clockwise() override;
 	void drop() override;
+	BlockCoord getBlockCoord() override;
+	char getBlockType() const override;
 };
 
 #endif

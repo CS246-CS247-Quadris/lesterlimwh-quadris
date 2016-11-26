@@ -2,6 +2,7 @@
 #include <vector>
 #include <iostream>
 #include <map>
+
 Grid::Grid(int height, int width): height{height}, width{width}, blockNum{0},
                                    display{std::vector<std::vector<BlockCell> >(height, std::vector<BlockCell>(width, {blockNum, ' '}))}{
 
@@ -15,7 +16,7 @@ Grid::Grid(int height, int width): height{height}, width{width}, blockNum{0},
 
 Grid::~Grid(){}
 
-void addToCount(){ blockNum++; } // WHEN DROP IS CALLED, AFTER UPDATE IS CALLED, CALL THIS FUNCTION TO INCREASE COUNT
+void Grid::addToCount(){ ++blockNum; } // WHEN DROP IS CALLED, AFTER UPDATE IS CALLED, CALL THIS FUNCTION TO INCREASE COUNT
 
 void Grid::update(const BlockCoord &b, const char c){
 	// CAN BE CHANGED IF WE WANT TO IMPLEMENT BLOCKS OF DIFFERENT SIZES
@@ -49,22 +50,25 @@ void Grid::rowClear(const BlockCoord &b){
 	int row3 = -1;
 	int row4 = -1;
 	if (b.x1.y > b.x2.y && b.x2.y > b.x3.y && b.x3.y > b.x4.y){
-		row1 = x1.y;
-		row2 = x2.y;
-		row3 = x3.y;
-		row4 = x4.y;
+		row1 = b.x1.y;
+		row2 = b.x2.y;
+		row3 = b.x3.y;
+		row4 = b.x4.y;
 	}
 	else if (b.x4.y > b.x3.y && b.x3.y > b.x2.y && b.x2.y > b.x1.y){
-		row1 = x4.y;
+		row1 = b.x4.y;
+	}
 
 	for (int i = 0; i < height; ++i){
 		isFull = 1;
 		for(int j = 0; j < width; ++j){
-         if (display[i][j].letter = ' '){ 
-         	isFull = 0;
-         	break; 
-         }
+			if (display[i][j].letter == ' '){ 
+				isFull = 0;
+				break; 
+			}
 		}
 	}
 }
 
+void Grid::restart(){}
+void Grid::hint(){}

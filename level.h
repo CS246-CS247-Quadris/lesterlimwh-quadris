@@ -1,26 +1,35 @@
 #include <iostream>
 #include <fstream>
-#include "blockcoord.h"
+#include "grid.h"
+#include "iblock.h"
+#include "jblock.h"
+#include "lblock.h"
+#include "oblock.h"
+#include "sblock.h"
+//#include "tblock.h" - Tblock is not complete yet
+#include "zblock.h"
 #include <vector>
+
 class Block;
 
 class Level{
- static int count = 0;
- int dif;
- Grid *g;
- ifstream f;
- std::vector<string> seqInput;
- Block* diff0Block();
- Block* diff1Block();
- Block* diff2Block();
- Block* diff3Block();
- Block* diff4Block();
- public:
-  Level(int n);
-  Level(int n, ifstream &f);
-  ~Level();
-  void readInFile();
-  void levelUp();
-  void levelDown();
-  Block* makeBlock();
+	static int count;
+	int dif;
+	//Grid *g;
+	std::ifstream f;
+	std::vector<std::string> seqInput;
+	Block *diff0Block();
+	Block *diff1Block();
+	Block *diff2Block();
+	Block *diff3Block();
+	Block *diff4Block();
+	public:
+	Grid *g; // temporarily make g public for main to access (remove after controller has been created)	
+	Level(int n);
+	Level(int n, std::ifstream &f);
+	~Level();
+	void readInFile();
+	void levelUp();
+	void levelDown();
+	Block *makeBlock();
 }; 

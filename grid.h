@@ -1,18 +1,26 @@
+#ifndef __GRID_H__
+#define __GRID_H__
 #include <iostream>
 #include <vector>
 #include "blockcoord.h"
+#include "blockcell.h"
+
 class Grid{
 	int height,width;
 	int blockNum;
-	std::vector<vector <BlockCell> > display;
+	std::vector<std::vector <BlockCell>> display;
+
 public:
 	Grid(int height = 18, int width = 11);
 	~Grid();
 	void update(const BlockCoord &b, const char c);
 	bool check(const BlockCoord &b);
+	void rowHelper(int &row1, int &row2, int &row3, int &row4, const BlockCoord &b);
 	void rowClear(const BlockCoord &b);
 	void hint();
 	void restart();
 	void addToCount(); // Called when Drop is Called
 	friend std::ostream &operator<<(std::ostream &out, const Grid *g);
 };
+
+#endif

@@ -80,3 +80,7 @@ void Oblock::drop() {
 		temp = {x1,x2,x3,x4};
 	}
 }
+
+BlockCoord Oblock::getBlockCoord() { return coords; }
+
+char Oblock::getBlockType() const { return name; }

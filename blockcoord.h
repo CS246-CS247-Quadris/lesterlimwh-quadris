@@ -1,3 +1,5 @@
+#ifndef __BLOCKCOORD_H__
+#define __BLOCKCOORD_H__
 #include "coord.h"
 
 struct BlockCoord{
@@ -6,3 +8,5 @@ struct BlockCoord{
 	Coord x3;
 	Coord x4;
 };
+
+#endif
