@@ -9,8 +9,6 @@ int main() {
   cin.exceptions(ios::eofbit|ios::failbit);
   string cmd;
 
-  // WHY IS THERE A SEG FAULT
-
   try {
     cout << "Please enter a level: ";
     int n; 
@@ -31,7 +29,7 @@ int main() {
       blockType = b->getBlockType(); // FIRST SEG FAULT HERE. CODE DOES NOT REACH PRINT STATEMENT
       coords = b->getBlockCoord();
       lvl.g->update(coords, blockType); // update the grid to see the new block
-      cout << blockType << " " << coords.x1.x << " " << coords.x1.y << endl; // Just to see output
+      //cout << blockType << " " << coords.x1.x << " " << coords.x1.y << endl; // Just to see output
       cin >> cmd;
       if (cmd == "left"){
         b->left();
@@ -55,7 +53,6 @@ int main() {
         lvl.g->update(coords, blockType); // update the grid to rotate the block counter-clockwise
       }
       cout << lvl.g;
-      
     }
   }
   catch (ios::failure &) {

@@ -3,7 +3,6 @@
 #include <iostream>
 #include <map>
 using namespace std;
-
 Grid::Grid(int height, int width): height{height}, width{width}, blockNum{0},
                                    display{std::vector<std::vector<BlockCell> >(height, std::vector<BlockCell>(width, {blockNum, ' '}))}{
 
@@ -74,11 +73,18 @@ void Grid::rowClear(const BlockCoord &b){
 void Grid::restart(){}
 void Grid::hint(){}
 std::ostream &operator<<(std::ostream &out , const Grid *g){
+        for (int i = 0; i < g->width; ++i){
+         out << '_';
+        }
+        out << endl;
 	for (int i = 0; i < g->height; ++i){
 		for (int j = 0; j < g->width; ++j){
 			out << g->display[i][j].letter << " ";
 		}
 		out << endl;
 	}
+        for (int i = 0; i < g->width; ++i){
+         out << '_';
+        }
 	return out;
 }
