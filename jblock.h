@@ -20,7 +20,7 @@ public:
 	void clockwise() override;
 	void drop() override;
 	BlockCoord getBlockCoord() override;
-	char getBlockType() const override;
+	char getBlockType() override;
 };
 
 #endif
