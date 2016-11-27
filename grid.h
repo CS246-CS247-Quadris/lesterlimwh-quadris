@@ -15,7 +15,7 @@ public:
 	~Grid();
 	void update(const BlockCoord &b, const char c);
 	bool check(const BlockCoord &b);
-	void rowHelper(int &row1, int &row2, int &row3, int &row4, const BlockCoord &b);
+	std::Vector rowHelper(const BlockCoord &b);
 	void rowClear(const BlockCoord &b);
 	void hint();
 	void restart();
