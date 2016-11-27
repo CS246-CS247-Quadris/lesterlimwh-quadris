@@ -4,7 +4,7 @@
 #include "block.h"
 #include "blockcoord.h"
 
-class Tblock {
+class Tblock:public Block {
 	BlockCoord coords;
 	bool isHeavy;
 	Grid *g;
@@ -12,7 +12,7 @@ class Tblock {
 	const char name = 'T';
 
 public:
-	Tblock(BlockCoord coords, bool isHeavy, Grid *g);
+	Tblock(bool isHeavy, Grid *g);
 	void left() override;
 	void right() override;
 	void down() override;

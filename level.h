@@ -6,7 +6,7 @@
 #include "lblock.h"
 #include "oblock.h"
 #include "sblock.h"
-//#include "tblock.h" - Tblock is not complete yet
+#include "tblock.h"
 #include "zblock.h"
 #include <vector>
 
