@@ -85,7 +85,7 @@ std::ostream &operator<<(std::ostream &out , const Grid *g){
 	return out;
 	*/
 	for (int i = g->width - 1; i >= 0; --i){
-		out << '-';
+		out << "--";
 	}
 	out << endl;
 	for (int i = g->height - 1; i >= 0; --i){
@@ -95,7 +95,7 @@ std::ostream &operator<<(std::ostream &out , const Grid *g){
 		out << endl;
 		}
         for (int i = g->width - 1; i >= 0; --i){
-         	out << '-';
+         	out << "--";
         }
 	return out;
 }
