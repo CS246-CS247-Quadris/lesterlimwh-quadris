@@ -1,12 +1,13 @@
 #include "level.h"
 #include <cstdlib>
 #include <vector>
+#include <ctime>
 
-Level::Level(int n): dif{n}{ g = new Grid(n); } // Constructor for Level 1 -4
+Level::Level(int n): dif{n}{ g = new Grid(); } // Constructor for Level 1 -4
 
 Level::Level(int n, std::string &file): dif{n}, file{file}{ 
- f.open(file);
- g = new Grid(); 
+	f.open(file);
+	g = new Grid(); 
 } // Constructor for Level 0
 
 Level::~Level(){ delete g; }
@@ -35,6 +36,7 @@ Block *Level::diff0Block(){
 }
 
 Block *Level::diff1Block(){
+	srand(time(NULL)); // change seed state
 	int y = rand() % 12;
 	if (y == 0 || y == 1){ return new Iblock(false, g); }
 	else if (y == 2 || y == 3){ return new Jblock(false, g); }
@@ -43,6 +45,8 @@ Block *Level::diff1Block(){
 	//else if (y == 8 || y == 9){ return new Tblock(false, g); }
 	else if (y == 10){ return new Sblock(false, g); }
 	else { return new Zblock(false, g); }
+
+	//return new Lblock(false, g);
 }
 
 Block *Level::diff2Block(){

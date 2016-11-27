@@ -10,7 +10,7 @@ public:
 	virtual void counterclockwise() = 0;
 	virtual void clockwise() = 0;
 	virtual void drop() = 0;
-	virtual char getBlockType() const = 0;
+	virtual char getBlockType() = 0;
 	virtual BlockCoord getBlockCoord() = 0;
 	virtual ~Block() = default;
 };

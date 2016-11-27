@@ -3,16 +3,9 @@
 #include <iostream>
 #include <map>
 using namespace std;
+
 Grid::Grid(int height, int width): height{height}, width{width}, blockNum{0},
-                                   display{std::vector<std::vector<BlockCell> >(height, std::vector<BlockCell>(width, {blockNum, ' '}))}{
-
-	/*for (int i = 0; i < height; ++i){
-		for (int j = 0; j < width; ++j){
-			display[i][j] = {' ', 0};
-		}
-	} If MIL creation for display works then this section is not needed. OTHERWISE, remove comment markers */
-
-}
+                                   display{std::vector<std::vector<BlockCell> >(height, std::vector<BlockCell>(width, {blockNum, ' '}))}{}
 
 Grid::~Grid(){}
 
