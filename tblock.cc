@@ -1,4 +1,4 @@
-#include "Tblock.h"
+#include "tblock.h"
 
 Tblock::Tblock(bool isHeavy, Grid *g): isHeavy{isHeavy}, g{g} {
 	Coord x1{0,1};
@@ -72,7 +72,7 @@ void Tblock::counterclockwise() {
 		Coord x3{coords.x3.x-1,coords.x3.y+1};
 		Coord x4{coords.x4.x-1,coords.x4.y-1};
 
-		temp = {altx1,altx2,altx3,altx4};
+		temp = {tx1,x2,x3,x4};
 		tempOrientation  = 2;
 	}
 	if (orientation == 2) {
@@ -126,7 +126,7 @@ void Tblock::clockwise() {
 		Coord x3{coords.x3.x-1,coords.x3.y-1};
 		Coord x4{coords.x4.x-+1,coords.x4.y-1};
 
-		temp = {altx1,altx2,altx3,altx4};
+		temp = {x1,x2,x3,x4};
 		tempOrientation  = 2;
 	}
 	if (orientation == 2) {
