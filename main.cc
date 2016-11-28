@@ -93,6 +93,7 @@ int main() {
         }
         cout << lvl.g << endl;
       } // while !isGameOver
+      if(b) delete b;
     } // else
   } // try
   catch (ios::failure &) {
