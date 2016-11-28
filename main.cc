@@ -22,7 +22,7 @@ int main() {
       Level lvl(n, file);
       lvl.readInFile();
       Block *b = lvl.makeBlock();
-
+      cout << lvl.g << endl;
       while (!isGameOver) { // change true to !isGameOver
         cin >> cmd;
         if (cmd == "a"){
