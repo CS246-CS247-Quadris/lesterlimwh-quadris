@@ -22,6 +22,9 @@ int main() {
       Level lvl(n, file);
       lvl.readInFile();
       Block *b = lvl.makeBlock();
+      blockType = b->getBlockType();
+      coords = b->getBlockCoord();
+      lvl.g->update(coords, blockType);
       cout << lvl.g << endl;
       while (!isGameOver) { // change true to !isGameOver
         cin >> cmd;
@@ -41,6 +44,7 @@ int main() {
           b->drop();
           coords = b->getBlockCoord();
           lvl.g->update(coords, blockType);
+          lvl.g->rowClear(coords);
           delete b;
           b = lvl.makeBlock();
           coords = b->getBlockCoord();
@@ -85,6 +89,7 @@ int main() {
           b->drop();
           coords = b->getBlockCoord();
           lvl.g->update(coords, blockType);
+          lvl.g->rowClear(coords);
           delete b;
           b = lvl.makeBlock();
           coords = b->getBlockCoord();
