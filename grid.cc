@@ -64,7 +64,9 @@ void Grid::rowClear(const BlockCoord &b){
 		}
 	}
 }
-
+bool Grid::gameOver(const BlockCoord &b){
+	return check(b);
+}
 
 void Grid::restart(){}
 void Grid::hint(){}

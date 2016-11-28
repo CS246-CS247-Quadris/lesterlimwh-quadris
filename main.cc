@@ -15,6 +15,7 @@ int main() {
     cout << endl;
     char blockType;
     BlockCoord coords;
+    bool isGameOver = false;
 
     if (n == 0){
       string file = "test.txt";
@@ -22,7 +23,7 @@ int main() {
       lvl.readInFile();
       Block *b = lvl.makeBlock();
 
-      while (true) { // change true to !isGameOver later
+      while (!isGameOver) { // change true to !isGameOver later
         blockType = b->getBlockType();
         coords = b->getBlockCoord();
         lvl.g->update(coords, blockType); // update the grid to see the new block
@@ -42,6 +43,8 @@ int main() {
           lvl.g->update(coords, blockType); // update the grid to place the block
           delete b;
           b = lvl.makeBlock();
+          coords = b->getBlockCoord();
+          isGameOver = g->gameOver(coords);
         } else if (cmd == "clockwise"){
           b->clockwise();
           lvl.g->update(coords, blockType); // update the grid to rotate the block clockwise
@@ -51,6 +54,7 @@ int main() {
         }
         cout << lvl.g;
       }
+      if (b){ delete b; }
     } else{
       Level lvl(n);
       Block *b = lvl.makeBlock();
@@ -59,7 +63,7 @@ int main() {
       lvl.g->update(coords, blockType);
       cout << lvl.g << endl;
 
-      while (true) { // change true to !isGameOver
+      while (!isGameOver) { // change true to !isGameOver
         cin >> cmd;
         if (cmd == "a"){
           b->left();
@@ -81,6 +85,7 @@ int main() {
           b = lvl.makeBlock();
           coords = b->getBlockCoord();
           blockType = b->getBlockType();
+          isGameOver = g->gameOver(coords);
           lvl.g->update(coords, blockType); 
         } else if (cmd == "c"){
           b->clockwise();
@@ -92,8 +97,10 @@ int main() {
           lvl.g->update(coords, blockType);
         }
         cout << lvl.g << endl;
-      } // while !isGameOver
-    } // else
+      }
+      delete b; // while !isGameOver
+    }
+    // else
   } // try
   catch (ios::failure &) {
   }
