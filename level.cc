@@ -3,11 +3,11 @@
 #include <vector>
 #include <ctime>
 
-Level::Level(int n): dif{n}{ g = new Grid(); } // Constructor for Level 1 -4
+Level::Level(int n): dif{n}{ g = new Grid(dif); } // Constructor for Level 1 -4
 
 Level::Level(int n, std::string &file): dif{n}, file{file}{ 
 	f.open(file);
-	g = new Grid(); 
+	g = new Grid(dif); 
 } // Constructor for Level 0
 
 Level::~Level(){ delete g; }
@@ -15,6 +15,7 @@ Level::~Level(){ delete g; }
 void Level::levelUp(){ dif++; }
 
 void Level::levelDown(){ dif--; }
+
 
 void Level::readInFile(){ // This is to be called when a Level 0 object is made in the controller
 	std::string s;

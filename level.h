@@ -10,7 +10,6 @@
 #include "zblock.h"
 #include <vector>
 
-
 class Block;
 
 class Level{

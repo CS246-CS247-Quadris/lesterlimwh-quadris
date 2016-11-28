@@ -4,10 +4,14 @@
 #include <algorithm>
 using namespace std;
 
-Grid::Grid(int height, int width): height{height}, width{width}, blockNum{0},
+Grid::Grid(int dif, int height, int width): dif{dif}, height{height}, width{width}, blockNum{0},
                                    display{std::vector<std::vector<BlockCell> >(height, std::vector<BlockCell>(width, {blockNum, ' '}))}{}
 
 Grid::~Grid(){}
+
+void Grid::setLetter(const char letter){
+	blockLetter = letter;
+}
 
 void Grid::addToCount(){ ++blockNum; } // WHEN DROP IS CALLED, AFTER UPDATE IS CALLED, CALL THIS FUNCTION TO INCREASE COUNT
 
@@ -69,6 +73,43 @@ bool Grid::gameOver(const BlockCoord &b){
 	return false;
 }
 
+string Grid::nextBlock() const{
+	string s;
+	if (blockLetter == 'I'){
+		s = "IIII";
+	}
+	else if (blockLetter== 'J'){
+		s= "J";
+		s.append("\n");
+		s.append("JJJ");
+	}
+	else if (blockLetter == 'L'){
+		s = "  L";
+		s.append("\n");
+		s.append("LLL");
+	}
+	else if (blockLetter == 'O'){
+		s = "OO";
+		s.append("\n");
+		s.append("OO");
+	}
+	else if (blockLetter == 'S'){
+		s = " SS";
+		s.append("\n");
+		s.append("SS ");
+	}
+	else if (blockLetter == 'Z'){
+		s = "ZZ ";
+		s.append("\n");
+		s.append(" ZZ");
+	}
+	else {
+		s = "TTT";
+		s.append("\n");
+		s.append(" T ");
+	}
+	return s;
+}
 void Grid::restart(){}
 void Grid::hint(){}
 std::ostream &operator<<(std::ostream &out , const Grid *g){
@@ -87,6 +128,9 @@ std::ostream &operator<<(std::ostream &out , const Grid *g){
         }
 	return out;
 	*/
+	out << "Level: " << g->dif << endl;
+	out << "Score: " << "XXX" << endl;
+	out << "High Score" << "XXX" << endl;
 	for (int i = g->width - 1; i >= 0; --i){
 		out << "--";
 	}
@@ -99,6 +143,8 @@ std::ostream &operator<<(std::ostream &out , const Grid *g){
 		}
         for (int i = g->width - 1; i >= 0; --i){
          	out << "--";
-        }
+    }
+    out << endl << "Next Block:" << endl;
+    out << g->nextBlock();
 	return out;
 }
