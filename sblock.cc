@@ -163,10 +163,10 @@ void Sblock::clockwise() {
 }
 
 void Sblock::drop() {
-	Coord x1 = {coords.x1.x,coords.x1.y+1};
-	Coord x2 = {coords.x2.x,coords.x2.y+1};
-	Coord x3 = {coords.x3.x,coords.x3.y+1};
-	Coord x4 = {coords.x4.x,coords.x4.y+1};
+	Coord x1 = {coords.x1.x,coords.x1.y-1};
+	Coord x2 = {coords.x2.x,coords.x2.y-1};
+	Coord x3 = {coords.x3.x,coords.x3.y-1};
+	Coord x4 = {coords.x4.x,coords.x4.y-1};
 
 	g->update(coords, ' ');
 	BlockCoord temp = {x1,x2,x3,x4};
