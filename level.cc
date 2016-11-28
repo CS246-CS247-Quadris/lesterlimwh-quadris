@@ -31,22 +31,20 @@ Block *Level::diff0Block(){
 	else if (seqInput[count] == "O") { count++; return new Oblock(false, g); }
 	else if (seqInput[count] == "S") { count++; return new Sblock(false, g); }
 	else if (seqInput[count] == "Z") { count++; return new Zblock(false, g); }
-	//else if (seqInput[count] == "T") { count++; return new Tblock(false, g); }
+	else if (seqInput[count] == "T") { count++; return new Tblock(false, g); }
 	else if (seqInput[count] == "Z") { count++; return new Zblock(false, g); }
 }
 
 Block *Level::diff1Block(){
-	/*srand(time(NULL)); // change seed state
+	srand(time(NULL)); // change seed state
 	int y = rand() % 12;
 	if (y == 0 || y == 1){ return new Iblock(false, g); }
 	else if (y == 2 || y == 3){ return new Jblock(false, g); }
 	else if (y == 4 || y == 5){ return new Lblock(false, g); }
 	else if (y == 6 || y == 7){ return new Oblock(false, g); }
-	//else if (y == 8 || y == 9){ return new Tblock(false, g); }
+	else if (y == 8 || y == 9){ return new Tblock(false, g); }
 	else if (y == 10){ return new Sblock(false, g); }
-	else { return new Zblock(false, g); }*/
-
-	return new Tblock(false, g);
+	else { return new Zblock(false, g); }
 }
 
 Block *Level::diff2Block(){
@@ -56,7 +54,7 @@ Block *Level::diff2Block(){
 	else if (y == 1) { return new Jblock(false, g); }
 	else if (y == 2) { return new Lblock(false, g); }
 	else if (y == 3) { return new Oblock(false, g); }
-	//else if (y == 4) { return new Tblock(false, g); }
+	else if (y == 4) { return new Tblock(false, g); }
 	else if (y == 5) { return new Sblock(false, g); }
 	else { return new Zblock(false, g); }
 }
@@ -68,7 +66,7 @@ Block *Level::diff3Block(){
 	else if (y == 1){ return new Jblock(true, g); }
 	else if (y == 2){ return new Lblock(true, g); }
 	else if (y == 3){ return new Oblock(true, g); }
-	//else if (y == 4){ return new Tblock(true, g); }
+	else if (y == 4){ return new Tblock(true, g); }
 	else if (y == 5 || y == 6){ return new Sblock(true, g); }
 	else { return new Zblock(true, g); }
 }
