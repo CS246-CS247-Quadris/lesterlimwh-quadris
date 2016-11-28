@@ -9,8 +9,10 @@ class Level;
 class Grid{
 	int height,width;
 	int blockNum;
-	int dif;
+	int dif; 
 	char blockLetter;
+	//int rowsCleared = 0;
+	int score = 0;
 	std::vector<std::vector <BlockCell>> display;
 
 public:
@@ -25,6 +27,7 @@ public:
 	void hint();
 	void restart();
 	void addToCount();
+	void addToScore(); 
 	std::string nextBlock() const; // Called when Drop is Called
 	friend std::ostream &operator<<(std::ostream &out, const Grid *g);
 };

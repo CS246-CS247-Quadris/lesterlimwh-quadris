@@ -3,6 +3,7 @@
 
 struct BlockCell{
 	int count;
+	int levelCreated;
 	char letter;
 };
 

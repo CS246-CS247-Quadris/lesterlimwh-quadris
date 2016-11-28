@@ -46,6 +46,7 @@ Block *Level::diff1Block(){
 	else if (y == 8 || y == 9){ return new Tblock(false, g); }
 	else if (y == 10){ return new Sblock(false, g); }
 	else { return new Zblock(false, g); }
+	
 }
 
 Block *Level::diff2Block(){

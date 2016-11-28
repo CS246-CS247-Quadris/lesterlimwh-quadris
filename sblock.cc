@@ -147,7 +147,7 @@ void Sblock::clockwise() {
 		tempOrientation = 1;
 	}
 	if (orientation == 1) {
-		Coord x1{coords.x1.x-2,coords.x1.y+1};
+		Coord x1{coords.x1.x-2,coords.x1.y};
 		Coord x2{coords.x2.x-1,coords.x2.y-1};
 		Coord x3{coords.x3.x,coords.x3.y};
 		Coord x4{coords.x4.x+1,coords.x4.y-1};

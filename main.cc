@@ -48,6 +48,7 @@ int main() {
           b->drop();
           coords = b->getBlockCoord();
           lvl.g->update(coords, blockType);
+          lvl.g->addToCount();
           lvl.g->rowClear(coords);
           delete b;
           b = lvl.makeBlock();

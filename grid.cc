@@ -5,7 +5,7 @@
 using namespace std;
 
 Grid::Grid(int dif, int height, int width): dif{dif}, height{height}, width{width}, blockNum{0},
-                                   display{std::vector<std::vector<BlockCell> >(height, std::vector<BlockCell>(width, {blockNum, ' '}))}{}
+                                   display{std::vector<std::vector<BlockCell> >(height, std::vector<BlockCell>(width, {blockNum, dif, ' '}))}{}
 
 Grid::~Grid(){}
 
@@ -15,12 +15,31 @@ void Grid::setLetter(const char letter){
 
 void Grid::addToCount(){ ++blockNum; } // WHEN DROP IS CALLED, AFTER UPDATE IS CALLED, CALL THIS FUNCTION TO INCREASE COUNT
 
+void Grid::addToScore() {
+	score += (dif + 1) * (dif + 1);
+	std::vector<int> v; // gets filled with the levels removed blocks were created in
+	for (int num = 1; num <= blockNum; num++) {
+		for (int i = 0; i < height; i++) {
+			for (int j = 0; i < width; j++) {
+				if (display[i][j].levelCreated != num && num == blockNum) {
+					v.emplace_back(num);
+				}
+			}
+		}
+	}
+	for (int i = 0; i < v.size(); i++) {
+		score += (v[i]+1) * (v[i]+1);
+	}
+}
+
+//int Grid::getScore() const{	return score;}
+
 void Grid::update(const BlockCoord &b, const char c){
 	// CAN BE CHANGED IF WE WANT TO IMPLEMENT BLOCKS OF DIFFERENT SIZES
-    display[b.x1.y][b.x1.x] = {blockNum, c};
-    display[b.x2.y][b.x2.x] = {blockNum, c};
-    display[b.x3.y][b.x3.x] = {blockNum, c};
-    display[b.x4.y][b.x4.x] = {blockNum, c};
+    display[b.x1.y][b.x1.x] = {blockNum,dif,c};
+    display[b.x2.y][b.x2.x] = {blockNum,dif,c};
+    display[b.x3.y][b.x3.x] = {blockNum,dif,c};
+    display[b.x4.y][b.x4.x] = {blockNum,dif,c};
 }
 
 bool Grid::check(const BlockCoord &b){
@@ -61,7 +80,8 @@ void Grid::rowClear(const BlockCoord &b){
 		if (isFull){
 			display.erase(display.begin() + rows[i]);
 			// ADD SCORE HERE
-			display.push_back(vector<BlockCell>(width, {0, ' '})); // 0 BECAUSE NO BLOCK IS ASSIGNED TO THE NEW ROW
+			addToScore();
+			display.push_back(vector<BlockCell>(width, {0,0,' '})); // 0 BECAUSE NO BLOCK IS ASSIGNED TO THE NEW ROW
 			//for (int k = i; k < size; ++k){ // REDUCES THE VALUE OF EACH ROW IN ROWS SO THAT WE DON'T CHECK THE ROW ABOVE THE ONE WE WANT
 			//	rows[k] = rows[k] - 1;
 			//}
@@ -129,8 +149,8 @@ std::ostream &operator<<(std::ostream &out , const Grid *g){
 	return out;
 	*/
 	out << "Level: " << g->dif << endl;
-	out << "Score: " << "XXX" << endl;
-	out << "High Score" << "XXX" << endl;
+	out << "Score: " << g->score << endl;
+	out << "High Score" << g->score << endl;
 	for (int i = g->width - 1; i >= 0; --i){
 		out << "--";
 	}
