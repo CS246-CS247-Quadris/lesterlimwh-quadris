@@ -45,7 +45,7 @@ int main() {
           b = lvl.makeBlock();
           coords = b->getBlockCoord();
           blockType = b->getBlockType();
-          isGameOver = g->gameOver(coords);
+          isGameOver = lvl.g->gameOver(coords);
           lvl.g->update(coords, blockType); 
         } else if (cmd == "c"){
           b->clockwise();
@@ -89,7 +89,7 @@ int main() {
           b = lvl.makeBlock();
           coords = b->getBlockCoord();
           blockType = b->getBlockType();
-          isGameOver = g->gameOver(coords);
+          isGameOver = lvl.g->gameOver(coords);
           lvl.g->update(coords, blockType); 
         } else if (cmd == "c"){
           b->clockwise();
@@ -101,7 +101,6 @@ int main() {
           lvl.g->update(coords, blockType);
         }
         cout << lvl.g << endl;
-<<<<<<< HEAD
       }
       delete b; // while !isGameOver
     }
