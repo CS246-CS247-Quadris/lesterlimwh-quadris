@@ -190,11 +190,11 @@ void Lblock::drop() {
 }
 
 BlockCoord Lblock::getBlockCoord() { 
-	std::cout << "Current coordinates of this block:" << std::endl;
+	/*std::cout << "Current coordinates of this block:" << std::endl;
 	std::cout << "Row = " << coords.x1.y << " " << "Col = " << coords.x1.x << std::endl; 
 	std::cout << "Row = " << coords.x2.y << " " << "Col = " << coords.x2.x << std::endl; 
 	std::cout << "Row = " << coords.x3.y << " " << "Col = " << coords.x3.x << std::endl; 
-	std::cout << "Row = " << coords.x4.y << " " << "Col = " << coords.x4.x << std::endl; 
+	std::cout << "Row = " << coords.x4.y << " " << "Col = " << coords.x4.x << std::endl; */
 	return coords; 
 }
 

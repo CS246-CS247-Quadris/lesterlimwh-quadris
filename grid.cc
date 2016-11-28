@@ -4,10 +4,14 @@
 #include <algorithm>
 using namespace std;
 
-Grid::Grid(int height, int width): height{height}, width{width}, blockNum{0},
+Grid::Grid(int dif, int height, int width): dif{dif}, height{height}, width{width}, blockNum{0},
                                    display{std::vector<std::vector<BlockCell> >(height, std::vector<BlockCell>(width, {blockNum, ' '}))}{}
 
 Grid::~Grid(){}
+
+void Grid::setLetter(const char letter){
+	blockLetter = letter;
+}
 
 void Grid::addToCount(){ ++blockNum; } // WHEN DROP IS CALLED, AFTER UPDATE IS CALLED, CALL THIS FUNCTION TO INCREASE COUNT
 
@@ -49,7 +53,7 @@ void Grid::rowClear(const BlockCoord &b){
 	bool isFull = true;
 	for (int i = 0; i < size; ++i){
 		for (int j = 0; j < width; ++j){
-			if (display[j][rows[i]].letter == ' '){
+			if (display[rows[i]][j].letter == ' '){
 				isFull = false;
 				break;
 			}
@@ -58,16 +62,54 @@ void Grid::rowClear(const BlockCoord &b){
 			display.erase(display.begin() + rows[i]);
 			// ADD SCORE HERE
 			display.push_back(vector<BlockCell>(width, {0, ' '})); // 0 BECAUSE NO BLOCK IS ASSIGNED TO THE NEW ROW
-			for (int k = i; k < size; ++k){ // REDUCES THE VALUE OF EACH ROW IN ROWS SO THAT WE DON'T CHECK THE ROW ABOVE THE ONE WE WANT
-				rows[k] = rows[k] - 1;
-			}
+			//for (int k = i; k < size; ++k){ // REDUCES THE VALUE OF EACH ROW IN ROWS SO THAT WE DON'T CHECK THE ROW ABOVE THE ONE WE WANT
+			//	rows[k] = rows[k] - 1;
+			//}
 		}
+		isFull = true;
 	}
 }
 bool Grid::gameOver(const BlockCoord &b){
 	return false;
 }
 
+string Grid::nextBlock() const{
+	string s;
+	if (blockLetter == 'I'){
+		s = "IIII";
+	}
+	else if (blockLetter== 'J'){
+		s= "J";
+		s.append("\n");
+		s.append("JJJ");
+	}
+	else if (blockLetter == 'L'){
+		s = "  L";
+		s.append("\n");
+		s.append("LLL");
+	}
+	else if (blockLetter == 'O'){
+		s = "OO";
+		s.append("\n");
+		s.append("OO");
+	}
+	else if (blockLetter == 'S'){
+		s = " SS";
+		s.append("\n");
+		s.append("SS ");
+	}
+	else if (blockLetter == 'Z'){
+		s = "ZZ ";
+		s.append("\n");
+		s.append(" ZZ");
+	}
+	else {
+		s = "TTT";
+		s.append("\n");
+		s.append(" T ");
+	}
+	return s;
+}
 void Grid::restart(){}
 void Grid::hint(){}
 std::ostream &operator<<(std::ostream &out , const Grid *g){
@@ -86,6 +128,9 @@ std::ostream &operator<<(std::ostream &out , const Grid *g){
         }
 	return out;
 	*/
+	out << "Level: " << g->dif << endl;
+	out << "Score: " << "XXX" << endl;
+	out << "High Score" << "XXX" << endl;
 	for (int i = g->width - 1; i >= 0; --i){
 		out << "--";
 	}
@@ -98,6 +143,8 @@ std::ostream &operator<<(std::ostream &out , const Grid *g){
 		}
         for (int i = g->width - 1; i >= 0; --i){
          	out << "--";
-        }
+    }
+    //out << endl << "Next Block:" << endl;
+    //out << g->nextBlock();
 	return out;
 }

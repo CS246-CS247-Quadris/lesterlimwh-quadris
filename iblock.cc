@@ -21,6 +21,10 @@ void Iblock::left() {
 	} else{
 		g->update(coords, name);
 	}
+
+	if (isHeavy){
+		down();
+	}
 }
 
 void Iblock::right() {
@@ -35,6 +39,10 @@ void Iblock::right() {
 		coords = temp;
 	} else{
 		g->update(coords, name);
+	}
+
+	if (isHeavy){
+		down();
 	}
 }
 
