@@ -21,6 +21,10 @@ void Tblock::left() {
 	} else{
 		g->update(coords, name);
 	}
+
+	if (isHeavy){
+		down();
+	}
 }
 
 void Tblock::right() {
@@ -35,6 +39,10 @@ void Tblock::right() {
 		coords = temp;
 	} else{
 		g->update(coords, name);
+	}
+
+	if (isHeavy){
+		down();
 	}
 }
 

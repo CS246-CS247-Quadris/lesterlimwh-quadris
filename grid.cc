@@ -62,9 +62,9 @@ void Grid::rowClear(const BlockCoord &b){
 			display.erase(display.begin() + rows[i]);
 			// ADD SCORE HERE
 			display.push_back(vector<BlockCell>(width, {0, ' '})); // 0 BECAUSE NO BLOCK IS ASSIGNED TO THE NEW ROW
-			for (int k = i; k < size; ++k){ // REDUCES THE VALUE OF EACH ROW IN ROWS SO THAT WE DON'T CHECK THE ROW ABOVE THE ONE WE WANT
-				rows[k] = rows[k] - 1;
-			}
+			//for (int k = i; k < size; ++k){ // REDUCES THE VALUE OF EACH ROW IN ROWS SO THAT WE DON'T CHECK THE ROW ABOVE THE ONE WE WANT
+			//	rows[k] = rows[k] - 1;
+			//}
 		}
 		isFull = true;
 	}
@@ -144,7 +144,7 @@ std::ostream &operator<<(std::ostream &out , const Grid *g){
         for (int i = g->width - 1; i >= 0; --i){
          	out << "--";
     }
-    out << endl << "Next Block:" << endl;
-    out << g->nextBlock();
+    //out << endl << "Next Block:" << endl;
+    //out << g->nextBlock();
 	return out;
 }
