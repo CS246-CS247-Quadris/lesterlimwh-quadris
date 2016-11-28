@@ -23,36 +23,40 @@ int main() {
       lvl.readInFile();
       Block *b = lvl.makeBlock();
 
-      while (!isGameOver) { // change true to !isGameOver later
-        blockType = b->getBlockType();
-        coords = b->getBlockCoord();
-        lvl.g->update(coords, blockType); // update the grid to see the new block
-
+      while (!isGameOver) { // change true to !isGameOver
         cin >> cmd;
-        if (cmd == "left"){
+        if (cmd == "a"){
           b->left();
-          lvl.g->update(coords, blockType); // update the grid to shift the block one unit left
-        } else if (cmd == "right"){
+          coords = b->getBlockCoord();
+          lvl.g->update(coords, blockType);
+        } else if (cmd == "d"){
           b->right();
-          lvl.g->update(coords, blockType); // update the grid to shift the block one unit right
-        } else if (cmd == "down"){
+          coords = b->getBlockCoord();
+          lvl.g->update(coords, blockType);
+        } else if (cmd == "s"){
           b->down();
-          lvl.g->update(coords, blockType); // update the grid to shift the block one unit down
-        } else if (cmd == "drop"){
+          coords = b->getBlockCoord();
+          lvl.g->update(coords, blockType);
+        } else if (cmd == "x"){
           b->drop();
-          lvl.g->update(coords, blockType); // update the grid to place the block
+          coords = b->getBlockCoord();
+          lvl.g->update(coords, blockType);
           delete b;
           b = lvl.makeBlock();
           coords = b->getBlockCoord();
+          blockType = b->getBlockType();
           isGameOver = g->gameOver(coords);
-        } else if (cmd == "clockwise"){
+          lvl.g->update(coords, blockType); 
+        } else if (cmd == "c"){
           b->clockwise();
-          lvl.g->update(coords, blockType); // update the grid to rotate the block clockwise
-        } else if (cmd == "cclockwise"){
+          coords = b->getBlockCoord();
+          lvl.g->update(coords, blockType);
+        } else if (cmd == "z"){
           b->counterclockwise();
-          lvl.g->update(coords, blockType); // update the grid to rotate the block counter-clockwise
+          coords = b->getBlockCoord();
+          lvl.g->update(coords, blockType);
         }
-        cout << lvl.g;
+        cout << lvl.g << endl;
       }
       if (b){ delete b; }
     } else{
