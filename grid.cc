@@ -49,7 +49,7 @@ void Grid::rowClear(const BlockCoord &b){
 	bool isFull = true;
 	for (int i = 0; i < size; ++i){
 		for (int j = 0; j < width; ++j){
-			if (display[rows[i]][j].letter == ' '){
+			if (display[j][rows[i]].letter == ' '){
 				isFull = false;
 				break;
 			}
@@ -64,7 +64,9 @@ void Grid::rowClear(const BlockCoord &b){
 		}
 	}
 }
-
+bool Grid::gameOver(const BlockCoord &b){
+	return false;
+}
 
 void Grid::restart(){}
 void Grid::hint(){}

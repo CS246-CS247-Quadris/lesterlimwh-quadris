@@ -120,11 +120,19 @@ void Tblock::clockwise() {
 		temp = {x1,x2,x3,x4};
 		tempOrientation = 3;
 	} 
+<<<<<<< HEAD
 	if (orientation == 3) {
 		Coord x1{coords.x1.x+1,coords.x1.y-1};
 		Coord x2{coords.x2.x,coords.x2.y};
 		Coord x3{coords.x3.x-1,coords.x3.y+1};
 		Coord x4{coords.x4.x+1,coords.x4.y+1};
+=======
+	if (orientation == 1) {
+		Coord x1{coords.x1.x+1,coords.x1.y-1};
+		Coord x2{coords.x2.x,coords.x2.y};
+		Coord x3{coords.x3.x-1,coords.x3.y+1};
+		Coord x4{coords.x4.x-+1,coords.x4.y+1};
+>>>>>>> 225c853b30c88e00593005644674272f13710056
 
 		temp = {x1,x2,x3,x4};
 		tempOrientation  = 2;
@@ -138,7 +146,11 @@ void Tblock::clockwise() {
 		temp = {x1,x2,x3,x4};
 		tempOrientation = 1;
 	}
+<<<<<<< HEAD
 	if (orientation == 1) {
+=======
+	if (orientation == 3) {
+>>>>>>> 225c853b30c88e00593005644674272f13710056
 		Coord x1{coords.x1.x-1,coords.x1.y+1};
 		Coord x2{coords.x2.x,coords.x2.y};
 		Coord x3{coords.x3.x+1,coords.x3.y-1};
@@ -163,20 +175,20 @@ void Tblock::clockwise() {
 }
 
 void Tblock::drop() {
-	Coord x1 = {coords.x1.x,coords.x1.y+1};
-	Coord x2 = {coords.x2.x,coords.x2.y+1};
-	Coord x3 = {coords.x3.x,coords.x3.y+1};
-	Coord x4 = {coords.x4.x,coords.x4.y+1};
+	Coord x1 = {coords.x1.x,coords.x1.y-1};
+	Coord x2 = {coords.x2.x,coords.x2.y-1};
+	Coord x3 = {coords.x3.x,coords.x3.y-1};
+	Coord x4 = {coords.x4.x,coords.x4.y-1};
 
 	g->update(coords, ' ');
 	BlockCoord temp = {x1,x2,x3,x4};
 	if (g->check(temp)){
 		while (g->check(temp)) {
 			down();
-			x1 = {coords.x1.x, (coords.x1.y + 1)};
-			x2 = {coords.x2.x, (coords.x2.y + 1)};
-			x3 = {coords.x3.x, (coords.x3.y + 1)};
-			x4 = {coords.x4.x, (coords.x4.y + 1)};
+			x1 = {coords.x1.x, (coords.x1.y - 1)};
+			x2 = {coords.x2.x, (coords.x2.y - 1)};
+			x3 = {coords.x3.x, (coords.x3.y - 1)};
+			x4 = {coords.x4.x, (coords.x4.y - 1)};
 			temp = {x1,x2,x3,x4};
 		}
 	} else{
