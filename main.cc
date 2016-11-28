@@ -23,9 +23,9 @@ int main() {
       Level lvl(n, file);
       lvl.readInFile();
       Block *b = lvl.makeBlock();
-      Block *next = lvl.makeBlock();
+      //Block *next = lvl.makeBlock();
       blockType = b->getBlockType();
-      nextBlockType = next->getBlockType();
+      //nextBlockType = next->getBlockType();
       lvl.g->setLetter(nextBlockType);
       coords = b->getBlockCoord();
       lvl.g->update(coords, blockType);
@@ -50,11 +50,12 @@ int main() {
           lvl.g->update(coords, blockType);
           lvl.g->rowClear(coords);
           delete b;
-          b = next;
-          next = lvl.makeBlock();
+          b = lvl.makeBlock();
+          //b = next;
+          //next = lvl.makeBlock();
           coords = b->getBlockCoord();
           blockType = b->getBlockType();
-          nextBlockType = next->getBlockType();
+          //nextBlockType = next->getBlockType();
           lvl.g->setLetter(nextBlockType);
           isGameOver = lvl.g->gameOver(coords);
           lvl.g->update(coords, blockType); 
