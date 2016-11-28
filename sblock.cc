@@ -84,7 +84,33 @@ void Sblock::counterclockwise() {
 }
 
 void Sblock::clockwise() {
-	counterclockwise();
+	Coord x1 = {coords.x1.x,coords.x1.y+2};
+	Coord x2 = {coords.x2.x+1,coords.x2.y+1};
+	Coord x3 = {coords.x3.x,coords.x3.y};
+	Coord x4 = {coords.x4.x+1,coords.x4.y-1};
+
+	Coord altx1 = {coords.x1.x,coords.x1.y-2};
+	Coord altx2 = {coords.x2.x-1,coords.x2.y-1};
+	Coord altx3 = {coords.x3.x,coords.x3.y};
+	Coord altx4 = {coords.x4.x-1,coords.x4.y+1};
+
+	int tempOrientation;
+	BlockCoord temp;
+
+	if (orientation == 0) {
+		temp = {x1,x2,x3,x4};
+		tempOrientation = 1;
+	} else {
+		temp = {altx1,altx2,altx3,altx4};
+		tempOrientation  = 0;
+	}
+	g->update(coords, ' ');
+	if (g->check(temp)) {
+		coords = temp;
+		orientation = tempOrientation;
+	} else{
+		g->update(coords, name);
+	}
 }
 
 void Sblock::drop() {

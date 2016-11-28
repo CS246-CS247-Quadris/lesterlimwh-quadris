@@ -36,7 +36,7 @@ Block *Level::diff0Block(){
 }
 
 Block *Level::diff1Block(){
-	srand(time(NULL)); // change seed state
+	/*srand(time(NULL)); // change seed state
 	int y = rand() % 12;
 	if (y == 0 || y == 1){ return new Iblock(false, g); }
 	else if (y == 2 || y == 3){ return new Jblock(false, g); }
@@ -44,12 +44,13 @@ Block *Level::diff1Block(){
 	else if (y == 6 || y == 7){ return new Oblock(false, g); }
 	//else if (y == 8 || y == 9){ return new Tblock(false, g); }
 	else if (y == 10){ return new Sblock(false, g); }
-	else { return new Zblock(false, g); }
+	else { return new Zblock(false, g); }*/
 
-	//return new Lblock(false, g);
+	return new Tblock(false, g);
 }
 
 Block *Level::diff2Block(){
+	srand(time(NULL)); // change seed state
 	int y = rand() % 7;
 	if (y == 0){ return new Iblock(false, g); }
 	else if (y == 1) { return new Jblock(false, g); }
@@ -61,6 +62,7 @@ Block *Level::diff2Block(){
 }
 
 Block *Level::diff3Block(){
+	srand(time(NULL)); // change seed state
 	int y = rand() % 9;
 	if (y == 0){ return new Iblock(true, g); }
 	else if (y == 1){ return new Jblock(true, g); }

@@ -97,10 +97,16 @@ int main() {
           lvl.g->update(coords, blockType);
         }
         cout << lvl.g << endl;
+<<<<<<< HEAD
       }
       delete b; // while !isGameOver
     }
     // else
+=======
+      } // while !isGameOver
+      if(b) delete b;
+    } // else
+>>>>>>> 961ba1419ef2a1a3f09aa1b1427089f37a7ea3f5
   } // try
   catch (ios::failure &) {
   }

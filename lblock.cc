@@ -66,26 +66,26 @@ void Lblock::counterclockwise() {
 	BlockCoord temp;
 
 	if (orientation == 0){
-		Coord x1 = {coords.x1.x, coords.x1.y + 2};
-		Coord x2 = {coords.x2.x + 1, coords.x2.y + 1};
+		Coord x1 = {coords.x1.x - 2, coords.x1.y};
+		Coord x2 = {coords.x2.x - 1, coords.x2.y - 1};
 		Coord x3 = {coords.x3.x, coords.x3.y};
-		Coord x4 = {coords.x4.x - 1, coords.x4.y - 1};
+		Coord x4 = {coords.x4.x + 1, coords.x4.y + 1};
 		temp = {x1,x2,x3,x4};
 		tempOrientation = 3;
 	}
 
 	if (orientation == 1){
-		Coord x1 = {coords.x1.x - 2, coords.x1.y};
-		Coord x2 = {coords.x2.x - 1, coords.x2.y + 1};
+		Coord x1 = {coords.x1.x, coords.x1.y - 2};
+		Coord x2 = {coords.x2.x + 1, coords.x2.y - 1};
 		Coord x3 = {coords.x3.x, coords.x3.y};
-		Coord x4 = {coords.x4.x + 1, coords.x4.y - 1};
+		Coord x4 = {coords.x4.x - 1, coords.x4.y + 1};
 		temp = {x1,x2,x3,x4};
 		tempOrientation = 0;
 	}
 
 	if (orientation == 2){
-		Coord x1 = {coords.x1.x, coords.x1.y - 2};
-		Coord x2 = {coords.x2.x - 1, coords.x2.y - 1};
+		Coord x1 = {coords.x1.x + 2, coords.x1.y};
+		Coord x2 = {coords.x2.x + 1, coords.x2.y + 1};
 		Coord x3 = {coords.x3.x, coords.x3.y};
 		Coord x4 = {coords.x4.x - 1, coords.x4.y - 1};
 		temp = {x1,x2,x3,x4};
@@ -93,10 +93,10 @@ void Lblock::counterclockwise() {
 	}
 
 	if (orientation == 3){
-		Coord x1 = {coords.x1.x + 2, coords.x1.y};
-		Coord x2 = {coords.x2.x + 1, coords.x2.y - 1};
+		Coord x1 = {coords.x1.x, coords.x1.y + 2};
+		Coord x2 = {coords.x2.x - 1, coords.x2.y + 1};
 		Coord x3 = {coords.x3.x, coords.x3.y};
-		Coord x4 = {coords.x4.x - 1, coords.x4.y + 1};
+		Coord x4 = {coords.x4.x + 1, coords.x4.y - 1};
 		temp = {x1,x2,x3,x4};
 		tempOrientation = 2;
 	}
@@ -120,7 +120,7 @@ void Lblock::clockwise() {
 
 	if (orientation == 0){
 		Coord x1 = {coords.x1.x, coords.x1.y + 2};
-		Coord x2 = {coords.x2.x + 1, coords.x2.y + 1};
+		Coord x2 = {coords.x2.x - 1, coords.x2.y + 1};
 		Coord x3 = {coords.x3.x, coords.x3.y};
 		Coord x4 = {coords.x4.x + 1, coords.x4.y - 1};
 		temp = {x1,x2,x3,x4};
@@ -190,11 +190,11 @@ void Lblock::drop() {
 }
 
 BlockCoord Lblock::getBlockCoord() { 
-	/*std::cout << "Current coordinates of this block:" << std::endl;
+	std::cout << "Current coordinates of this block:" << std::endl;
 	std::cout << "Row = " << coords.x1.y << " " << "Col = " << coords.x1.x << std::endl; 
 	std::cout << "Row = " << coords.x2.y << " " << "Col = " << coords.x2.x << std::endl; 
 	std::cout << "Row = " << coords.x3.y << " " << "Col = " << coords.x3.x << std::endl; 
-	std::cout << "Row = " << coords.x4.y << " " << "Col = " << coords.x4.x << std::endl; */
+	std::cout << "Row = " << coords.x4.y << " " << "Col = " << coords.x4.x << std::endl; 
 	return coords; 
 }
 
