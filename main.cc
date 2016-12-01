@@ -1,23 +1,12 @@
 #include <iostream>
+#include "controller.h"
 
-//#include <fstream>
-//#include <string>
-//#include "level.h"
-//#include "controller.h"
-
-#include <fstream>
-#include <string>
-#include "level.h"
-#include "window.h"
-#include "graphics.h"
-
-using namespace std;
+using std::cin;
+using std::cout;
+using std::endl;
 
 int main() {
-  cin.exceptions(ios::eofbit|ios::failbit);
-  string cmd;
-
-  /*cout << "Please enter a level: ";
+  cout << "Please enter a level: ";
   int n;
   cin >> n;
   cout << endl;
@@ -27,7 +16,10 @@ int main() {
   } else{
     Controller ctrl(n);
     ctrl.startGame();
-  }*/
+  }
+
+  /*cin.exceptions(ios::eofbit|ios::failbit);
+  string cmd;
 
   try {
     cout << "Please enter a level: ";
@@ -174,5 +166,5 @@ int main() {
     delete view; // else
   } // try
   catch (ios::failure &) {
-  }
+  }*/
 }

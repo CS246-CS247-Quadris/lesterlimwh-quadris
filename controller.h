@@ -1,9 +1,11 @@
 #ifndef __CONTROLLER_H__
 #define __CONTROLLER_H__
-#include "level.h"
 #include <string>
 #include <fstream>
 #include <iostream>
+#include "level.h"
+#include "window.h"
+#include "graphics.h"
 
 using std::cin;
 using std::cout;

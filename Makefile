@@ -1,11 +1,9 @@
 CXX = g++-5
 CXXFLAGS = -std=c++14 -Wall -MMD
 EXEC = quadris
-<<<<<<< HEAD
-OBJECTS = level.o iblock.o jblock.o lblock.o oblock.o sblock.o tblock.o zblock.o grid.o controller.o main.o
-=======
-OBJECTS = level.o iblock.o jblock.o lblock.o oblock.o sblock.o tblock.o zblock.o grid.o window.o graphics.o main.o
->>>>>>> 494a59fc3ef4202da77a75f2065e507d144a5539
+
+OBJECTS = level.o iblock.o jblock.o lblock.o oblock.o sblock.o tblock.o zblock.o grid.o window.o graphics.o controller.o main.o
+
 DEPENDS = ${OBJECTS:.o=.d}
 
 ${EXEC}: ${OBJECTS}
