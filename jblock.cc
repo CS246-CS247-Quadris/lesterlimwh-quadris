@@ -1,6 +1,6 @@
 #include "jblock.h"
 
-Jblock::Jblock(bool isHeavy, Grid *g): isHeavy{isHeavy}, g{g}{
+Jblock::Jblock(bool isHeavy, Grid *g, int levelCreated): isHeavy{isHeavy}, g{g}, levelCreated{levelCreated} {
 	Coord x1 = {0,14};
 	Coord x2 = {0,13};
 	Coord x3 = {1,13};
@@ -15,11 +15,11 @@ void Jblock::left(){
 	Coord x4 = {(coords.x4.x - 1), coords.x4.y};
 
 	BlockCoord temp = {x1,x2,x3,x4}; 
-	g->update(coords, ' ');
+	g->update(coords, ' ', 0, true);
 	if (g->check(temp)) {
 		coords = temp;
 	} else{
-		g->update(coords, name);
+		g->update(coords, name, levelCreated, false);
 	}
 
 	if (isHeavy){
@@ -34,11 +34,11 @@ void Jblock::right(){
 	Coord x4 = {(coords.x4.x + 1), coords.x4.y};
 
 	BlockCoord temp = {x1,x2,x3,x4}; 
-	g->update(coords, ' ');
+	g->update(coords, ' ', 0, true);
 	if (g->check(temp)) {
 		coords = temp;
 	} else{
-		g->update(coords, name);
+		g->update(coords, name, levelCreated, false);
 	}
 
 	if (isHeavy){
@@ -53,11 +53,11 @@ void Jblock::down() {
 	Coord x4 = {coords.x4.x, (coords.x4.y - 1)};
 
 	BlockCoord temp = {x1,x2,x3,x4}; 
-	g->update(coords, ' ');
+	g->update(coords, ' ', 0, true);
 	if (g->check(temp)) {
 		coords = temp;
 	} else{
-		g->update(coords, name);
+		g->update(coords, name, levelCreated, false);
 	}
 }
 
@@ -101,12 +101,12 @@ void Jblock::counterclockwise() {
 		tempOrientation = 2;
 	}
 
-	g->update(coords, ' ');
+	g->update(coords, ' ', 0, true);
 	if (g->check(temp)) {
 		coords = temp;
 		orientation = tempOrientation;
 	} else{
-		g->update(coords, name);
+		g->update(coords, name, levelCreated, false);
 	}
 
 	if (isHeavy){
@@ -154,12 +154,12 @@ void Jblock::clockwise() {
 		tempOrientation = 0;
 	}
 
-	g->update(coords, ' ');
+	g->update(coords, ' ', 0, true);
 	if (g->check(temp)) {
 		coords = temp;
 		orientation = tempOrientation;
 	} else{
-		g->update(coords, name);
+		g->update(coords, name, levelCreated, false);
 	}
 
 	if (isHeavy){
@@ -173,7 +173,7 @@ void Jblock::drop() {
 	Coord x3 = {coords.x3.x, (coords.x3.y - 1)};
 	Coord x4 = {coords.x4.x, (coords.x4.y - 1)};
 
-	g->update(coords, ' ');
+	g->update(coords, ' ', 0, true);
 	BlockCoord temp = {x1,x2,x3,x4};
 	if (g->check(temp)){
 		while (g->check(temp)) {
@@ -185,7 +185,7 @@ void Jblock::drop() {
 			temp = {x1,x2,x3,x4};
 		}
 	} else{
-		g->update(coords, name);
+		g->update(coords, name, levelCreated, false);
 	}
 }
 

@@ -1,6 +1,6 @@
 #include "iblock.h"
 
-Iblock::Iblock(bool isHeavy, Grid *g): isHeavy{isHeavy}, g{g} {
+Iblock::Iblock(bool isHeavy, Grid *g, int levelCreated): isHeavy{isHeavy}, g{g}, levelCreated{levelCreated} {
 	Coord x1{0,15};
 	Coord x2{1,15};
 	Coord x3{2,15};
@@ -15,11 +15,11 @@ void Iblock::left() {
 	Coord x4{coords.x4.x-1,coords.x4.y};
 
 	BlockCoord temp{x1,x2,x3,x4};
-	g->update(coords, ' ');
+	g->update(coords, ' ', 0, true);
 	if (g->check(temp)) {
 		coords = temp;
 	} else{
-		g->update(coords, name);
+		g->update(coords, name, levelCreated, false);
 	}
 
 	if (isHeavy){
@@ -34,11 +34,11 @@ void Iblock::right() {
 	Coord x4{coords.x4.x+1,coords.x4.y};
 
 	BlockCoord temp{x1,x2,x3,x4};
-	g->update(coords, ' ');
+	g->update(coords, ' ', 0, true);
 	if (g->check(temp)) {
 		coords = temp;
 	} else{
-		g->update(coords, name);
+		g->update(coords, name, levelCreated, false);
 	}
 
 	if (isHeavy){
@@ -53,11 +53,11 @@ void Iblock::down() {
 	Coord x4{coords.x4.x,coords.x4.y-1};
 
 	BlockCoord temp{x1,x2,x3,x4};
-	g->update(coords, ' ');
+	g->update(coords, ' ', 0, true);
 	if (g->check(temp)) {
 		coords = temp;
 	} else{
-		g->update(coords, name);
+		g->update(coords, name, levelCreated, false);
 	}
 }
 
@@ -102,12 +102,12 @@ void Iblock::counterclockwise() {
 		tempOrientation = 0;
 	}
 
-	g->update(coords, ' ');
+	g->update(coords, ' ', 0, true);
 	if (g->check(temp)) {
 		coords = temp;
 		orientation = tempOrientation;
 	} else{
-		g->update(coords, name);
+		g->update(coords, name, levelCreated, false);
 	}
 
 	if (isHeavy){
@@ -156,12 +156,12 @@ void Iblock::clockwise() {
 		tempOrientation = 0;
 	}
 
-	g->update(coords, ' ');
+	g->update(coords, ' ', 0, true);
 	if (g->check(temp)) {
 		coords = temp;
 		orientation = tempOrientation;
 	} else{
-		g->update(coords, name);
+		g->update(coords, name, levelCreated, false);
 	}
 
 	if (isHeavy){
@@ -175,7 +175,7 @@ void Iblock::drop() {
 	Coord x3 = {coords.x3.x,coords.x3.y-1};
 	Coord x4 = {coords.x4.x,coords.x4.y-1};
 
-	g->update(coords, ' ');
+	g->update(coords, ' ', 0, true);
 	BlockCoord temp = {x1,x2,x3,x4};
 	if (g->check(temp)){
 		while (g->check(temp)) {
@@ -187,16 +187,16 @@ void Iblock::drop() {
 			temp = {x1,x2,x3,x4};
 		}
 	} else{
-		g->update(coords, name);
+		g->update(coords, name, levelCreated, false);
 	}
 }
 
 BlockCoord Iblock::getBlockCoord() { 
 	/*std::cout << "Current coordinates of this block:" << std::endl;
-	std::cout << "Row = " << coords.x1.y << " " << "Col = " << coords.x1.x << std::endl; 
+	std::cout << "Row = " << coords.x1.y << " " << "Col = " << coords.x1.x << " levelCreated = " << levelCreated << std::endl; 
 	std::cout << "Row = " << coords.x2.y << " " << "Col = " << coords.x2.x << std::endl; 
 	std::cout << "Row = " << coords.x3.y << " " << "Col = " << coords.x3.x << std::endl; 
-	std::cout << "Row = " << coords.x4.y << " " << "Col = " << coords.x4.x << std::endl;*/ 
+	std::cout << "Row = " << coords.x4.y << " " << "Col = " << coords.x4.x << std::endl;*/
 	return coords; 
 }
 

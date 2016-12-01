@@ -33,32 +33,32 @@ int main() {
       //nextBlockType = next->getBlockType();
       lvl.g->setLetter(nextBlockType);
       coords = b->getBlockCoord();
-      lvl.g->update(coords, blockType);
       view->update(coords, blockType);
+      lvl.g->update(coords, blockType, lvl.getDif(), false);
       cout << lvl.g << endl;
       while (!isGameOver) { // change true to !isGameOver
         cin >> cmd;
         if (cmd == "a"){
           b->left();
           coords = b->getBlockCoord();
-          lvl.g->update(coords, blockType);
+          lvl.g->update(coords, blockType, lvl.getDif(), false);
           view->update(coords, blockType);
         } else if (cmd == "d"){
           b->right();
           coords = b->getBlockCoord();
-          lvl.g->update(coords, blockType);
+          lvl.g->update(coords, blockType, lvl.getDif(), false);
           view->update(coords, blockType);
         } else if (cmd == "s"){
           b->down();
           coords = b->getBlockCoord();
-          lvl.g->update(coords, blockType);
+          lvl.g->update(coords, blockType, lvl.getDif(), false);
           view->update(coords, blockType);
         } else if (cmd == "x"){
           b->drop();
           coords = b->getBlockCoord();
-          lvl.g->update(coords, blockType);
+          lvl.g->update(coords, blockType, lvl.getDif(), false);
           view->update(coords, blockType);
-          lvl.g->addToCount();
+          //lvl.g->addToCount();
           lvl.g->rowClear(coords);
           delete b;
           b = lvl.makeBlock();
@@ -69,17 +69,17 @@ int main() {
           //nextBlockType = next->getBlockType();
           lvl.g->setLetter(nextBlockType);
           isGameOver = lvl.g->gameOver(coords);
-          lvl.g->update(coords, blockType);
+          lvl.g->update(coords, blockType, lvl.getDif(), false);
           view->update(coords, blockType); 
         } else if (cmd == "c"){
           b->clockwise();
           coords = b->getBlockCoord();
-          lvl.g->update(coords, blockType);
+          lvl.g->update(coords, blockType, lvl.getDif(), false);
           view->update(coords, blockType);
         } else if (cmd == "z"){
           b->counterclockwise();
           coords = b->getBlockCoord();
-          lvl.g->update(coords, blockType);
+          lvl.g->update(coords, blockType, lvl.getDif(), false);
           view->update(coords, blockType);
         }
         cout << lvl.g << endl;
@@ -94,7 +94,7 @@ int main() {
       nextBlockType = next->getBlockType();
       lvl.g->setLetter(nextBlockType);
       coords = b->getBlockCoord();
-      lvl.g->update(coords, blockType);
+      lvl.g->update(coords, blockType, lvl.getDif(), false);
       view->update(coords, blockType);
       cout << lvl.g << endl;
       while (!isGameOver) {
@@ -103,27 +103,28 @@ int main() {
           view->update(coords, ' ');
           b->left();
           coords = b->getBlockCoord();
-          lvl.g->update(coords, blockType);
+          lvl.g->update(coords, blockType, lvl.getDif(), false);
           view->update(coords, blockType);
         } else if (cmd == "d"){
           view->update(coords, ' ');
           b->right();
           coords = b->getBlockCoord();
-          lvl.g->update(coords, blockType);
+          lvl.g->update(coords, blockType, lvl.getDif(), false);
           view->update(coords, blockType);
         } else if (cmd == "s"){
           view->update(coords, ' ');
           b->down();
           coords = b->getBlockCoord();
-          lvl.g->update(coords, blockType);
+          lvl.g->update(coords, blockType, lvl.getDif(), false);
           view->update(coords, blockType);
         } else if (cmd == "x"){
           view->update(coords, ' ');
           b->drop();
           coords = b->getBlockCoord();
-          lvl.g->update(coords, blockType);
+          lvl.g->update(coords, blockType, lvl.getDif(), false);
           view->update(coords, blockType);
           lvl.g->rowClear(coords);
+          //lvl.g->addToCount();
           delete b;
           b = next;
           next = lvl.makeBlock();
@@ -132,19 +133,19 @@ int main() {
           nextBlockType = next->getBlockType();
           lvl.g->setLetter(nextBlockType);
           isGameOver = lvl.g->gameOver(coords);
-          lvl.g->update(coords, blockType);
-          view->update(coords, blockType); 
+          lvl.g->update(coords, blockType, lvl.getDif(), false); 
+          view->update(coords, blockType);
         } else if (cmd == "c"){
           view->update(coords, ' ');
           b->clockwise();
           coords = b->getBlockCoord();
-          lvl.g->update(coords, blockType);
+          lvl.g->update(coords, blockType, lvl.getDif(), false);
           view->update(coords, blockType);
         } else if (cmd == "z"){
           view->update(coords, ' ');
           b->counterclockwise();
           coords = b->getBlockCoord();
-          lvl.g->update(coords, blockType);
+          lvl.g->update(coords, blockType, lvl.getDif(), false);
           view->update(coords, blockType);
         }
         cout << lvl.g << endl;

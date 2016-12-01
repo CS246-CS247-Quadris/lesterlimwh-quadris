@@ -1,6 +1,6 @@
 #include "oblock.h"
 
-Oblock::Oblock(bool isHeavy, Grid *g): isHeavy{isHeavy}, g{g}{
+Oblock::Oblock(bool isHeavy, Grid *g, int levelCreated): isHeavy{isHeavy}, g{g}, levelCreated{levelCreated} {
 	Coord x1 = {0,14};
 	Coord x2 = {1,14};
 	Coord x3 = {0,13};
@@ -15,11 +15,11 @@ void Oblock::left(){
 	Coord x4 = {(coords.x4.x - 1), coords.x4.y};
 
 	BlockCoord temp = {x1,x2,x3,x4}; 
-	g->update(coords, ' ');
+	g->update(coords, ' ', 0, true);
 	if (g->check(temp)) {
 		coords = temp;
 	} else{
-		g->update(coords, name);
+		g->update(coords, name, levelCreated, false);
 	}
 
 	if (isHeavy){
@@ -34,11 +34,11 @@ void Oblock::right(){
 	Coord x4 = {(coords.x4.x + 1), coords.x4.y};
 
 	BlockCoord temp = {x1,x2,x3,x4}; 
-	g->update(coords, ' ');
+	g->update(coords, ' ', 0, true);
 	if (g->check(temp)) {
 		coords = temp;
 	} else{
-		g->update(coords, name);
+		g->update(coords, name, levelCreated, false);
 	}
 
 	if (isHeavy){
@@ -53,11 +53,11 @@ void Oblock::down() {
 	Coord x4 = {coords.x4.x, (coords.x4.y - 1)};
 	
 	BlockCoord temp = {x1,x2,x3,x4}; 
-	g->update(coords, ' ');
+	g->update(coords, ' ', 0, true);
 	if (g->check(temp)) {
 		coords = temp;
 	} else{
-		g->update(coords, name);
+		g->update(coords, name, levelCreated, false);
 	}
 }
 
@@ -79,7 +79,7 @@ void Oblock::drop() {
 	Coord x3 = {coords.x3.x, (coords.x3.y - 1)};
 	Coord x4 = {coords.x4.x, (coords.x4.y - 1)};
 
-	g->update(coords, ' ');
+	g->update(coords, ' ', 0, true);
 	BlockCoord temp = {x1,x2,x3,x4};
 	if (g->check(temp)){
 		while (g->check(temp)) {
@@ -91,7 +91,7 @@ void Oblock::drop() {
 			temp = {x1,x2,x3,x4};
 		}
 	} else{
-		g->update(coords, name);
+		g->update(coords, name, levelCreated, false);
 	}
 }
 
