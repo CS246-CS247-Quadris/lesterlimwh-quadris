@@ -9,10 +9,11 @@ class Iblock:public Block {
 	bool isHeavy;
 	Grid *g;
 	int orientation = 0;
+	int levelCreated; //Needed to pass down to blockcells
 	const char name = 'I';
 
 public:
-	Iblock(bool isHeavy, Grid *g);
+	Iblock(bool isHeavy, Grid *g, int levelCreated);
 	void left() override;
 	void right() override;
 	void down() override;

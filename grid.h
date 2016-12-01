@@ -18,7 +18,7 @@ class Grid{
 public:
 	Grid(int dif, int height = 18, int width = 11);
 	~Grid();
-	void update(const BlockCoord &b, const char c);
+	void update(const BlockCoord &b, const char c, int level, bool empty);
 	bool check(const BlockCoord &b);
 	bool gameOver(const BlockCoord &b);
 	std::vector<int> rowHelper(const BlockCoord &b);
@@ -28,6 +28,7 @@ public:
 	void restart();
 	void addToCount();
 	void addToScore(); 
+	//int getScore() const;
 	std::string nextBlock() const; // Called when Drop is Called
 	friend std::ostream &operator<<(std::ostream &out, const Grid *g);
 };

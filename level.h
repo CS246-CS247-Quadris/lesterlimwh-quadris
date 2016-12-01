@@ -32,5 +32,6 @@ class Level{
 	void readInFile();
 	void levelUp();
 	void levelDown();
+	int getDif() const;
 	Block *makeBlock();
 }; 

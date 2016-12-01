@@ -1,6 +1,6 @@
 #include "tblock.h"
 
-Tblock::Tblock(bool isHeavy, Grid *g): isHeavy{isHeavy}, g{g} {
+Tblock::Tblock(bool isHeavy, Grid *g, int levelCreated): isHeavy{isHeavy}, g{g}, levelCreated{levelCreated} {
 	Coord x1{0,16};
 	Coord x2{1,16};
 	Coord x3{2,16};
@@ -15,11 +15,12 @@ void Tblock::left() {
 	Coord x4{coords.x4.x-1,coords.x4.y};
 
 	BlockCoord temp{x1,x2,x3,x4};
-	g->update(coords, ' ');
+	g->update(coords, ' ', 0, true);
 	if (g->check(temp)) {
+
 		coords = temp;
 	} else{
-		g->update(coords, name);
+		g->update(coords, name, levelCreated, false);
 	}
 }
 
@@ -30,11 +31,11 @@ void Tblock::right() {
 	Coord x4{coords.x4.x+1,coords.x4.y};
 
 	BlockCoord temp{x1,x2,x3,x4};
-	g->update(coords, ' ');
+	g->update(coords, ' ', 0, true);
 	if (g->check(temp)) {
 		coords = temp;
 	} else{
-		g->update(coords, name);
+		g->update(coords, name, levelCreated, false);
 	}
 }
 
@@ -45,11 +46,11 @@ void Tblock::down() {
 	Coord x4{coords.x4.x,coords.x4.y-1};
 
 	BlockCoord temp{x1,x2,x3,x4};
-	g->update(coords, ' ');
+	g->update(coords, ' ', 0, true);
 	if (g->check(temp)) {
 		coords = temp;
 	} else{
-		g->update(coords, name);
+		g->update(coords, name, levelCreated, false);
 	}
 }
 
@@ -94,12 +95,12 @@ void Tblock::counterclockwise() {
 		tempOrientation = 0;
 	}
 
-	g->update(coords, ' ');
+	g->update(coords, ' ', 0, true);
 	if (g->check(temp)) {
 		coords = temp;
 		orientation = tempOrientation;
 	} else{
-		g->update(coords, name);
+		g->update(coords, name, levelCreated, false);
 	}
 
 	if (isHeavy){
@@ -150,12 +151,12 @@ void Tblock::clockwise() {
 		tempOrientation = 0;
 	}
 
-	g->update(coords, ' ');
+	g->update(coords, ' ', 0, true);
 	if (g->check(temp)) {
 		coords = temp;
 		orientation = tempOrientation;
 	} else{
-		g->update(coords, name);
+		g->update(coords, name, levelCreated, false);
 	}
 
 	if (isHeavy){
@@ -170,7 +171,7 @@ void Tblock::drop() {
 	Coord x3 = {coords.x3.x,coords.x3.y-1};
 	Coord x4 = {coords.x4.x,coords.x4.y-1};
 
-	g->update(coords, ' ');
+	g->update(coords, ' ', 0, true);
 	BlockCoord temp = {x1,x2,x3,x4};
 	if (g->check(temp)){
 		while (g->check(temp)) {
@@ -182,7 +183,7 @@ void Tblock::drop() {
 			temp = {x1,x2,x3,x4};
 		}
 	} else{
-		g->update(coords, name);
+		g->update(coords, name, levelCreated, false);
 	}
 }
 
