@@ -15,7 +15,7 @@ class Block;
 class Level{
 	static int count;
 	int dif;
-	//Grid *g;
+	Grid *g;
 	std::ifstream f;
         std::string file;
 	std::vector<std::string> seqInput;
@@ -25,7 +25,6 @@ class Level{
 	Block *diff3Block();
 	Block *diff4Block();
 	public:
-	Grid *g; // temporarily make g public for main to access (remove after controller has been created)	
 	Level(int n);
 	Level(int n, std::string &file);
 	~Level();
@@ -34,4 +33,5 @@ class Level{
 	void levelDown();
 	int getDif() const;
 	Block *makeBlock();
+	Grid * getGrid();
 }; 

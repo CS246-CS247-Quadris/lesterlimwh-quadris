@@ -101,7 +101,6 @@ Block *Level::J(){
 	else { return new Jblock(false, g); }
 }*/
 
+Grid * Level::getGrid(){ return g; }
+
 int Level::count = 0;
-
-// Pranav can you see this
-
