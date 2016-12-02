@@ -113,6 +113,9 @@ vector<int> Grid::rowClear(const BlockCoord &b){
 			}
 		}
 		if (isFull){
+			for (int z = 0; z < width; ++z){
+				scoreRowCheck.emplace_back(display[rows[i]][z]);
+			}
 			deleted.emplace_back(rows[i]);
 			display.erase(display.begin() + rows[i]);
 			// ADD SCORE HERE
@@ -125,7 +128,6 @@ vector<int> Grid::rowClear(const BlockCoord &b){
 		}
 		isFull = true;
 	}
-	addToScore();
 	return deleted;
 }
 bool Grid::gameOver(const BlockCoord &b){
