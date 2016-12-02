@@ -19,7 +19,7 @@ int Grid::getScore() const { return score; }
 
 void Grid::addToCount(){ ++blockNum; } // WHEN DROP IS CALLED, AFTER UPDATE IS CALLED, CALL THIS FUNCTION TO INCREASE COUNT
 
-bool scoreHelper(int n) { //Returns true if given int is within deletedBlocks vec
+bool Grid::scoreHelper(int n) { //Returns true if given int is within deletedBlocks vec
 	int len = deletedBlocks.size();
 	for (int i = 0; i < len; i++) {
 		if (n == i) {
