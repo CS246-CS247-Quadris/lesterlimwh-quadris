@@ -15,7 +15,7 @@ void Grid::setLetter(const char letter){
 	blockLetter = letter;
 }
 
-int Grid::getScore(){ return score; }
+int Grid::getScore() const { return score; }
 
 void Grid::addToCount(){ ++blockNum; } // WHEN DROP IS CALLED, AFTER UPDATE IS CALLED, CALL THIS FUNCTION TO INCREASE COUNT
 
@@ -99,13 +99,9 @@ vector<int> Grid::rowHelper(/*int &row1, int &row2, int &row3, int &row4,*/ cons
   	return rows;
 }
 
-<<<<<<< HEAD
 vector<int> Grid::rowClear(const BlockCoord &b){
 	vector<int> deleted;
-=======
-void Grid::rowClear(const BlockCoord &b){\
 	scoreRowCheck.clear();
->>>>>>> e2a5af4fbaf92a3700b5589fc65c2703102d3eb2
 	vector<int> rows = rowHelper(b);
 	int size = rows.size();
 	bool isFull = true;
@@ -200,7 +196,7 @@ std::ostream &operator<<(std::ostream &out , const Grid *g){
 	out << endl;
 	for (int i = g->height - 1; i >= 0; --i){
 		for (int j = 0; j < g->width; ++j){
-			out << g->display[i][j].count << " "; // MAY ADD IF STATEMENTS TO REMOVE " " FOR LAST ENTRY IN ROW
+			out << g->display[i][j].letter << " "; // MAY ADD IF STATEMENTS TO REMOVE " " FOR LAST ENTRY IN ROW
 			}
 		out << endl;
 		}
