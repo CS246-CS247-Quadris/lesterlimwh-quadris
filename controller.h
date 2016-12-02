@@ -6,6 +6,8 @@
 #include "level.h"
 #include "window.h"
 #include "graphics.h"
+#include <chrono>
+#include <thread>
 
 using std::cin;
 using std::cout;

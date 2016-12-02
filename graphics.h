@@ -13,4 +13,5 @@ public:
 	Graphics(Xwindow &window, int rows, int columns);
 	~Graphics();
 	void update(const BlockCoord &b, const char blockType);
+	void gameOver(int score);
 };

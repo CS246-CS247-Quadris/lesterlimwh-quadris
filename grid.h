@@ -28,6 +28,7 @@ public:
 	void restart();
 	void addToCount();
 	void addToScore(); 
+	int getScore();
 	//int getScore() const;
 	std::string nextBlock() const; // Called when Drop is Called
 	friend std::ostream &operator<<(std::ostream &out, const Grid *g);

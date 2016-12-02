@@ -28,7 +28,7 @@ void Controller::levelZeroGame(){
 	view->update(coords, blockType);
 	cout << lvl.getGrid() << endl;
 
-	while (!isGameOver){
+	while (true){
 		cin >> cmd;
 		if (cmd == "a"){
 			view->update(coords, ' ');
@@ -75,10 +75,16 @@ void Controller::levelZeroGame(){
 			nextBlockType = next->getBlockType();
 			lvl.getGrid()->setLetter(nextBlockType);
 			isGameOver = lvl.getGrid()->gameOver(coords);
+			if (isGameOver) { break; }
 			lvl.getGrid()->update(coords, blockType, lvl.getDif(), false); 
 			view->update(coords, blockType);
 		}
 		cout << lvl.getGrid() << endl;
+		
+	}
+	if (isGameOver){
+		view->gameOver(lvl.getGrid()->getScore());
+		std::this_thread::sleep_for(std::chrono::milliseconds(5000));
 	}
 
 	delete b;
@@ -106,7 +112,7 @@ void Controller::regularGame(){
 	view->update(coords, blockType);
 	cout << lvl.getGrid() << endl;
 
-	while (!isGameOver){
+	while (true){
 		cin >> cmd;
 		if (cmd == "a"){
 			view->update(coords, ' ');
@@ -153,12 +159,15 @@ void Controller::regularGame(){
 			nextBlockType = next->getBlockType();
 			lvl.getGrid()->setLetter(nextBlockType);
 			isGameOver = lvl.getGrid()->gameOver(coords);
+			if (isGameOver){ break; }
 			lvl.getGrid()->update(coords, blockType, lvl.getDif(), false); 
 			view->update(coords, blockType);
 		}
 		cout << lvl.getGrid() << endl;
+		
 	}
-
+    view->gameOver(lvl.getGrid()->getScore());
+    std::this_thread::sleep_for(std::chrono::milliseconds(5000));
 	delete b;
 	delete next;
 	delete window;

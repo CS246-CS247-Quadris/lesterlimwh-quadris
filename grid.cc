@@ -13,6 +13,8 @@ void Grid::setLetter(const char letter){
 	blockLetter = letter;
 }
 
+int Grid::getScore(){ return score; }
+
 void Grid::addToCount(){ ++blockNum; } // WHEN DROP IS CALLED, AFTER UPDATE IS CALLED, CALL THIS FUNCTION TO INCREASE COUNT
 
 void Grid::addToScore() {
@@ -105,7 +107,7 @@ void Grid::rowClear(const BlockCoord &b){
 	addToScore();
 }
 bool Grid::gameOver(const BlockCoord &b){
-	return false;
+	return !(check(b));
 }
 
 string Grid::nextBlock() const{

@@ -1,4 +1,6 @@
 #include "graphics.h"
+#include <string>
+#include <sstream>
 Graphics::Graphics(Xwindow &window, int rows, int columns): window{window}, rows{rows}, columns{columns}{
 	width = 500/rows;
 	window.drawLine(100, 150, 100, 650);
@@ -24,3 +26,15 @@ void Graphics::update(const BlockCoord &b, const char blockType){
 	window.fillRectangle(100 + b.x3.x*width, 150 + 13 + (17 - b.x3.y)*width, width, width, colour);
 	window.fillRectangle(100 + b.x4.x*width, 150 + 13 + (17 - b.x4.y)*width, width, width, colour);
 }
+
+void Graphics::gameOver(int score){
+	std::string scoreView;
+	std::stringstream ss{scoreView};
+	ss << "Final score is ";
+	ss << score;
+	//scoreView << score;
+	window.fillRectangle(0, 0, 800, 800, Xwindow::Black);
+	window.drawString(300,250, "You reached the top :(", Xwindow::White);
+	window.drawString(300, 300, ss.str(), Xwindow::White );
+}
+
