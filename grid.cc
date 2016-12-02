@@ -19,7 +19,7 @@ int Grid::getScore() const { return score; }
 
 void Grid::addToCount(){ ++blockNum; } // WHEN DROP IS CALLED, AFTER UPDATE IS CALLED, CALL THIS FUNCTION TO INCREASE COUNT
 
-bool scoreHelper(int n) { //Returns true if given int is within deletedBlocks vec
+bool Grid::scoreHelper(int n) { //Returns true if given int is within deletedBlocks vec
 	int len = deletedBlocks.size();
 	for (int i = 0; i < len; i++) {
 		if (n == i) {
@@ -113,6 +113,9 @@ vector<int> Grid::rowClear(const BlockCoord &b){
 			}
 		}
 		if (isFull){
+			for (int z = 0; z < width; ++z){
+				scoreRowCheck.emplace_back(display[rows[i]][z]);
+			}
 			deleted.emplace_back(rows[i]);
 			display.erase(display.begin() + rows[i]);
 			// ADD SCORE HERE
@@ -125,7 +128,6 @@ vector<int> Grid::rowClear(const BlockCoord &b){
 		}
 		isFull = true;
 	}
-	addToScore();
 	return deleted;
 }
 bool Grid::gameOver(const BlockCoord &b){
