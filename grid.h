@@ -11,8 +11,9 @@ class Grid{
 	int blockNum;
 	int dif; 
 	char blockLetter;
-	//int rowsCleared = 0;
 	int score = 0;
+	//std::vector<int> deletedBlocks;
+	std::vector<BlockCell> scoreRowCheck;
 	std::vector<std::vector <BlockCell>> display;
 
 public:
@@ -27,8 +28,8 @@ public:
 	void hint();
 	void restart();
 	void addToCount();
+	//void scoreHelper();
 	void addToScore(); 
-	//int getScore() const;
 	std::string nextBlock() const; // Called when Drop is Called
 	friend std::ostream &operator<<(std::ostream &out, const Grid *g);
 };
