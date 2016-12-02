@@ -3,6 +3,8 @@
 #include <vector>
 #include <ctime>
 
+Level::Level(){}
+
 Level::Level(int n): dif{n}{ g = new Grid(dif); } // Constructor for Level 1 -4
 
 Level::Level(int n, std::string &file): dif{n}, file{file}{ 

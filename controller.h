@@ -21,8 +21,11 @@ public:
 	Controller(int levelNum);
 	Controller(int levelNum, string file);
 	void startGame();
+	void createGame(Level lvl);
 	void regularGame();
 	void levelZeroGame();
+	void levelUp();
+	void levelDown();
 };
 
 #endif
