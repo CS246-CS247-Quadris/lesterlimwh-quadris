@@ -82,7 +82,8 @@ vector<int> Grid::rowHelper(/*int &row1, int &row2, int &row3, int &row4,*/ cons
   	return rows;
 }
 
-void Grid::rowClear(const BlockCoord &b){
+vector<int> Grid::rowClear(const BlockCoord &b){
+	vector<int> deleted;
 	vector<int> rows = rowHelper(b);
 	int size = rows.size();
 	bool isFull = true;
@@ -94,6 +95,7 @@ void Grid::rowClear(const BlockCoord &b){
 			}
 		}
 		if (isFull){
+			deleted.emplace_back(rows[i]);
 			display.erase(display.begin() + rows[i]);
 			// ADD SCORE HERE
 			score += (dif + 1) * (dif + 1); //Added when row is cleared
@@ -105,6 +107,7 @@ void Grid::rowClear(const BlockCoord &b){
 		isFull = true;
 	}
 	addToScore();
+	return deleted;
 }
 bool Grid::gameOver(const BlockCoord &b){
 	return !(check(b));

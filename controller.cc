@@ -19,15 +19,16 @@ void Controller::levelZeroGame(){
 	lvl.readInFile();
     bool isGameOver = false;
 	Block * b = lvl.makeBlock();
-	Block * next = lvl.makeBlock();
+	//Block * next = lvl.makeBlock();
 	char blockType = b->getBlockType();
-	char nextBlockType = next->getBlockType();
-	lvl.getGrid()->setLetter(nextBlockType);
+	//char nextBlockType = next->getBlockType();
+	//lvl.getGrid()->setLetter(nextBlockType);
 	BlockCoord coords = b->getBlockCoord();
 	lvl.getGrid()->update(coords, blockType, lvl.getDif(), false);
 	view->update(coords, blockType);
 	cout << lvl.getGrid() << endl;
-
+	view->print();
+	std::vector<int> delRows;
 	while (true){
 		cin >> cmd;
 		if (cmd == "a"){
@@ -66,20 +67,24 @@ void Controller::levelZeroGame(){
 			coords = b->getBlockCoord();
 			lvl.getGrid()->update(coords, blockType, lvl.getDif(), false);
 			view->update(coords, blockType);
-			lvl.getGrid()->rowClear(coords);
+			delRows = lvl.getGrid()->rowClear(coords);
+			view->rowClear(delRows);
+			//view->update(coords, blockType);
 			delete b;
-			b = next;
-			next = lvl.makeBlock();
+			//b = next;
+			b = lvl.makeBlock();
+			//next = lvl.makeBlock();
 			coords = b->getBlockCoord();
 			blockType = b->getBlockType();
-			nextBlockType = next->getBlockType();
-			lvl.getGrid()->setLetter(nextBlockType);
+			//nextBlockType = next->getBlockType();
+			//lvl.getGrid()->setLetter(nextBlockType);
 			isGameOver = lvl.getGrid()->gameOver(coords);
-			if (isGameOver) { break; }
+			if (isGameOver){ break; }
 			lvl.getGrid()->update(coords, blockType, lvl.getDif(), false); 
 			view->update(coords, blockType);
 		}
 		cout << lvl.getGrid() << endl;
+		view->print();
 		
 	}
 	if (isGameOver){
@@ -88,7 +93,7 @@ void Controller::levelZeroGame(){
 	}
 
 	delete b;
-	delete next;
+	//delete next;
 	delete window;
 	delete view;
 }
@@ -111,7 +116,9 @@ void Controller::regularGame(){
 	lvl.getGrid()->update(coords, blockType, lvl.getDif(), false);
 	view->update(coords, blockType);
 	cout << lvl.getGrid() << endl;
-
+	cout << coords.x1.x << coords.x1.y << endl;
+	view->print();
+	std::vector<int> delRows;
 	while (true){
 		cin >> cmd;
 		if (cmd == "a"){
@@ -149,10 +156,13 @@ void Controller::regularGame(){
 			b->drop();
 			coords = b->getBlockCoord();
 			lvl.getGrid()->update(coords, blockType, lvl.getDif(), false);
-			lvl.getGrid()->rowClear(coords);
 			view->update(coords, blockType);
+			delRows = lvl.getGrid()->rowClear(coords);
+			view->rowClear(delRows);
+			//view->update(coords, blockType);
 			delete b;
 			b = next;
+			//b = lvl.makeBlock();
 			next = lvl.makeBlock();
 			coords = b->getBlockCoord();
 			blockType = b->getBlockType();
@@ -164,6 +174,7 @@ void Controller::regularGame(){
 			view->update(coords, blockType);
 		}
 		cout << lvl.getGrid() << endl;
+		view->print();
 		
 	}
     view->gameOver(lvl.getGrid()->getScore());
