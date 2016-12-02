@@ -19,7 +19,7 @@ int Grid::getScore(){ return score; }
 
 void Grid::addToCount(){ ++blockNum; } // WHEN DROP IS CALLED, AFTER UPDATE IS CALLED, CALL THIS FUNCTION TO INCREASE COUNT
 
-bool scoreHelper(int n) { //Returns true if given int is within deletedBlocks vec
+bool Grid::scoreHelper(int n) { //Returns true if given int is within deletedBlocks vec
 	int len = deletedBlocks.size();
 	for (int i = 0; i < len; i++) {
 		if (n == i) {
@@ -195,7 +195,7 @@ std::ostream &operator<<(std::ostream &out , const Grid *g){
 	out << endl;
 	for (int i = g->height - 1; i >= 0; --i){
 		for (int j = 0; j < g->width; ++j){
-			out << g->display[i][j].count << " "; // MAY ADD IF STATEMENTS TO REMOVE " " FOR LAST ENTRY IN ROW
+			out << g->display[i][j].letter << " "; // MAY ADD IF STATEMENTS TO REMOVE " " FOR LAST ENTRY IN ROW
 			}
 		out << endl;
 		}

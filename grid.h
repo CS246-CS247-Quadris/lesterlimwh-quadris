@@ -28,8 +28,9 @@ public:
 	void hint();
 	void restart();
 	void addToCount();
-	//void scoreHelper();
-	//int getScore() const;
+	bool scoreHelper(int n);
+	void addToScore();
+	int getScore();
 	std::string nextBlock() const; // Called when Drop is Called
 	friend std::ostream &operator<<(std::ostream &out, const Grid *g);
 };
