@@ -23,7 +23,7 @@ public:
 	bool check(const BlockCoord &b);
 	bool gameOver(const BlockCoord &b);
 	std::vector<int> rowHelper(const BlockCoord &b);
-	void rowClear(const BlockCoord &b);
+	std::vector<int> rowClear(const BlockCoord &b);
 	void setLetter(const char letter);
 	void hint();
 	void restart();
