@@ -41,7 +41,6 @@ Block *Level::diff0Block(){
 }
 
 Block *Level::diff1Block(){
-	srand(time(NULL)); // change seed state
 	int y = rand() % 12;
 	if (y == 0 || y == 1){ return new Iblock(false, g, 1); }
 	else if (y == 2 || y == 3){ return new Jblock(false, g, 1); }
@@ -54,7 +53,6 @@ Block *Level::diff1Block(){
 }
 
 Block *Level::diff2Block(){
-	srand(time(NULL)); // change seed state
 	int y = rand() % 7;
 	if (y == 0){ return new Iblock(false, g, 2); }
 	else if (y == 1) { return new Jblock(false, g, 2); }
@@ -66,7 +64,6 @@ Block *Level::diff2Block(){
 }
 
 Block *Level::diff3Block(){
-	srand(time(NULL)); // change seed state
 	int y = rand() % 9;
 	if (y == 0){ return new Iblock(true, g, 3); }
 	else if (y == 1){ return new Jblock(true, g, 3); }
@@ -78,12 +75,27 @@ Block *Level::diff3Block(){
 }
 
 Block *Level::diff4Block(){
-	return diff3Block();
+	//return diff3Block();
+	srand(time(NULL)); // change seed state
+	int y = rand() % 9;
+	if (y == 0){ return new Iblock(true, g, 4); }
+	else if (y == 1){ return new Jblock(true, g, 4); }
+	else if (y == 2){ return new Lblock(true, g, 4); }
+	else if (y == 4){ return new Oblock(true, g, 4); }
+	else if (y == 4){ return new Tblock(true, g, 4); }
+	else if (y == 5 || y == 6){ return new Sblock(true, g, 4); }
+	else { return new Zblock(true, g, 4); }
 } // Same as diff3block except draws the *block. 
  
 Block *Level::makeBlock(){
-	srand(2); // THIS IS PART OF THE COMMAND LINE ARGUMENTS. THIS WILL BE CHANGED
+<<<<<<< HEAD
+	srand(time(NULL)); // THIS IS PART OF THE COMMAND LINE ARGUMENTS. THIS WILL BE CHANGED
+=======
+	srand(time(NULL));
+>>>>>>> c517524e31f6c6af5b772f8d02956c30db6d35fb
 	g->addToCount();
+	g->addTolvl4Count();
+	g->dropStarBlock();
 	if (dif == 0){ return diff0Block(); }
 	else if (dif == 1){ return diff1Block(); }
 	else if (dif == 2){ return diff2Block(); }

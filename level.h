@@ -30,7 +30,7 @@ class Level{
 	~Level();
 	void readInFile();
 	void levelUp();
-	void levelDown();
+	void levelDown();	
 	int getDif() const;
 	Block *makeBlock();
 	Grid * getGrid();
