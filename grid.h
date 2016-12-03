@@ -38,6 +38,7 @@ public:
 	void removeBlock(BlockCoord &b, int level);
 	std::string nextBlock() const; // Called when Drop is Called
 	friend std::ostream &operator<<(std::ostream &out, const Grid *g);
+	friend class Graphics;
 };
 
 #endif

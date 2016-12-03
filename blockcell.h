@@ -7,6 +7,7 @@ struct BlockCell{
 	int count;
 	int levelCreated;
 	char letter;
+	bool isChanged = true;
 };
 
 #endif
