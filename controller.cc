@@ -129,18 +129,18 @@ void Controller::startGame(){
 	string cmd;
     int rows = 18;
 	int columns = 11;
-    Xwindow *window = new Xwindow();
-    Graphics *view = new Graphics(*window, rows, columns);
-
     bool isGameOver = false;
 	Block * b = lvl->makeBlock();
 	Block * next = lvl->makeBlock();
 	char blockType = b->getBlockType();
 	char nextBlockType = next->getBlockType();
+
 	lvl->getGrid()->setLetter(nextBlockType);
+	Xwindow *window = new Xwindow();
+    Graphics *view = new Graphics(*window, rows, columns, lvl->getGrid());
 	BlockCoord coords = b->getBlockCoord();
 	lvl->getGrid()->update(coords, blockType, lvl->getDif(), false);
-	view->update(coords, blockType);
+	//view->update(coords, blockType);
 	cout << lvl->getGrid() << endl;
 	cout << coords.x1.x << coords.x1.y << endl;
 	view->print(lvl->getGrid()->getScore(), lvl->getDif());
@@ -149,44 +149,44 @@ void Controller::startGame(){
 	while (true){
 		cin >> cmd;
 		if (cmd == "a"){
-			view->update(coords, ' ');
+			//view->update(coords, ' ');
 			b->left();
 			coords = b->getBlockCoord();
 			lvl->getGrid()->update(coords, blockType, lvl->getDif(), false);
-			view->update(coords, blockType);
+			//view->update(coords, blockType);
 		} else if (cmd == "d"){
-			view->update(coords, ' ');
+			//view->update(coords, ' ');
 			b->right();
 			coords = b->getBlockCoord();
 			lvl->getGrid()->update(coords, blockType, lvl->getDif(), false);
-			view->update(coords, blockType);
+			//view->update(coords, blockType);
 		} else if (cmd == "s"){
-			view->update(coords, ' ');
+			//view->update(coords, ' ');
 			b->down();
 			coords = b->getBlockCoord();
 			lvl->getGrid()->update(coords, blockType, lvl->getDif(), false);
-			view->update(coords, blockType);
+			//view->update(coords, blockType);
 		} else if (cmd == "c"){
-			view->update(coords, ' ');
+			//view->update(coords, ' ');
 			b->clockwise();
 			coords = b->getBlockCoord();
 			lvl->getGrid()->update(coords, blockType, lvl->getDif(), false);
-			view->update(coords, blockType);
+			//view->update(coords, blockType);
 		} else if (cmd == "z"){
-			view->update(coords, ' ');
+			//view->update(coords, ' ');
 			b->counterclockwise();
 			coords = b->getBlockCoord();
 			lvl->getGrid()->update(coords, blockType, lvl->getDif(), false);
-			view->update(coords, blockType);
+			//view->update(coords, blockType);
 		} else if (cmd == "x"){
-			view->update(coords, ' ');
+			//view->update(coords, ' ');
 			b->drop();
 			coords = b->getBlockCoord();
 			lvl->getGrid()->addTolvl4Count();
 			lvl->getGrid()->update(coords, blockType, lvl->getDif(), false);
-			view->update(coords, blockType);
+			//view->update(coords, blockType);
 			delRows = lvl->getGrid()->rowClear(coords);
-			view->rowClear(delRows);
+			//view->rowClear(delRows);
 			delete b;
 			b = next;
 			next = lvl->makeBlock();
@@ -197,7 +197,7 @@ void Controller::startGame(){
 			isGameOver = lvl->getGrid()->gameOver(coords);
 			if (isGameOver){ break; }
 			lvl->getGrid()->update(coords, blockType, lvl->getDif(), false); 
-			view->update(coords, blockType);
+			//view->update(coords, blockType);
 		} else if (cmd == "levelup"){
 			lvl->levelUp();
 			view->levelChanged();

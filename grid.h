@@ -37,6 +37,7 @@ public:
 	void dropStarBlock();
 	std::string nextBlock() const; // Called when Drop is Called
 	friend std::ostream &operator<<(std::ostream &out, const Grid *g);
+	friend class Graphics;
 };
 
 #endif

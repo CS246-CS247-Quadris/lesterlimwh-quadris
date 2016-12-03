@@ -66,15 +66,15 @@ void Grid::addToScore() {
 void Grid::update(const BlockCoord &b, const char c, int level, bool empty ){ //added empty to know if resetting block
 	// CAN BE CHANGED IF WE WANT TO IMPLEMENT BLOCKS OF DIFFERENT SIZES
 	if (empty) {
-		display[b.x1.y][b.x1.x] = {0,level,' '};
-	    display[b.x2.y][b.x2.x] = {0,level,' '};
-	    display[b.x3.y][b.x3.x] = {0,level,' '};
-	    display[b.x4.y][b.x4.x] = {0,level,' '};
+		display[b.x1.y][b.x1.x] = {0,level,' ', true};
+	    display[b.x2.y][b.x2.x] = {0,level,' ', true};
+	    display[b.x3.y][b.x3.x] = {0,level,' ', true};
+	    display[b.x4.y][b.x4.x] = {0,level,' ', true};
 	} else {
-	    display[b.x1.y][b.x1.x] = {blockNum,level,c};
-	    display[b.x2.y][b.x2.x] = {blockNum,level,c};
-	    display[b.x3.y][b.x3.x] = {blockNum,level,c};
-	    display[b.x4.y][b.x4.x] = {blockNum,level,c};
+	    display[b.x1.y][b.x1.x] = {blockNum,level,c, true};
+	    display[b.x2.y][b.x2.x] = {blockNum,level,c, true};
+	    display[b.x3.y][b.x3.x] = {blockNum,level,c, true};
+	    display[b.x4.y][b.x4.x] = {blockNum,level,c, true};
 	}
 }
 
@@ -133,6 +133,11 @@ vector<int> Grid::rowClear(const BlockCoord &b){
 			//	rows[k] = rows[k] - 1;
 			//}
 			//addToScore();
+			for (int j = rows[i]; j < height; ++j){
+				for (int k = 0; k < width; ++k){
+					display[j][k].isChanged = true;
+				}
+			}
 		}
 		isFull = true;
 	}
@@ -145,8 +150,10 @@ void Grid::dropStarBlock() {//COUNT IS MESSED UP BUT IT KINDA WORKS
 		for (int i = height - 1; i >= 0; --i) {
 			if (i == 0 && display[i][starCol].letter == ' ') {
 				display[i][starCol].letter = '*';
+				display[i][starCol].isChanged = true;
 			} else if (i != 0 && display[i-1][starCol].letter != ' ') {
 				display[i][starCol].letter = '*';
+				display[i][starCol].isChanged = true;
 				break;
 			}
 		}
