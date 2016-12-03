@@ -91,7 +91,6 @@ Block *Level::diff4Block(){
 Block *Level::makeBlock(){
 	srand(time(NULL));
 	g->addToCount();
-	g->addTolvl4Count();
 	if (dif == 0){ return diff0Block(); }
 	else if (dif == 1){ return diff1Block(); }
 	else if (dif == 2){ return diff2Block(); }

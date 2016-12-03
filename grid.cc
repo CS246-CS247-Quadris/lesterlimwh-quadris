@@ -106,6 +106,7 @@ vector<int> Grid::rowHelper(/*int &row1, int &row2, int &row3, int &row4,*/ cons
 }
 
 vector<int> Grid::rowClear(const BlockCoord &b){
+	cout << "LVL4COUNT IS: " << lvl4Count << endl;
 	vector<int> deleted;
 	scoreRowCheck.clear();
 	vector<int> rows = rowHelper(b);
@@ -140,7 +141,7 @@ vector<int> Grid::rowClear(const BlockCoord &b){
 
 void Grid::dropStarBlock() {//COUNT IS MESSED UP BUT IT KINDA WORKS
 	int starCol = 5;
-	if (lvl4Count % 5 == 0) {
+	if (lvl4Count != 0 && lvl4Count % 5 == 0) {
 		for (int i = height - 1; i >= 0; --i) {
 			if (i == 0 && display[i][starCol].letter == ' ') {
 				display[i][starCol].letter = '*';

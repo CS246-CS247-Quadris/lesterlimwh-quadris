@@ -49,6 +49,7 @@ void Controller::noDisplayGame(){
 		} else if (cmd == "x"){
 			b->drop();
 			coords = b->getBlockCoord();
+			lvl->getGrid()->addTolvl4Count();
 			lvl->getGrid()->update(coords, blockType, lvl->getDif(), false);
 			delete b;
 			b = next;
@@ -181,6 +182,7 @@ void Controller::startGame(){
 			view->update(coords, ' ');
 			b->drop();
 			coords = b->getBlockCoord();
+			lvl->getGrid()->addTolvl4Count();
 			lvl->getGrid()->update(coords, blockType, lvl->getDif(), false);
 			view->update(coords, blockType);
 			delRows = lvl->getGrid()->rowClear(coords);
