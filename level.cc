@@ -77,6 +77,7 @@ Block *Level::diff3Block(){
 Block *Level::diff4Block(){
 	//return diff3Block();
 	srand(time(NULL)); // change seed state
+	g->dropStarBlock();
 	int y = rand() % 9;
 	if (y == 0){ return new Iblock(true, g, 4); }
 	else if (y == 1){ return new Jblock(true, g, 4); }
@@ -88,14 +89,9 @@ Block *Level::diff4Block(){
 } // Same as diff3block except draws the *block. 
  
 Block *Level::makeBlock(){
-<<<<<<< HEAD
-	srand(time(NULL)); // THIS IS PART OF THE COMMAND LINE ARGUMENTS. THIS WILL BE CHANGED
-=======
 	srand(time(NULL));
->>>>>>> c517524e31f6c6af5b772f8d02956c30db6d35fb
 	g->addToCount();
 	g->addTolvl4Count();
-	g->dropStarBlock();
 	if (dif == 0){ return diff0Block(); }
 	else if (dif == 1){ return diff1Block(); }
 	else if (dif == 2){ return diff2Block(); }
