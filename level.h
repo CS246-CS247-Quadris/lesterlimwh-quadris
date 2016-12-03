@@ -34,4 +34,11 @@ class Level{
 	int getDif() const;
 	Block *makeBlock();
 	Grid * getGrid();
+	Block *iBlock();
+	Block *jBlock();
+	Block *lBlock();
+	Block *oBlock();
+	Block *sBlock();
+	Block *zBlock();
+	Block *tBlock();
 }; 
