@@ -15,7 +15,7 @@ void Grid::setLetter(const char letter){
 	blockLetter = letter;
 }
 
-int Grid::getScore(){ return score; }
+int Grid::getScore() const { return score; }
 
 void Grid::addToCount(){ ++blockNum; } // WHEN DROP IS CALLED, AFTER UPDATE IS CALLED, CALL THIS FUNCTION TO INCREASE COUNT
 
@@ -99,7 +99,8 @@ vector<int> Grid::rowHelper(/*int &row1, int &row2, int &row3, int &row4,*/ cons
   	return rows;
 }
 
-void Grid::rowClear(const BlockCoord &b){\
+vector<int> Grid::rowClear(const BlockCoord &b){
+	vector<int> deleted;
 	scoreRowCheck.clear();
 	vector<int> rows = rowHelper(b);
 	int size = rows.size();
@@ -115,17 +116,20 @@ void Grid::rowClear(const BlockCoord &b){\
 			for (int z = 0; z < width; ++z){
 				scoreRowCheck.emplace_back(display[rows[i]][z]);
 			}
+			deleted.emplace_back(rows[i]);
 			display.erase(display.begin() + rows[i]);
 			// ADD SCORE HERE
-			score += (dif + 1) * (dif + 1); //Added when row is cleared
+			//score += (dif + 1) * (dif + 1); //Added when row is cleared
 			display.push_back(vector<BlockCell>(width, {0,0,' '})); // 0 BECAUSE NO BLOCK IS ASSIGNED TO THE NEW ROW
 			//for (int k = i; k < size; ++k){ // REDUCES THE VALUE OF EACH ROW IN ROWS SO THAT WE DON'T CHECK THE ROW ABOVE THE ONE WE WANT
 			//	rows[k] = rows[k] - 1;
 			//}
-			addToScore();
+			//addToScore();
 		}
 		isFull = true;
 	}
+	addToScore();
+	return deleted;
 }
 bool Grid::gameOver(const BlockCoord &b){
 	return !(check(b));
