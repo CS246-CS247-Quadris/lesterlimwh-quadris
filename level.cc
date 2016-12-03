@@ -113,37 +113,37 @@ Grid * Level::getGrid(){ return g; }
 
 int Level::count = 0;
 
-Block *Grid::iBlock(){
+Block *Level::iBlock(){
 	if (dif >= 3){ return new Iblock(true, g, dif); }
 	else { return new Iblock(false, g, dif) ; } 
 }
 
-Block *Grid::jBlock(){
+Block *Level::jBlock(){
 	if (dif >= 3){ return new Jblock(true, g, dif); }
 	else { return new Jblock(false, g, dif) ; } 
 }
 
-Block *Grid::lBlock(){
+Block *Level::lBlock(){
 	if (dif >= 3){ return new Lblock(true, g, dif); }
 	else { return new Lblock(false, g, dif) ; } 
 }
 
-Block *Grid::oBlock(){
+Block *Level::oBlock(){
 	if (dif >= 3){ return new Oblock(true, g, dif); }
 	else { return new Oblock(false, g, dif) ; } 
 }
 
-Block *Grid::sBlock(){
+Block *Level::sBlock(){
 	if (dif >= 3){ return new Sblock(true, g, dif); }
 	else { return new Sblock(false, g, dif) ; } 
 }
 
-Block *Grid::zBlock(){
+Block *Level::zBlock(){
 	if (dif >= 3){ return new Zblock(true, g, dif); }
 	else { return new Zblock(false, g, dif) ; } 
 }
 
-Block *Grid::tBlock(){
+Block *Level::tBlock(){
 	if (dif >= 3){ return new Tblock(true, g, dif); }
 	else { return new Tblock(false, g, dif) ; } 
 }
