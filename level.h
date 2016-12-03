@@ -17,7 +17,7 @@ class Level{
 	int dif;
 	Grid *g;
 	std::ifstream f;
-        std::string file;
+	std::string file;
 	std::vector<std::string> seqInput;
 	Block *diff0Block();
 	Block *diff1Block();
@@ -29,10 +29,11 @@ class Level{
 	Level(int n, std::string &file);
 	~Level();
 	void readInFile();
+	void readRandomFile(std::string randomFile);
 	void levelUp();
 	void levelDown();	
 	int getDif() const;
-	Block *makeBlock();
+	Block *makeBlock(bool norandom = false);
 	Grid * getGrid();
 	Block *iBlock();
 	Block *jBlock();
