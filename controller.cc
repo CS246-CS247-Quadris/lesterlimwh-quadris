@@ -216,6 +216,7 @@ void Controller::startGame(){
     int rows = 18;
 	int columns = 11;
     bool isGameOver = false;
+    bool noRandom = false;
 	Block * b = lvl->makeBlock();
 	Block * next = lvl->makeBlock();
 	char blockType = b->getBlockType();
@@ -235,64 +236,175 @@ void Controller::startGame(){
 
 	while (true){
 		cin >> cmd;
-		if (cmd == "a"){
-			//view->update(coords, ' ');
-			b->left();
+		regex r("^[0-9]*(ri|rig|righ|right)");
+		regex l("^[0-9]*(le|lef|left)");
+		regex d("^[0-9]*(do|dow|down)");
+		regex dr("^[0-9]*(dr|dro|drop)");
+		regex c("^[0-9]*(clock|clockw|clockwi|clockwis|clockwise)");
+		regex cc("^[0-9]*(counter|counterc|countercl|counterclo|countercloc|counterclock|counterclockw|counterclockwi|counterclockwis|counterclockwise)");
+		regex lu("^[0-9]*(levelu|levelup)");
+		regex ld("^[0-9]*(leveld|leveldo|leveldow|leveldown)");
+		regex blocks("^[IJLOSTZ]");
+		smatch m;
+
+		if (regex_match(cmd, m, l)){
+			string s = cmd.substr(0,1);
+			istringstream ss(s);
+			int units;
+			if (ss >> units){
+				for (int i = 0; i < units; ++i){
+					b->left();
+				}
+			} else{
+				b->left();
+			}
 			coords = b->getBlockCoord();
 			lvl->getGrid()->update(coords, blockType, lvl->getDif(), false);
-			//view->update(coords, blockType);
-		} else if (cmd == "d"){
-			//view->update(coords, ' ');
-			b->right();
+		} else if (regex_match(cmd, m, r)){
+			string s = cmd.substr(0,1);
+			istringstream ss(s);
+			int units;
+			if (ss >> units){
+				for (int i = 0; i < units; ++i){
+					b->right();
+				}
+			} else{
+				b->right();
+			}
 			coords = b->getBlockCoord();
 			lvl->getGrid()->update(coords, blockType, lvl->getDif(), false);
-			//view->update(coords, blockType);
-		} else if (cmd == "s"){
-			//view->update(coords, ' ');
-			b->down();
+		} else if (regex_match(cmd, m, d)){
+			string s = cmd.substr(0,1);
+			istringstream ss(s);
+			int units;
+			if (ss >> units){
+				for (int i = 0; i < units; ++i){
+					b->down();
+				}
+			} else{
+				b->down();
+			}
 			coords = b->getBlockCoord();
 			lvl->getGrid()->update(coords, blockType, lvl->getDif(), false);
-			//view->update(coords, blockType);
-		} else if (cmd == "c"){
-			//view->update(coords, ' ');
-			b->clockwise();
+		} else if (regex_match(cmd, m, c)){
+			string s = cmd.substr(0,1);
+			istringstream ss(s);
+			int units;
+			if (ss >> units){
+				for (int i = 0; i < units; ++i){
+					b->clockwise();
+				}
+			} else{
+				b->clockwise();
+			}
 			coords = b->getBlockCoord();
 			lvl->getGrid()->update(coords, blockType, lvl->getDif(), false);
-			//view->update(coords, blockType);
-		} else if (cmd == "z"){
-			//view->update(coords, ' ');
-			b->counterclockwise();
+		} else if (regex_match(cmd, m, cc)){
+			string s = cmd.substr(0,1);
+			istringstream ss(s);
+			int units;
+			if (ss >> units){
+				for (int i = 0; i < units; ++i){
+					b->counterclockwise();
+				}
+			} else{
+				b->counterclockwise();
+			}
 			coords = b->getBlockCoord();
 			lvl->getGrid()->update(coords, blockType, lvl->getDif(), false);
-			//view->update(coords, blockType);
-		} else if (cmd == "x"){
-			//view->update(coords, ' ');
-			b->drop();
+		} else if (regex_match(cmd, m, dr)){
+			string s = cmd.substr(0,1);
+			istringstream ss(s);
+			int units;
+			if (ss >> units){
+				for (int i = 0; i < units; ++i){
+					b->drop();
+					coords = b->getBlockCoord();
+					lvl->getGrid()->addTolvl4Count();
+					lvl->getGrid()->update(coords, blockType, lvl->getDif(), false);
+					delete b;
+					b = next;
+					next = lvl->makeBlock(noRandom);
+					coords = b->getBlockCoord();
+					blockType = b->getBlockType();
+					nextBlockType = next->getBlockType();
+					lvl->getGrid()->setLetter(nextBlockType);
+					view->drawNextBlock(nextcoords, nextBlockType);
+					isGameOver = lvl->getGrid()->gameOver(coords);
+					if (isGameOver){ break; }
+					lvl->getGrid()->update(coords, blockType, lvl->getDif(), false); 
+				}
+				if (isGameOver) { break; }
+			} else{
+				b->drop();
+				coords = b->getBlockCoord();
+				lvl->getGrid()->addTolvl4Count();
+				lvl->getGrid()->update(coords, blockType, lvl->getDif(), false);
+				delete b;
+				b = next;
+				next = lvl->makeBlock(noRandom);
+				coords = b->getBlockCoord();
+				blockType = b->getBlockType();
+				nextBlockType = next->getBlockType();
+				lvl->getGrid()->setLetter(nextBlockType);
+				view->drawNextBlock(nextcoords, nextBlockType);
+				isGameOver = lvl->getGrid()->gameOver(coords);
+				if (isGameOver){ break; }
+				lvl->getGrid()->update(coords, blockType, lvl->getDif(), false); 
+			}
+		} else if (regex_match(cmd, m, lu)){
+			string s = cmd.substr(0,1);
+			istringstream ss(s);
+			int units;
+			if (ss >> units){
+				for (int i = 0; i < units; ++i){
+					lvl->levelUp();
+				}
+			} else{
+				lvl->levelUp();
+			}
 			coords = b->getBlockCoord();
-			lvl->getGrid()->addTolvl4Count();
 			lvl->getGrid()->update(coords, blockType, lvl->getDif(), false);
-			//view->update(coords, blockType);
-			delRows = lvl->getGrid()->rowClear(coords);
-			//view->rowClear(delRows);
+		} else if (regex_match(cmd, m, ld)){
+			string s = cmd.substr(0,1);
+			istringstream ss(s);
+			int units;
+			if (ss >> units){
+				for (int i = 0; i < units; ++i){
+					lvl->levelDown();
+				}
+			} else{
+				lvl->levelDown();
+			}
+			coords = b->getBlockCoord();
+			lvl->getGrid()->update(coords, blockType, lvl->getDif(), false);
+		} else if (regex_match(cmd, m, blocks)){
 			delete b;
-			b = next;
-			next = lvl->makeBlock();
+			if (cmd == "I") { b = lvl->iBlock(); }
+			else if (cmd == "J") { b = lvl->jBlock(); }
+			else if (cmd == "L") { b = lvl->lBlock(); }
+			else if (cmd == "O") { b = lvl->oBlock(); }
+			else if (cmd == "S") { b = lvl->sBlock(); }
+			else if (cmd == "T") { b = lvl->tBlock(); }
+			else { b = lvl->zBlock(); }
+			coords = b->getBlockCoord();
+			blockType = b->getBlockType();
+			lvl->getGrid()->update(coords, blockType, lvl->getDif(), false); 
+		} else if (cmd == "norandom"){
+			cin >> cmd;
+			lvl->readRandomFile(cmd);
+			coords = b->getBlockCoord();
+			lvl->getGrid()->removeBlock(coords, lvl->getDif());
+			delete b;
+			delete next;
+			noRandom = true;
+			b = lvl->makeBlock(noRandom);
+			next = lvl->makeBlock(noRandom);
 			coords = b->getBlockCoord();
 			blockType = b->getBlockType();
 			nextBlockType = next->getBlockType();
-			nextcoords = next->getBlockCoord();
 			lvl->getGrid()->setLetter(nextBlockType);
-            view->drawNextBlock(nextcoords, nextBlockType);
-			isGameOver = lvl->getGrid()->gameOver(coords);
-			if (isGameOver){ break; }
 			lvl->getGrid()->update(coords, blockType, lvl->getDif(), false); 
-			//view->update(coords, blockType);
-		} else if (cmd == "levelup"){
-			lvl->levelUp();
-			view->levelChanged();
-		} else if (cmd == "leveldown"){
-			lvl->levelDown();
-			view->levelChanged();
 		}
 		cout << lvl->getGrid() << endl;
 		view->print(lvl->getGrid()->getScore(), lvl->getDif());	
