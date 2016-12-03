@@ -3,8 +3,6 @@
 #include <vector>
 #include <ctime>
 
-Level::Level(){}
-
 Level::Level(int n): dif{n}{ g = new Grid(dif); } // Constructor for Level 1 -4
 
 Level::Level(int n, std::string &file): dif{n}, file{file}{ 
@@ -43,7 +41,6 @@ Block *Level::diff0Block(){
 }
 
 Block *Level::diff1Block(){
-	srand(time(NULL)); // change seed state
 	int y = rand() % 12;
 	if (y == 0 || y == 1){ return new Iblock(false, g, 1); }
 	else if (y == 2 || y == 3){ return new Jblock(false, g, 1); }
@@ -56,7 +53,6 @@ Block *Level::diff1Block(){
 }
 
 Block *Level::diff2Block(){
-	srand(time(NULL)); // change seed state
 	int y = rand() % 7;
 	if (y == 0){ return new Iblock(false, g, 2); }
 	else if (y == 1) { return new Jblock(false, g, 2); }
@@ -68,7 +64,6 @@ Block *Level::diff2Block(){
 }
 
 Block *Level::diff3Block(){
-	srand(time(NULL)); // change seed state
 	int y = rand() % 9;
 	if (y == 0){ return new Iblock(true, g, 3); }
 	else if (y == 1){ return new Jblock(true, g, 3); }
@@ -84,7 +79,7 @@ Block *Level::diff4Block(){
 } // Same as diff3block except draws the *block. 
  
 Block *Level::makeBlock(){
-	srand(2); // THIS IS PART OF THE COMMAND LINE ARGUMENTS. THIS WILL BE CHANGED
+	srand(time(NULL));
 	g->addToCount();
 	if (dif == 0){ return diff0Block(); }
 	else if (dif == 1){ return diff1Block(); }
