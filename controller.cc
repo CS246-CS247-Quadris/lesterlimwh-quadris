@@ -128,7 +128,7 @@ void Controller::startGame(){
 	view->update(coords, blockType);
 	cout << lvl->getGrid() << endl;
 	cout << coords.x1.x << coords.x1.y << endl;
-	view->print(lvl.getGrid()->getScore(), lvl.getDif());
+	view->print(lvl->getGrid()->getScore(), lvl->getDif());
 	std::vector<int> delRows;
 
 	while (true){
@@ -187,8 +187,8 @@ void Controller::startGame(){
 		} else if (cmd == "leveldown"){
 			lvl->levelDown();
 		}
-		cout << lvl.getGrid() << endl;
-		view->print(lvl.getGrid()->getScore(), lvl.getDif());	
+		cout << lvl->getGrid() << endl;
+		view->print(lvl->getGrid()->getScore(), lvl->getDif());	
 	}
 
     view->gameOver(lvl->getGrid()->getScore());

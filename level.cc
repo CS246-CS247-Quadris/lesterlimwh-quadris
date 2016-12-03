@@ -88,11 +88,7 @@ Block *Level::diff4Block(){
 } // Same as diff3block except draws the *block. 
  
 Block *Level::makeBlock(){
-<<<<<<< HEAD
-	srand(time(NULL)); // THIS IS PART OF THE COMMAND LINE ARGUMENTS. THIS WILL BE CHANGED
-=======
 	srand(time(NULL));
->>>>>>> c517524e31f6c6af5b772f8d02956c30db6d35fb
 	g->addToCount();
 	g->addTolvl4Count();
 	g->dropStarBlock();
