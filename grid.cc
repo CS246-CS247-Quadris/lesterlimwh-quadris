@@ -126,10 +126,11 @@ vector<int> Grid::rowClear(const BlockCoord &b){
 			//for (int k = i; k < size; ++k){ // REDUCES THE VALUE OF EACH ROW IN ROWS SO THAT WE DON'T CHECK THE ROW ABOVE THE ONE WE WANT
 			//	rows[k] = rows[k] - 1;
 			//}
-			addToScore();
+			//addToScore();
 		}
 		isFull = true;
 	}
+	addToScore();
 	return deleted;
 }
 bool Grid::gameOver(const BlockCoord &b){
