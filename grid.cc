@@ -65,6 +65,7 @@ void Grid::addToScore() {
 
 void Grid::update(const BlockCoord &b, const char c, int level, bool empty ){ //added empty to know if resetting block
 	// CAN BE CHANGED IF WE WANT TO IMPLEMENT BLOCKS OF DIFFERENT SIZES
+	dif = level;
 	if (empty) {
 		display[b.x1.y][b.x1.x] = {0,level,' '};
 	    display[b.x2.y][b.x2.x] = {0,level,' '};
@@ -151,6 +152,13 @@ void Grid::dropStarBlock() {//COUNT IS MESSED UP BUT IT KINDA WORKS
 			}
 		}
 	}
+}
+
+void Grid::removeBlock(BlockCoord &b, int level){
+	display[b.x1.y][b.x1.x] = {0,level,' '};
+    display[b.x2.y][b.x2.x] = {0,level,' '};
+    display[b.x3.y][b.x3.x] = {0,level,' '};
+    display[b.x4.y][b.x4.x] = {0,level,' '};
 }
 
 bool Grid::gameOver(const BlockCoord &b){

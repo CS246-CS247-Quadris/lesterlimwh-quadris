@@ -3,27 +3,41 @@
 #include <vector>
 #include <ctime>
 
-Level::Level(int n): dif{n}{ g = new Grid(dif); } // Constructor for Level 1 -4
+Level::Level(int n): dif{n}{ g = new Grid(dif); }
 
 Level::Level(int n, std::string &file): dif{n}, file{file}{ 
 	f.open(file);
 	g = new Grid(dif); 
-} // Constructor for Level 0
+}
 
 Level::~Level(){ delete g; }
 
-void Level::levelUp(){ dif++; }
+void Level::levelUp(){
+	int maxLvl = 4;
+	if (dif < maxLvl) dif++; 
+}
 
-void Level::levelDown(){ dif--; }
+void Level::levelDown(){ 
+	int minLvl = 0;
+	if (dif > minLvl) dif--; 
+}
 
-
-void Level::readInFile(){ // This is to be called when a Level 0 object is made in the controller
+void Level::readInFile(){
 	std::string s;
 	while (f >> s){
 		seqInput.push_back(s);
 		s.clear();
 	}
 } // Call it in the form Level* level = new Level(0, f); Followed by level->readInFile(); followed by level->makeblock()
+
+void Level::readRandomFile(std::string randomFile){
+	std::string s;
+	f.open(randomFile);
+	while (f >> s){
+		seqInput.push_back(s);
+		s.clear();
+	}
+}
 
 int Level::getDif() const {
 	return dif;
@@ -75,8 +89,6 @@ Block *Level::diff3Block(){
 }
 
 Block *Level::diff4Block(){
-	//return diff3Block();
-	srand(time(NULL)); // change seed state
 	g->dropStarBlock();
 	int y = rand() % 9;
 	if (y == 0){ return new Iblock(true, g, 4); }
@@ -86,64 +98,47 @@ Block *Level::diff4Block(){
 	else if (y == 4){ return new Tblock(true, g, 4); }
 	else if (y == 5 || y == 6){ return new Sblock(true, g, 4); }
 	else { return new Zblock(true, g, 4); }
-} // Same as diff3block except draws the *block. 
+}
  
-Block *Level::makeBlock(){
+Block *Level::makeBlock(bool norandom){
 	srand(time(NULL));
 	g->addToCount();
-	if (dif == 0){ return diff0Block(); }
+	if (norandom){ return diff0Block(); }
+	else if (dif == 0){ return diff0Block(); }
 	else if (dif == 1){ return diff1Block(); }
 	else if (dif == 2){ return diff2Block(); }
 	else if (dif == 3){ return diff3Block(); }
 	else if (dif == 4){ return diff4Block(); }
 }
 
-/*Block *Level::I(){
-	if (dif >= 3){ return new Iblock(true, g); }
-	else { return new Iblock(false, g); }
-}
-
-Block *Level::J(){
-	if (dif >= 3){ return new Jblock(true, g); }
-	else { return new Jblock(false, g); }
-}*/
-
 Grid * Level::getGrid(){ return g; }
 
 int Level::count = 0;
 
 Block *Level::iBlock(){
-	if (dif >= 3){ return new Iblock(true, g, dif); }
-	else { return new Iblock(false, g, dif) ; } 
+	return new Iblock(false, g, dif);
 }
 
 Block *Level::jBlock(){
-	if (dif >= 3){ return new Jblock(true, g, dif); }
-	else { return new Jblock(false, g, dif) ; } 
+	return new Jblock(false, g, dif);
 }
 
 Block *Level::lBlock(){
-	if (dif >= 3){ return new Lblock(true, g, dif); }
-	else { return new Lblock(false, g, dif) ; } 
+	return new Lblock(false, g, dif);
 }
 
 Block *Level::oBlock(){
-	if (dif >= 3){ return new Oblock(true, g, dif); }
-	else { return new Oblock(false, g, dif) ; } 
+	return new Oblock(false, g, dif);
 }
 
 Block *Level::sBlock(){
-	if (dif >= 3){ return new Sblock(true, g, dif); }
-	else { return new Sblock(false, g, dif) ; } 
+	return new Sblock(false, g, dif);
 }
 
 Block *Level::zBlock(){
-	if (dif >= 3){ return new Zblock(true, g, dif); }
-	else { return new Zblock(false, g, dif) ; } 
+	return new Zblock(false, g, dif);
 }
 
 Block *Level::tBlock(){
-	if (dif >= 3){ return new Tblock(true, g, dif); }
-	else { return new Tblock(false, g, dif) ; } 
+	return new Tblock(false, g, dif);
 }
-
