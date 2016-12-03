@@ -96,6 +96,8 @@ vector<int> Grid::rowHelper(/*int &row1, int &row2, int &row3, int &row4,*/ cons
   	rows.emplace_back(b.x3.y);
   	rows.emplace_back(b.x4.y);
   	rows.erase(unique(rows.begin(), rows.end()), rows.end());
+  	sort(rows.begin(), rows.end());
+  	reverse(rows.begin(), rows.end());
   	return rows;
 }
 
