@@ -73,14 +73,13 @@ void Graphics::gameOver(int score){
 void Graphics::rowClear(const std::vector<int> delRows){
 	int size = delRows.size();
 	for (int i = 0; i < size; ++i){
-		cout << delRows[i] << endl << endl << endl;
 		view.erase(view.begin() + delRows[i]);
 		view.emplace_back(std::vector<GraphicCell>(columns));
 		for (int l = 0; l < columns; ++l){
 			//view[l][0].x = l; //100 + l*width;
 			//view[l][0].y = 0; //150 + 13 + (17 - (size - l))*width;
-			view[size - 1][0].letter = ' ';
-			view[size - 1][0].isChanged = false;
+			view[rows - 1][l].letter = ' ';
+			view[rows - 1][l].isChanged = false;
 		}
 		for (int k = delRows[i]; k < rows; ++k){
 			for (int j = 0; j < columns; ++j){
