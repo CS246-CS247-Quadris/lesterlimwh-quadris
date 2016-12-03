@@ -70,6 +70,12 @@ void Xwindow::fillRectangle(int x, int y, int width, int height, int colour) {
   XSetForeground(d, gc, colours[Black]);
 }
 
+void Xwindow::drawRectangle(int x, int y, int width, int height, int colour){
+  XSetForeground(d, gc, colours[colour]);
+  XDrawRectangle(d, w, gc, x, y, width, height);
+  XSetForeground(d, gc, colours[Black]);
+}
+
 void Xwindow::drawString(int x, int y, string msg, int colour) {
   XSetForeground(d, gc, colours[colour]);
   Font f = XLoadFont(d, "6x13");
@@ -86,16 +92,17 @@ void Xwindow::drawString(int x, int y, string msg, int colour) {
 
 void Xwindow::drawBigString(int x, int y, string msg, int colour) {
   XSetForeground(d, gc, colours[colour]);
-  // Font f = XLoadFont(d, "-*-helvetica-bold-r-normal--*-240-*-*-*-*-*");
-  ostringstream name;
-  name << "-*-helvetica-bold-r-*-*-*-240-" << width/5 << "-" << height/5 << "-*-*-*-*";
+  Font f = XLoadFont(d, "-misc-fixed-medium-r-semicondensed--13-100-100-100-c-60-iso8859-1");
+  //ostringstream name;
+  //name << "-*-helvetica-bold-r-*-*-*-240-" << width/5 << "-" << height/5 << "-*-*-*-*";
 
-  XFontStruct * f = XLoadQueryFont(d, name.str().c_str());
+  //XFontStruct * f = XLoadQueryFont(d, name.str().c_str());
   XTextItem ti;
   ti.chars = const_cast<char*>(msg.c_str());
   ti.nchars = msg.length();
   ti.delta = 0;
-  ti.font = f->fid;
+  ti.font = f;
+  //ti.font = f->fid;
   XDrawText(d, w, gc, x, y, &ti, 1);
   XSetForeground(d, gc, colours[Black]);
   XFlush(d);

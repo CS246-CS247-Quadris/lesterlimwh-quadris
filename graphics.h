@@ -18,5 +18,5 @@ public:
 	void update(const BlockCoord &b, const char blockType);
 	void gameOver(int score);
 	int getColour(const char blockType);
-	void print();
+	void print(int score, int dif);
 };

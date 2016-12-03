@@ -27,7 +27,7 @@ void Controller::levelZeroGame(){
 	lvl.getGrid()->update(coords, blockType, lvl.getDif(), false);
 	view->update(coords, blockType);
 	cout << lvl.getGrid() << endl;
-	view->print();
+	view->print(lvl.getGrid()->getScore(), lvl.getDif());
 	std::vector<int> delRows;
 	while (true){
 		cin >> cmd;
@@ -84,7 +84,7 @@ void Controller::levelZeroGame(){
 			view->update(coords, blockType);
 		}
 		cout << lvl.getGrid() << endl;
-		view->print();
+		view->print(lvl.getGrid()->getScore(), lvl.getDif());
 		
 	}
 	if (isGameOver){
@@ -117,7 +117,7 @@ void Controller::regularGame(){
 	view->update(coords, blockType);
 	cout << lvl.getGrid() << endl;
 	cout << coords.x1.x << coords.x1.y << endl;
-	view->print();
+	view->print(lvl.getGrid()->getScore(), lvl.getDif());
 	std::vector<int> delRows;
 	while (true){
 		cin >> cmd;
@@ -174,7 +174,7 @@ void Controller::regularGame(){
 			view->update(coords, blockType);
 		}
 		cout << lvl.getGrid() << endl;
-		view->print();
+		view->print(lvl.getGrid()->getScore(), lvl.getDif());
 		
 	}
     view->gameOver(lvl.getGrid()->getScore());

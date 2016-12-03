@@ -4,6 +4,7 @@
 #include <iostream>
 using namespace std;
 Graphics::Graphics(Xwindow &window, int rows, int columns): window{window}, rows{rows}, columns{columns}{
+	window.drawBigString(300, 50, "Quadris", Xwindow::Black);
 	width = 500/rows;
 	window.drawLine(100, 150, 100, 650);
 	window.drawLine(width * 15 - 10, 150, width * 15 - 10, 650);
@@ -16,6 +17,7 @@ Graphics::Graphics(Xwindow &window, int rows, int columns): window{window}, rows
 			//view[j][i].y = j; //150 + 13 + (17 - j)*width;
 			view[j][i].letter = ' ';
 			view[j][i].isChanged = false;
+			//window.drawRectangle(i*width + 100, (17 - j)*width + 150 + 13, width, width);
 		}
 	}
 	
@@ -89,13 +91,21 @@ void Graphics::rowClear(const std::vector<int> delRows){
 	}
 }
 
-void Graphics::print(){
+void Graphics::print(int score, int dif){
 	int colour;
+	window.fillRectangle(600, 400, 300, 300, Xwindow::White);
+	std::string theScore;
+	std::string level;
+	std::string hiscore;
+	std::stringstream ss{theScore};
+	ss << "Score: ";
+	ss << score;
+	window.drawString(600,400, ss.str(), Xwindow::Black); 
 	for (int j = 0; j < rows; ++j){
 		for (int i = 0; i < columns; ++i){
 			if (view[j][i].isChanged){
 				colour = getColour(view[j][i].letter);
-				//window.fillRectangle(view[j][i].x*width + 100, (17 - view[j][i].y)*width + 150 + 13, width, width, colour );
+				//window.drawRectangle(i*width + 100, (17 - j)*width + 150 + 13, width, width);
 				window.fillRectangle(i*width + 100, (17 - j)*width + 150 + 13, width, width, colour );
 				view[j][i].isChanged = false;
 			}
