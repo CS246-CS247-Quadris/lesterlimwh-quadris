@@ -184,8 +184,10 @@ void Controller::startGame(){
 			view->update(coords, blockType);
 		} else if (cmd == "levelup"){
 			lvl->levelUp();
+			view->levelChanged();
 		} else if (cmd == "leveldown"){
 			lvl->levelDown();
+			view->levelChanged();
 		}
 		cout << lvl->getGrid() << endl;
 		view->print(lvl->getGrid()->getScore(), lvl->getDif());	

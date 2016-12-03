@@ -6,10 +6,6 @@ using namespace std;
 Graphics::Graphics(Xwindow &window, int rows, int columns): window{window}, rows{rows}, columns{columns}{
 	window.drawBigString(300, 50, "Quadris", Xwindow::Black);
 	width = 500/rows;
-	window.drawLine(100, 150, 100, 650);
-	window.drawLine(width * 15 - 10, 150, width * 15 - 10, 650);
-	window.drawLine(100, 150, width * 15 - 10, 150);
-	window.drawLine(100, 650, width * 15 - 10, 650);
 	view = std::vector< std::vector <GraphicCell > > (rows, std::vector <GraphicCell> (columns));
 	for (int j = 0; j < rows; ++j){
 		for (int i = 0; i < columns; ++i){
@@ -48,6 +44,10 @@ void Graphics::update(const BlockCoord &b, const char blockType){
 	//window.fillRectangle(100 + b.x4.x*width, 150 + 13 + (17 - b.x4.y)*width, width, width, colour);
 }
 
+void Graphics::levelChanged(){
+	isLvlDif = true;
+}
+
 int Graphics::getColour(const char blockType){
 	int colour;
 	if (blockType == 'I'){ colour = Xwindow::Orange; }
@@ -74,6 +74,7 @@ void Graphics::gameOver(int score){
 
 void Graphics::rowClear(const std::vector<int> delRows){
 	int size = delRows.size();
+	if (size >= 1){ isScoreDif = 1; }
 	for (int i = 0; i < size; ++i){
 		view.erase(view.begin() + delRows[i]);
 		view.emplace_back(std::vector<GraphicCell>(columns));
@@ -93,14 +94,24 @@ void Graphics::rowClear(const std::vector<int> delRows){
 
 void Graphics::print(int score, int dif){
 	int colour;
-	window.fillRectangle(600, 400, 300, 300, Xwindow::White);
-	std::string theScore;
-	std::string level;
-	std::string hiscore;
-	std::stringstream ss{theScore};
-	ss << "Score: ";
-	ss << score;
-	window.drawString(600,400, ss.str(), Xwindow::Black); 
+	if (isScoreDif){
+		window.fillRectangle(550, 380, 300, 40, Xwindow::White);
+		std::string theScore;
+		std::stringstream ss{theScore};
+		ss << "Score: ";
+		ss << score;
+		window.drawString(600,400, ss.str(), Xwindow::Black); 
+		isScoreDif = false;
+    }
+    if (isLvlDif){
+    	window.fillRectangle(550, 280, 300, 40, Xwindow::White);
+    	std::string level;
+    	std::stringstream ss2{level};
+    	ss2 << "Level: ";
+    	ss2 << dif;
+    	window.drawString(600,300, ss2.str(), Xwindow::Black);
+    	isLvlDif = false; 
+    }
 	for (int j = 0; j < rows; ++j){
 		for (int i = 0; i < columns; ++i){
 			if (view[j][i].isChanged){
@@ -111,5 +122,9 @@ void Graphics::print(int score, int dif){
 			}
 		}
 	}
+	window.drawLine(100, 150, 100, 650);
+	window.drawLine(width * 15 - 10, 150, width * 15 - 10, 650);
+	window.drawLine(100, 150, width * 15 - 10, 150);
+	window.drawLine(100, 650, width * 15 - 10, 650);
 
 }
