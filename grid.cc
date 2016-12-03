@@ -135,7 +135,6 @@ vector<int> Grid::rowClear(const BlockCoord &b){
 		}
 		isFull = true;
 	}
-	addToScore();
 	return deleted;
 }
 
@@ -228,10 +227,8 @@ std::ostream &operator<<(std::ostream &out , const Grid *g){
         for (int i = g->width - 1; i >= 0; --i){
          	out << "--";
     }
-    //out << endl << "Next Block:" << endl;
-    //out << g->nextBlock();
+    out << endl << "Next Block:" << endl;
+    out << g->nextBlock();
 	return out;
 }
-
-// Pranav can you see this
 

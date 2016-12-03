@@ -8,6 +8,7 @@
 #include "graphics.h"
 #include <chrono>
 #include <thread>
+#include <regex>
 
 using std::cin;
 using std::cout;
@@ -17,12 +18,12 @@ using std::string;
 class Controller{
 	int levelNum;
 	string file;
+	Level * lvl;
 public:
 	Controller(int levelNum);
 	Controller(int levelNum, string file);
 	void startGame();
-	void regularGame();
-	void levelZeroGame();
+	void noDisplayGame();
 };
 
 #endif
