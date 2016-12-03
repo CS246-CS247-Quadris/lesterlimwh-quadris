@@ -17,7 +17,11 @@ void Grid::setLetter(const char letter){
 
 int Grid::getScore() const { return score; }
 
-void Grid::addToCount(){ ++blockNum; } // WHEN DROP IS CALLED, AFTER UPDATE IS CALLED, CALL THIS FUNCTION TO INCREASE COUNT
+void Grid::addToCount(){ ++blockNum; } // WHEN MAKEBLOCK IS CALLED, AFTER UPDATE IS CALLED, CALL THIS FUNCTION TO INCREASE COUNT
+
+void Grid::addTolvl4Count(){ ++lvl4Count; }  //Used to keep track of how many blocks have been created before a row has been cleared
+
+void Grid::resetlvl4Count(){ lvl4Count = 0; } //Resets lvl4Count back to 0 when a row is cleared
 
 bool Grid::scoreHelper(int n) { //Returns true if given int is within deletedBlocks vec
 	int len = deletedBlocks.size();
@@ -115,6 +119,7 @@ vector<int> Grid::rowClear(const BlockCoord &b){
 			}
 		}
 		if (isFull){
+			resetlvl4Count();
 			for (int z = 0; z < width; ++z){
 				scoreRowCheck.emplace_back(display[rows[i]][z]);
 			}
@@ -133,6 +138,21 @@ vector<int> Grid::rowClear(const BlockCoord &b){
 	addToScore();
 	return deleted;
 }
+
+void Grid::dropStarBlock() {//COUNT IS MESSED UP BUT IT KINDA WORKS
+	int starCol = 5;
+	if (lvl4Count % 5 == 0) {
+		for (int i = height - 1; i >= 0; --i) {
+			if (i == 0 && display[i][starCol].letter == ' ') {
+				display[i][starCol].letter = '*';
+			} else if (i != 0 && display[i-1][starCol].letter != ' ') {
+				display[i][starCol].letter = '*';
+				break;
+			}
+		}
+	}
+}
+
 bool Grid::gameOver(const BlockCoord &b){
 	return !(check(b));
 }
