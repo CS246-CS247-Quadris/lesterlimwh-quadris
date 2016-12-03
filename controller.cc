@@ -24,7 +24,6 @@ void Controller::noDisplayGame(){
 	lvl->getGrid()->update(coords, blockType, lvl->getDif(), false);
 	cout << lvl->getGrid() << endl;
 	cout << coords.x1.x << coords.x1.y << endl;
-
 	while (true){
 		cin >> cmd;
 		if (cmd == "a"){
@@ -66,15 +65,48 @@ void Controller::noDisplayGame(){
 		} else if (cmd == "leveldown"){
 			lvl->levelDown();
 		} else{
-			std::regex r("^[0-9](right)");
+			std::regex r("^[0-9]*(r|ri|rig|righ|right)");
+			std::regex l("^[0-9]*(l|le|lef|left)");
+			std::regex d("^[0-9]*(d|do|dow|down)");
 			std::smatch m;
 			if (std::regex_match(cmd, m, r)){
 				string s = cmd.substr(0,1);
 				std::istringstream ss(s);
 				int units;
-				ss >> units;
-				for (int i = 0; i < units; ++i){
+				if (ss >> units){ // a number is specified
+					for (int i = 0; i < units; ++i){
+						b->right();
+					}
+				} else{
 					b->right();
+				}
+				coords = b->getBlockCoord();
+				lvl->getGrid()->update(coords, blockType, lvl->getDif(), false);
+			}
+			if (std::regex_match(cmd, m, l)){
+				string s = cmd.substr(0,1);
+				std::istringstream ss(s);
+				int units;
+				if (ss >> units){ // a number is specified
+					for (int i = 0; i < units; ++i){
+						b->left();
+					}
+				} else{
+					b->left();
+				}
+				coords = b->getBlockCoord();
+				lvl->getGrid()->update(coords, blockType, lvl->getDif(), false);
+			}
+			if (std::regex_match(cmd, m, d)){
+				string s = cmd.substr(0,1);
+				std::istringstream ss(s);
+				int units;
+				if (ss >> units){ // a number is specified
+					for (int i = 0; i < units; ++i){
+						b->down();
+					}
+				} else{
+					b->down();
 				}
 				coords = b->getBlockCoord();
 				lvl->getGrid()->update(coords, blockType, lvl->getDif(), false);
@@ -82,7 +114,7 @@ void Controller::noDisplayGame(){
 		}
 		cout << lvl->getGrid() << endl;		
 	}
-    std::this_thread::sleep_for(std::chrono::milliseconds(5000));
+    //std::this_thread::sleep_for(std::chrono::milliseconds(5000));
 
 	delete b;
 	delete next;
@@ -110,7 +142,7 @@ void Controller::startGame(){
 	view->update(coords, blockType);
 	cout << lvl->getGrid() << endl;
 	cout << coords.x1.x << coords.x1.y << endl;
-	view->print();
+	view->print(lvl->getGrid()->getScore(), lvl->getDif());
 	std::vector<int> delRows;
 
 	while (true){
@@ -166,12 +198,13 @@ void Controller::startGame(){
 			view->update(coords, blockType);
 		} else if (cmd == "levelup"){
 			lvl->levelUp();
+			view->levelChanged();
 		} else if (cmd == "leveldown"){
 			lvl->levelDown();
+			view->levelChanged();
 		}
 		cout << lvl->getGrid() << endl;
-		view->print();
-		
+		view->print(lvl->getGrid()->getScore(), lvl->getDif());	
 	}
 
     view->gameOver(lvl->getGrid()->getScore());
