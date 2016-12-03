@@ -111,6 +111,7 @@ vector<int> Grid::rowClear(const BlockCoord &b){
 	scoreRowCheck.clear();
 	vector<int> rows = rowHelper(b);
 	int size = rows.size();
+	if (size >= 1){ isScoreDif = 1;}
 	bool isFull = true;
 	for (int i = 0; i < size; ++i){
 		for (int j = 0; j < width; ++j){

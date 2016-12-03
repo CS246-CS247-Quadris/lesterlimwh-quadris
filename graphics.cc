@@ -6,6 +6,7 @@ using namespace std;
 Graphics::Graphics(Xwindow &window, int rows, int columns, Grid *g): window{window}, rows{rows}, columns{columns}, g{g}{
 	window.drawBigString(300, 50, "Quadris", Xwindow::Black);
 	width = 500/rows;
+	
 	//view = std::vector< std::vector <GraphicCell > > (rows, std::vector <GraphicCell> (columns));
 	/*for (int j = 0; j < rows; ++j){
 		for (int i = 0; i < columns; ++i){
@@ -94,16 +95,26 @@ void Graphics::gameOver(int score){
 	}
 }*/
 
+void Graphics::drawNextBlock(const BlockCoord &b, const char BlockType){
+	window.fillRectangle(50, 660, 450,300, Xwindow::White);
+	window.drawBigString(40, 720, "Next Block: ", Xwindow::Black);
+	int colour = getColour(BlockType);
+	window.fillRectangle(b.x1.x*width + 100, (17-b.x1.y)*width + 650, width, width, colour );
+	window.fillRectangle(b.x2.x*width + 100, (17-b.x2.y)*width + 650, width, width, colour );
+	window.fillRectangle(b.x3.x*width + 100, (17-b.x3.y)*width + 650, width, width, colour );
+	window.fillRectangle(b.x4.x*width + 100, (17-b.x4.y)*width + 650, width, width, colour );
+} 
+
 void Graphics::print(int score, int dif){
 	int colour;
-	if (isScoreDif){
+	if (g->isScoreDif){
 		window.fillRectangle(550, 380, 300, 40, Xwindow::White);
 		std::string theScore;
 		std::stringstream ss{theScore};
 		ss << "Score: ";
 		ss << score;
 		window.drawString(600,400, ss.str(), Xwindow::Black); 
-		isScoreDif = false;
+		g->isScoreDif = false;
     }
     if (isLvlDif){
     	window.fillRectangle(550, 280, 300, 40, Xwindow::White);

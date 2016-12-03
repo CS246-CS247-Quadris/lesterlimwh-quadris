@@ -12,6 +12,7 @@ class Grid{
 	int dif; 
 	char blockLetter;
 	int score = 0;
+	bool isScoreDif = true;
 	int lvl4Count = 0;
 	std::vector<int> deletedBlocks;
 	std::vector<BlockCell> scoreRowCheck;

@@ -139,8 +139,9 @@ void Controller::startGame(){
 	Xwindow *window = new Xwindow();
     Graphics *view = new Graphics(*window, rows, columns, lvl->getGrid());
 	BlockCoord coords = b->getBlockCoord();
+	BlockCoord nextcoords = next->getBlockCoord();
 	lvl->getGrid()->update(coords, blockType, lvl->getDif(), false);
-	//view->update(coords, blockType);
+	view->drawNextBlock(nextcoords, nextBlockType);
 	cout << lvl->getGrid() << endl;
 	cout << coords.x1.x << coords.x1.y << endl;
 	view->print(lvl->getGrid()->getScore(), lvl->getDif());
@@ -193,7 +194,9 @@ void Controller::startGame(){
 			coords = b->getBlockCoord();
 			blockType = b->getBlockType();
 			nextBlockType = next->getBlockType();
+			nextcoords = next->getBlockCoord();
 			lvl->getGrid()->setLetter(nextBlockType);
+            view->drawNextBlock(nextcoords, nextBlockType);
 			isGameOver = lvl->getGrid()->gameOver(coords);
 			if (isGameOver){ break; }
 			lvl->getGrid()->update(coords, blockType, lvl->getDif(), false); 
