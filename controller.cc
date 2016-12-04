@@ -35,6 +35,7 @@ void Controller::noDisplayGame(){
 	char nextBlockType = next->getBlockType();
 	lvl->getGrid()->setLetter(nextBlockType);
 	BlockCoord coords = b->getBlockCoord();
+	BlockCoord nextcoords = next->getBlockCoord();
 	lvl->getGrid()->update(coords, blockType, lvl->getDif(), false);
 	cout << lvl->getGrid() << endl;
 	
@@ -141,7 +142,6 @@ void Controller::noDisplayGame(){
 						next = lvl->makeBlock(noRandom);
 					} catch (const char*){
 						endReached = true;
-						cout << "You reached the end of file. Game is over" << endl;
 						breakNextLoop = true;
 						break;
 					}
@@ -161,18 +161,23 @@ void Controller::noDisplayGame(){
 				lvl->getGrid()->update(coords, blockType, lvl->getDif(), false);
 				lvl->getGrid()->rowClear(b->getBlockCoord());
 				delete b;
+				if (endReached == true){
+					break;
+				}
 				b = next;
-				try{
+				coords = b->getBlockCoord();
+				blockType = b->getBlockType();
+				try{ 
 				next = lvl->makeBlock(noRandom);
 			} catch (const char*){
 				endReached = true;
-				cout << "You reached the end of file. Game is over" << endl;
-				break;
-			}   
-				coords = b->getBlockCoord();
-				blockType = b->getBlockType();
+				
+				//break;
+			}
+				//cout << "Hello I am here" << endl;
 				nextBlockType = next->getBlockType();
-				lvl->getGrid()->setLetter(nextBlockType);
+				nextcoords = next->getBlockCoord();
+				lvl->getGrid()->setLetter(nextBlockType);				
 				isGameOver = lvl->getGrid()->gameOver(coords);
 				if (isGameOver){ break; }
 				lvl->getGrid()->update(coords, blockType, lvl->getDif(), false); 
@@ -204,6 +209,9 @@ void Controller::noDisplayGame(){
 			}
 			coords = b->getBlockCoord();
 			lvl->getGrid()->update(coords, blockType, lvl->getDif(), false);
+			if(lvl->getDif() == 0){
+				lvl->readRandomFile("sequence.txt");
+			}
 		} else if (regex_match(cmd, m, blocks)){
 			coords = b->getBlockCoord();
 			lvl->getGrid()->removeBlock(coords, lvl->getDif());
@@ -265,6 +273,7 @@ void Controller::noDisplayGame(){
 				seqCommands.push_back(s);
 				s.clear();
 			}
+			cout << "Size of seqCommands = " << seqCommands.size() << endl;
 		}
 		if (seqCounter == seqCommands.size() - 1){
 			readFromSeq = false;
@@ -272,12 +281,11 @@ void Controller::noDisplayGame(){
 		} else{
 			++seqCounter;
 		}
-		if (!(endReached)){
- 			cout << lvl->getGrid() << endl;
-		}		
-	} // while
-	if (b){ delete b; }
+		cout << lvl->getGrid() << endl;	
+	}
+	cout << "You have reached end of file. Game is over" << endl;
 	if (!(endReached)){
+		delete b;
 		delete  next;
 	}
 }
@@ -286,7 +294,6 @@ void Controller::startGame(){
 	if (levelNum == 0){
 		lvl->readInFile();
 	}
-
 	string cmd;
     int rows = 18;
 	int columns = 11;
@@ -300,7 +307,6 @@ void Controller::startGame(){
 	Block * next = lvl->makeBlock();
 	char blockType = b->getBlockType();
 	char nextBlockType = next->getBlockType();
-
 	lvl->getGrid()->setLetter(nextBlockType);
 	Xwindow *window = new Xwindow();
     Graphics *view = new Graphics(*window, rows, columns, lvl->getGrid());
@@ -419,8 +425,7 @@ void Controller::startGame(){
 						endReached = true;
 						break;  // FIX THIS
 					}
-					coords = b->getBlockCoord();
-					blockType = b->getBlockType();
+					
 					nextBlockType = next->getBlockType();
 					lvl->getGrid()->setLetter(nextBlockType);
 					view->drawNextBlock(nextcoords, nextBlockType);
@@ -436,19 +441,25 @@ void Controller::startGame(){
 				lvl->getGrid()->update(coords, blockType, lvl->getDif(), false);
 				lvl->getGrid()->rowClear(b->getBlockCoord());
 				delete b;
+				if (endReached == true){
+					cout << "I am breaking now" << endl;
+					break;
+				}
 				b = next;
+				coords = b->getBlockCoord();
+				blockType = b->getBlockType();
 				try{ 
 				next = lvl->makeBlock(noRandom);
 			} catch (const char*){
 				endReached = true;
-				break;
+				//break;
 			}
-				coords = b->getBlockCoord();
-				blockType = b->getBlockType();
+				//cout << "Hello I am here" << endl;
 				nextBlockType = next->getBlockType();
 				nextcoords = next->getBlockCoord();
 				lvl->getGrid()->setLetter(nextBlockType);
 				view->drawNextBlock(nextcoords, nextBlockType);
+			
 				isGameOver = lvl->getGrid()->gameOver(coords);
 				if (isGameOver){ break; }
 				lvl->getGrid()->update(coords, blockType, lvl->getDif(), false); 
@@ -554,7 +565,7 @@ void Controller::startGame(){
 		}
 		cout << lvl->getGrid() << endl;
 		view->print(lvl->getGrid()->getScore(), lvl->getDif());	
-	}
+	} //While loop ends
 	if (endReached){
 		view->endOfFile(lvl->getGrid()->getScore());
 	}
@@ -563,8 +574,7 @@ void Controller::startGame(){
     }
     std::this_thread::sleep_for(std::chrono::milliseconds(5000));
 
-	delete b;
-	if (!(endReached)) { delete next; }
+	if (!(endReached)) { delete b; delete next; }
 	delete window;
 	delete view;
 }
