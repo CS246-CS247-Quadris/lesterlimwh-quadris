@@ -39,6 +39,7 @@ int main(int argc, char * argv[]) {
   }
 
   int gameType = 0; // 0 => No Display, 1 => With Display
+  if (level != 0) gameType = 1;
 
   if (level == 0){
     srand(time(NULL));
