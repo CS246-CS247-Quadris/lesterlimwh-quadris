@@ -13,6 +13,8 @@ Controller::Controller(int levelNum, string file): levelNum{levelNum}, file{file
 	lvl = new Level(levelNum, file);
 }
 
+Controller::~Controller(){ delete lvl; }
+
 void Controller::noDisplayGame(){
 	if (levelNum == 0){
 		lvl->readInFile();

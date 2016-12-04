@@ -24,6 +24,7 @@ public:
 	Controller(int levelNum, string file);
 	void startGame();
 	void noDisplayGame();
+	~Controller();
 };
 
 #endif
