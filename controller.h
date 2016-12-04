@@ -26,6 +26,7 @@ class Controller{
 public:
 	Controller(int levelNum);
 	Controller(int levelNum, string file);
+	void changeFile(string newFile);
 	void startGame();
 	void noDisplayGame();
 	~Controller();

@@ -32,7 +32,7 @@ class Level{
 	void readInFile();
 	void readRandomFile(std::string randomFile);
 	void levelUp();
-	void levelDown();	
+	void levelDown();
 	int getDif() const;
 	Block *makeBlock(bool norandom = false);
 	Grid * getGrid();

@@ -102,7 +102,6 @@ Block *Level::diff4Block(){
 }
  
 Block *Level::makeBlock(bool norandom){
-	srand(time(NULL));
 	g->addToCount();
 	if (norandom){ return diff0Block(); }
 	else if (dif == 0){ return diff0Block(); }
