@@ -21,10 +21,6 @@ void Sblock::left() {
 	} else{
 		g->update(coords, name, levelCreated, false);
 	}
-
-	if (isHeavy){
-		down();
-	}
 }
 
 void Sblock::right() {
@@ -39,10 +35,6 @@ void Sblock::right() {
 		coords = temp;
 	} else{
 		g->update(coords, name, levelCreated, false);
-	}
-
-	if (isHeavy){
-		down();
 	}
 }
 
@@ -193,6 +185,8 @@ void Sblock::drop() {
 }
 
 BlockCoord Sblock::getBlockCoord() { return coords; }
+
+bool Sblock::getHeavy() { return isHeavy; }
 
 char Sblock::getBlockType() { return name; }
 

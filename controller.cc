@@ -55,6 +55,9 @@ void Controller::noDisplayGame(){
 			} else{
 				b->left();
 			}
+			if (b->getHeavy()){
+				b->down();
+			}
 			coords = b->getBlockCoord();
 			lvl->getGrid()->update(coords, blockType, lvl->getDif(), false);
 		} else if (regex_match(cmd, m, r)){
@@ -67,6 +70,9 @@ void Controller::noDisplayGame(){
 				}
 			} else{
 				b->right();
+			}
+			if (b->getHeavy()){
+				b->down();
 			}
 			coords = b->getBlockCoord();
 			lvl->getGrid()->update(coords, blockType, lvl->getDif(), false);
@@ -258,6 +264,9 @@ void Controller::startGame(){
 			} else{
 				b->left();
 			}
+			if (b->getHeavy()){
+				b->down();
+			}
 			coords = b->getBlockCoord();
 			lvl->getGrid()->update(coords, blockType, lvl->getDif(), false);
 		} else if (regex_match(cmd, m, r)){
@@ -270,6 +279,9 @@ void Controller::startGame(){
 				}
 			} else{
 				b->right();
+			}
+			if (b->getHeavy()){
+				b->down();
 			}
 			coords = b->getBlockCoord();
 			lvl->getGrid()->update(coords, blockType, lvl->getDif(), false);
@@ -322,6 +334,7 @@ void Controller::startGame(){
 					coords = b->getBlockCoord();
 					lvl->getGrid()->addTolvl4Count();
 					lvl->getGrid()->update(coords, blockType, lvl->getDif(), false);
+					lvl->getGrid()->rowClear(b->getBlockCoord());
 					delete b;
 					b = next;
 					next = lvl->makeBlock(noRandom);
@@ -340,6 +353,7 @@ void Controller::startGame(){
 				coords = b->getBlockCoord();
 				lvl->getGrid()->addTolvl4Count();
 				lvl->getGrid()->update(coords, blockType, lvl->getDif(), false);
+				lvl->getGrid()->rowClear(b->getBlockCoord());
 				delete b;
 				b = next;
 				next = lvl->makeBlock(noRandom);

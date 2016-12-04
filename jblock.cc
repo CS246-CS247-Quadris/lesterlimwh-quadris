@@ -21,10 +21,6 @@ void Jblock::left(){
 	} else{
 		g->update(coords, name, levelCreated, false);
 	}
-
-	if (isHeavy){
-		down();
-	}
 }
 
 void Jblock::right(){
@@ -39,10 +35,6 @@ void Jblock::right(){
 		coords = temp;
 	} else{
 		g->update(coords, name, levelCreated, false);
-	}
-
-	if (isHeavy){
-		down();
 	}
 }
 
@@ -197,5 +189,7 @@ BlockCoord Jblock::getBlockCoord() {
 	std::cout << "Row = " << coords.x4.y << " " << "Col = " << coords.x4.x << std::endl; */
 	return coords; 
 }
+
+bool Jblock::getHeavy() { return isHeavy; }
 
 char Jblock::getBlockType() { return name; }

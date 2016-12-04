@@ -23,9 +23,6 @@ void Tblock::left() {
 		g->update(coords, name, levelCreated, false);
 	}
 
-	if (isHeavy){
-		down();
-	}
 }
 
 void Tblock::right() {
@@ -42,9 +39,6 @@ void Tblock::right() {
 		g->update(coords, name, levelCreated, false);
 	}
 
-	if (isHeavy){
-		down();
-	}
 }
 
 void Tblock::down() {
@@ -203,5 +197,7 @@ BlockCoord Tblock::getBlockCoord() {
 	std::cout << "Row = " << coords.x4.y << " " << "Col = " << coords.x4.x << std::endl;*/
 	return coords; 
 }
+
+bool Tblock::getHeavy() { return isHeavy; }
 
 char Tblock::getBlockType() { return name; }

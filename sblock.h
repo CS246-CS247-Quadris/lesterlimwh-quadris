@@ -21,6 +21,7 @@ public:
 	void clockwise() override;
 	void drop() override;
 	BlockCoord getBlockCoord() override;
+	bool getHeavy() override;
 	char getBlockType() override;
 };
 
