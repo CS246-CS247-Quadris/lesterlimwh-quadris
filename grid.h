@@ -31,7 +31,6 @@ public:
 	void restart();
 	void addToCount();
 	void addTolvl4Count();
-	void resetlvl4Count();
 	void addToScore();
 	bool scoreHelper(int n);
 	int getScore() const;

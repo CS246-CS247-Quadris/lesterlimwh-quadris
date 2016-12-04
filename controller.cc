@@ -208,6 +208,11 @@ void Controller::noDisplayGame(){
 			nextBlockType = next->getBlockType();
 			lvl->getGrid()->setLetter(nextBlockType);
 			lvl->getGrid()->update(coords, blockType, lvl->getDif(), false); 
+		} else if (cmd == "restart"){
+			lvl->getGrid()->restart();
+			coords = b->getBlockCoord();
+			blockType = b->getBlockType();
+			lvl->getGrid()->update(coords, blockType, lvl->getDif(), false);
 		}
 		cout << lvl->getGrid() << endl;		
 	}
@@ -421,6 +426,11 @@ void Controller::startGame(){
 			nextBlockType = next->getBlockType();
 			lvl->getGrid()->setLetter(nextBlockType);
 			lvl->getGrid()->update(coords, blockType, lvl->getDif(), false); 
+		} else if (cmd == "restart"){
+			lvl->getGrid()->restart();
+			coords = b->getBlockCoord();
+			blockType = b->getBlockType();
+			lvl->getGrid()->update(coords, blockType, lvl->getDif(), false);
 		}
 		cout << lvl->getGrid() << endl;
 		view->print(lvl->getGrid()->getScore(), lvl->getDif());	
