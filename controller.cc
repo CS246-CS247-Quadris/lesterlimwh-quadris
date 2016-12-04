@@ -285,7 +285,10 @@ void Controller::noDisplayGame(){
 		}
 		cout << lvl->getGrid() << endl;	
 	}
-	cout << "You have reached end of file. Game is over" << endl;
+	if (isGameOver){
+		cout << "You have reached the top. Game is over" << endl;
+	}
+	else { 	cout << "You have reached end of file. Game is over" << endl; }	
 	if (!(endReached)){
 		delete b;
 		delete  next;
