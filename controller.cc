@@ -22,6 +22,9 @@ void Controller::noDisplayGame(){
 	}
 
 	string cmd;
+	ifstream f;
+	int seqCounter = -1;
+   	bool readFromSeq = false;
     bool isGameOver = false;
    	bool noRandom = false;
    	bool endReached = false;
@@ -36,7 +39,10 @@ void Controller::noDisplayGame(){
 	cout << lvl->getGrid() << endl;
 	
 	while (true){
-		cin >> cmd;
+
+		if (readFromSeq) { cmd = seqCommands[seqCounter]; } 
+		else { cin >> cmd; }
+
 		regex r("^[0-9]*(ri|rig|righ|right)");
 		regex l("^[0-9]*(le|lef|left)");
 		regex d("^[0-9]*(do|dow|down)");
@@ -213,7 +219,12 @@ void Controller::noDisplayGame(){
 			blockType = b->getBlockType();
 			lvl->getGrid()->update(coords, blockType, lvl->getDif(), false); 
 		} else if (cmd == "norandom"){
-			cin >> cmd;
+			if (readFromSeq) { 
+				++seqCounter;
+				cmd = seqCommands[seqCounter]; 
+			} else{
+				cin >> cmd;
+			}
 			lvl->readRandomFile(cmd);
 			coords = b->getBlockCoord();
 			lvl->getGrid()->removeBlock(coords, lvl->getDif());
@@ -245,11 +256,26 @@ void Controller::noDisplayGame(){
 			coords = b->getBlockCoord();
 			blockType = b->getBlockType();
 			lvl->getGrid()->update(coords, blockType, lvl->getDif(), false);
+		} else if (cmd == "sequence"){
+			readFromSeq = true;
+			cin >> cmd;
+			string s;
+			f.open(cmd);
+			while (f >> s){
+				seqCommands.push_back(s);
+				s.clear();
+			}
+		}
+		if (seqCounter == seqCommands.size() - 1){
+			readFromSeq = false;
+			seqCounter = -1;
+		} else{
+			++seqCounter;
 		}
 		if (!(endReached)){
-		cout << lvl->getGrid() << endl;
+ 			cout << lvl->getGrid() << endl;
 		}		
-	}
+	} // while
 	if (b){ delete b; }
 	if (!(endReached)){
 		delete  next;
@@ -264,6 +290,9 @@ void Controller::startGame(){
 	string cmd;
     int rows = 18;
 	int columns = 11;
+	ifstream f;
+	int seqCounter = -1;
+   	bool readFromSeq = false;
     bool isGameOver = false;
     bool noRandom = false;
     bool endReached = false;
@@ -285,7 +314,10 @@ void Controller::startGame(){
 	std::vector<int> delRows;
 
 	while (true){
-		cin >> cmd;
+
+		if (readFromSeq) { cmd = seqCommands[seqCounter]; } 
+		else { cin >> cmd; }
+
 		regex r("^[0-9]*(ri|rig|righ|right)");
 		regex l("^[0-9]*(le|lef|left)");
 		regex d("^[0-9]*(do|dow|down)");
@@ -467,7 +499,12 @@ void Controller::startGame(){
 			blockType = b->getBlockType();
 			lvl->getGrid()->update(coords, blockType, lvl->getDif(), false); 
 		} else if (cmd == "norandom"){
-			cin >> cmd;
+			if (readFromSeq) { 
+				++seqCounter;
+				cmd = seqCommands[seqCounter]; 
+			} else{
+				cin >> cmd;
+			}
 			lvl->readRandomFile(cmd);
 			coords = b->getBlockCoord();
 			lvl->getGrid()->removeBlock(coords, lvl->getDif());
@@ -499,6 +536,21 @@ void Controller::startGame(){
 			coords = b->getBlockCoord();
 			blockType = b->getBlockType();
 			lvl->getGrid()->update(coords, blockType, lvl->getDif(), false);
+		} else if (cmd == "sequence"){
+			readFromSeq = true;
+			cin >> cmd;
+			string s;
+			f.open(cmd);
+			while (f >> s){
+				seqCommands.push_back(s);
+				s.clear();
+			}
+		}
+		if (seqCounter == seqCommands.size() - 1){
+			readFromSeq = false;
+			seqCounter = -1;
+		} else{
+			++seqCounter;
 		}
 		cout << lvl->getGrid() << endl;
 		view->print(lvl->getGrid()->getScore(), lvl->getDif());	
