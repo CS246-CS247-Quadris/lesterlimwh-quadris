@@ -21,10 +21,6 @@ void Oblock::left(){
 	} else{
 		g->update(coords, name, levelCreated, false);
 	}
-
-	if (isHeavy){
-		down();
-	}
 }
 
 void Oblock::right(){
@@ -39,10 +35,6 @@ void Oblock::right(){
 		coords = temp;
 	} else{
 		g->update(coords, name, levelCreated, false);
-	}
-
-	if (isHeavy){
-		down();
 	}
 }
 
@@ -96,5 +88,7 @@ void Oblock::drop() {
 }
 
 BlockCoord Oblock::getBlockCoord() { return coords; }
+
+bool Oblock::getHeavy() { return isHeavy; }
 
 char Oblock::getBlockType() { return name; }

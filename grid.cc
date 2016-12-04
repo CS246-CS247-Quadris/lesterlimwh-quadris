@@ -40,7 +40,7 @@ void Grid::addToScore() {
 		ingrid = false;
 		for (int i = height - 1; i >= 0; --i) {
 			for (int j = 0; j < width; ++j) {
-				if (display[i][j].count == num) {
+				if (display[i][j].count == num) { //Sets ingrid to true the block with this count is in the grid
 					ingrid = true;
 				}
 			}
@@ -50,7 +50,7 @@ void Grid::addToScore() {
 				deletedBlocks.emplace_back(num);
 				for (int j = 0; j < scoreRowCheck.size(); ++j) {
 					if (scoreRowCheck[j].count == num) {
-						v.emplace_back(scoreRowCheck[j].levelCreated);
+						v.emplace_back(scoreRowCheck[j].levelCreated); //Adds to v when current count = num
 						break;
 					}
 				}
@@ -58,9 +58,8 @@ void Grid::addToScore() {
 		}
 	}
 	for (int i = 0; i < v.size(); i++) {
-		score += (v[i]+1) * (v[i]+1);
+		score += (v[i]+1) * (v[i]+1); 
 	}
-	cout << "LEN OF ARRAY IS: " << v.size() <<endl;
 }
 
 void Grid::update(const BlockCoord &b, const char c, int level, bool empty ){ //added empty to know if resetting block
@@ -107,7 +106,7 @@ vector<int> Grid::rowHelper(/*int &row1, int &row2, int &row3, int &row4,*/ cons
 }
 
 vector<int> Grid::rowClear(const BlockCoord &b){
-	cout << "LVL4COUNT IS: " << lvl4Count << endl;
+	//cout << "LVL4COUNT IS: " << lvl4Count << endl;
 	vector<int> deleted;
 	scoreRowCheck.clear();
 	vector<int> rows = rowHelper(b);
@@ -143,6 +142,7 @@ vector<int> Grid::rowClear(const BlockCoord &b){
 		}
 		isFull = true;
 	}
+	addToScore();
 	return deleted;
 }
 
@@ -210,7 +210,9 @@ string Grid::nextBlock() const{
 	}
 	return s;
 }
-void Grid::restart(){}
+void Grid::restart(){
+
+}
 void Grid::hint(){}
 std::ostream &operator<<(std::ostream &out , const Grid *g){
     /*    for (int i = 0; i < g->width; ++i){

@@ -21,10 +21,6 @@ void Iblock::left() {
 	} else{
 		g->update(coords, name, levelCreated, false);
 	}
-
-	if (isHeavy){
-		down();
-	}
 }
 
 void Iblock::right() {
@@ -41,9 +37,6 @@ void Iblock::right() {
 		g->update(coords, name, levelCreated, false);
 	}
 
-	if (isHeavy){
-		down();
-	}
 }
 
 void Iblock::down() {
@@ -199,5 +192,7 @@ BlockCoord Iblock::getBlockCoord() {
 	std::cout << "Row = " << coords.x4.y << " " << "Col = " << coords.x4.x << std::endl;*/
 	return coords; 
 }
+
+bool Iblock::getHeavy() { return isHeavy; }
 
 char Iblock::getBlockType() { return name; }

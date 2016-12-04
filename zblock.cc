@@ -21,10 +21,6 @@ void Zblock::left(){
 	} else{
 		g->update(coords, name, levelCreated, false);
 	}
-
-	if (isHeavy){
-		down();
-	}
 }
 
 void Zblock::right(){
@@ -39,10 +35,6 @@ void Zblock::right(){
 		coords = temp;
 	} else{
 		g->update(coords, name, levelCreated, false);
-	}
-
-	if (isHeavy){
-		down();
 	}
 }
 
@@ -189,8 +181,6 @@ void Zblock::drop() {
 	}
 }
 
-BlockCoord Zblock::getBlockCoord() { return coords; }
-
 char Zblock::getBlockType() { 
 	/*std::cout << "Current coordinates of this block:" << std::endl;
 	std::cout << "Row = " << coords.x1.y << " " << "Col = " << coords.x1.x << std::endl; 
@@ -200,4 +190,7 @@ char Zblock::getBlockType() {
 	return name; 
 }
 
+bool Zblock::getHeavy() { return isHeavy; }
+
+BlockCoord Zblock::getBlockCoord() { return coords; }
 // Pranav can you see this
