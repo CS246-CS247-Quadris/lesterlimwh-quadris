@@ -109,6 +109,8 @@ vector<int> Grid::rowClear(const BlockCoord &b){
 	scoreRowCheck.clear();
 	vector<int> rows = rowHelper(b);
 	int size = rows.size();
+	int whiteAbove = 0;
+	bool allWhite = true;
 	if (size >= 1){ isScoreDif = 1;}
 	bool isFull = true;
 	for (int i = 0; i < size; ++i){
@@ -137,6 +139,30 @@ vector<int> Grid::rowClear(const BlockCoord &b){
 					display[j][k].isChanged = true;
 				}
 			}
+			/*if (i == size - 1){
+				for (int j = rows[i]; j < height; ++j){
+					for (int k = 0; k < width; ++k){
+						if (display[j][k].letter != ' '){
+							allWhite = false;
+							break;
+						}
+					}
+					if (allWhite){
+						whiteAbove = j;
+						break;
+					}
+				}
+				for (int l = whiteAbove; l < height; ++l){
+					for (int k = 0; k < width; ++k){
+						display[l][k].isChanged = false;
+					}
+				}
+			}*/
+			/*for (int j = whiteAbove; j < height; ++j){
+				for (int k = 0; j < width; ++k){
+					display[j][k].isChanged = false;
+				}
+			}*/
 		}
 		isFull = true;
 	}
