@@ -13,7 +13,7 @@ int main(int argc, char * argv[]) {
   cout << endl; 
 
   if (n == 0){
-    Controller ctrl(n, "test.txt"); // change test.txt to sequence.txt when done testing
+    Controller ctrl(n, "sequence.txt");
     if (argc > 1){
       for(int i = 1; i < argc; ++i){
         string theArg = argv[i];

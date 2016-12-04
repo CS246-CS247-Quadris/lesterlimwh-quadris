@@ -3,6 +3,7 @@
 using std::regex;
 using std::smatch;
 using std::regex_match;
+using std::ifstream;
 using std::istringstream;
 
 Controller::Controller(int levelNum): levelNum{levelNum} {
@@ -127,32 +128,32 @@ void Controller::noDisplayGame(){
 					coords = b->getBlockCoord();
 					lvl->getGrid()->addTolvl4Count();
 					lvl->getGrid()->update(coords, blockType, lvl->getDif(), false);
+					lvl->getGrid()->rowClear(b->getBlockCoord());
 					delete b;
 					b = next;
 					try{
-					next = lvl->makeBlock(noRandom);
-				} catch (const char*){
-					endReached = true;
-					cout << "You reached the end of file. Game is over" << endl;
-					breakNextLoop = true;
-					break;
-					break;
-
+						next = lvl->makeBlock(noRandom);
+					} catch (const char*){
+						endReached = true;
+						cout << "You reached the end of file. Game is over" << endl;
+						breakNextLoop = true;
+						break;
+					}
+					coords = b->getBlockCoord();
+					blockType = b->getBlockType();
+					nextBlockType = next->getBlockType();
+					lvl->getGrid()->setLetter(nextBlockType);
+					isGameOver = lvl->getGrid()->gameOver(coords);
+					if (isGameOver){ break; }
+						lvl->getGrid()->update(coords, blockType, lvl->getDif(), false); 
 				}
-				coords = b->getBlockCoord();
-				blockType = b->getBlockType();
-				nextBlockType = next->getBlockType();
-				lvl->getGrid()->setLetter(nextBlockType);
-				isGameOver = lvl->getGrid()->gameOver(coords);
-				if (isGameOver){ break; }
-					lvl->getGrid()->update(coords, blockType, lvl->getDif(), false); 
-				}
-				//if (isGameOver) { break; } ??What is this for?
+				if (isGameOver) { break; }
 			} else{
 				b->drop();
 				coords = b->getBlockCoord();
 				lvl->getGrid()->addTolvl4Count();
 				lvl->getGrid()->update(coords, blockType, lvl->getDif(), false);
+				lvl->getGrid()->rowClear(b->getBlockCoord());
 				delete b;
 				b = next;
 				try{
@@ -162,7 +163,6 @@ void Controller::noDisplayGame(){
 				cout << "You reached the end of file. Game is over" << endl;
 				break;
 			}   
-				
 				coords = b->getBlockCoord();
 				blockType = b->getBlockType();
 				nextBlockType = next->getBlockType();
@@ -199,6 +199,8 @@ void Controller::noDisplayGame(){
 			coords = b->getBlockCoord();
 			lvl->getGrid()->update(coords, blockType, lvl->getDif(), false);
 		} else if (regex_match(cmd, m, blocks)){
+			coords = b->getBlockCoord();
+			lvl->getGrid()->removeBlock(coords, lvl->getDif());
 			delete b;
 			if (cmd == "I") { b = lvl->iBlock(); }
 			else if (cmd == "J") { b = lvl->jBlock(); }
@@ -225,6 +227,19 @@ void Controller::noDisplayGame(){
 			nextBlockType = next->getBlockType();
 			lvl->getGrid()->setLetter(nextBlockType);
 			lvl->getGrid()->update(coords, blockType, lvl->getDif(), false); 
+		} else if(cmd == "random"){
+			coords = b->getBlockCoord();
+			lvl->getGrid()->removeBlock(coords, lvl->getDif());
+			delete b;
+			delete next;
+			noRandom = false;
+			b = lvl->makeBlock(noRandom);
+			next = lvl->makeBlock(noRandom);
+			coords = b->getBlockCoord();
+			blockType = b->getBlockType();
+			nextBlockType = next->getBlockType();
+			lvl->getGrid()->setLetter(nextBlockType);
+			lvl->getGrid()->update(coords, blockType, lvl->getDif(), false);
 		} else if (cmd == "restart"){
 			lvl->getGrid()->restart();
 			coords = b->getBlockCoord();
@@ -367,11 +382,11 @@ void Controller::startGame(){
 					delete b;
 					b = next;
 					try{
-					next = lvl->makeBlock(noRandom);
-				} catch(const char*){
-					endReached = true;
-					break;  // FIX THIS
-				}
+						next = lvl->makeBlock(noRandom);
+					} catch(const char*){
+						endReached = true;
+						break;  // FIX THIS
+					}
 					coords = b->getBlockCoord();
 					blockType = b->getBlockType();
 					nextBlockType = next->getBlockType();
@@ -434,11 +449,12 @@ void Controller::startGame(){
 			coords = b->getBlockCoord();
 			lvl->getGrid()->update(coords, blockType, lvl->getDif(), false);
 			view->levelChanged();
-			if(lvl->getDif() == 0){ 
-			      /// THIS MAY SOLVE ERROR WHEN SWITCHING FROM ANY LEVEL TO LEVEL 0 AND GETTING EXCEPTION
-				lvl->readRandomFile("test.txt");
+			if(lvl->getDif() == 0){
+				lvl->readRandomFile("sequence.txt");
 			}
 		} else if (regex_match(cmd, m, blocks)){
+			coords = b->getBlockCoord();
+			lvl->getGrid()->removeBlock(coords, lvl->getDif());
 			delete b;
 			if (cmd == "I") { b = lvl->iBlock(); }
 			else if (cmd == "J") { b = lvl->jBlock(); }
@@ -465,6 +481,19 @@ void Controller::startGame(){
 			nextBlockType = next->getBlockType();
 			lvl->getGrid()->setLetter(nextBlockType);
 			lvl->getGrid()->update(coords, blockType, lvl->getDif(), false); 
+		} else if(cmd == "random"){
+			coords = b->getBlockCoord();
+			lvl->getGrid()->removeBlock(coords, lvl->getDif());
+			delete b;
+			delete next;
+			noRandom = false;
+			b = lvl->makeBlock(noRandom);
+			next = lvl->makeBlock(noRandom);
+			coords = b->getBlockCoord();
+			blockType = b->getBlockType();
+			nextBlockType = next->getBlockType();
+			lvl->getGrid()->setLetter(nextBlockType);
+			lvl->getGrid()->update(coords, blockType, lvl->getDif(), false);
 		} else if (cmd == "restart"){
 			lvl->getGrid()->restart();
 			coords = b->getBlockCoord();
@@ -487,4 +516,3 @@ void Controller::startGame(){
 	delete window;
 	delete view;
 }
-

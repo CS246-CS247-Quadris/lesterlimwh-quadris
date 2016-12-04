@@ -1,6 +1,5 @@
 #include "window.h"
 #include "blockcoord.h"
-#include "graphiccell.h"
 #include <vector>
 #include "grid.h"
 class Graphics{
@@ -14,7 +13,6 @@ class Graphics{
 	Grid *g;
 	bool isScoreDif = 1;
 	bool isLvlDif = 1;
-	std::vector<std:: vector <GraphicCell> > view;
 public:
 	Graphics(Xwindow &window, int rows, int columns, Grid *g);
 	~Graphics();
