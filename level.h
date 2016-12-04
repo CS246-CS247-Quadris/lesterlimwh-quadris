@@ -15,6 +15,7 @@ class Block;
 class Level{
 	static int count;
 	int dif;
+	int fileSize;
 	Grid *g;
 	std::ifstream f;
 	std::string file;

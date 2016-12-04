@@ -22,6 +22,7 @@ void Level::levelDown(){
 	if (dif > minLvl) dif--; 
 }
 
+
 void Level::readInFile(){
 	std::string s;
 	while (f >> s){
@@ -44,7 +45,7 @@ int Level::getDif() const {
 }
 
 Block *Level::diff0Block(){
-	if (count >= seqInput.size()) { throw "outofbounds"; }
+	if (count >= seqInput.size()) { throw "outofbounds" ; }
 	if ( seqInput[count] == "I") { count++; return new Iblock(false, g, 0); }
 	else if (seqInput[count] == "J") { count++; return new Jblock(false, g, 0); }
 	else if (seqInput[count] == "O") { count++; return new Oblock(false, g, 0); }

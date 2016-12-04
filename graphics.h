@@ -23,6 +23,7 @@ public:
 	//void update(const BlockCoord &b, const char blockType);
 	void drawNextBlock(const BlockCoord &b, const char BlockType);
 	void gameOver(int score);
+	void endOfFile(int score);
 	int getColour(const char blockType);
 	void print(int score, int dif);
 };

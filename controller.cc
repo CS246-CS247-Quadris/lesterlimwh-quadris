@@ -23,6 +23,8 @@ void Controller::noDisplayGame(){
 	string cmd;
     bool isGameOver = false;
    	bool noRandom = false;
+   	bool endReached = false;
+   	bool breakNextLoop = false;
 	Block * b = lvl->makeBlock();
 	Block * next = lvl->makeBlock();
 	char blockType = b->getBlockType();
@@ -31,7 +33,6 @@ void Controller::noDisplayGame(){
 	BlockCoord coords = b->getBlockCoord();
 	lvl->getGrid()->update(coords, blockType, lvl->getDif(), false);
 	cout << lvl->getGrid() << endl;
-	cout << coords.x1.x << coords.x1.y << endl;
 	
 	while (true){
 		cin >> cmd;
@@ -45,7 +46,6 @@ void Controller::noDisplayGame(){
 		regex ld("^[0-9]*(leveld|leveldo|leveldow|leveldown)");
 		regex blocks("^[IJLOSTZ]");
 		smatch m;
-
 		if (regex_match(cmd, m, l)){
 			string s = cmd.substr(0,1);
 			istringstream ss(s);
@@ -129,16 +129,25 @@ void Controller::noDisplayGame(){
 					lvl->getGrid()->update(coords, blockType, lvl->getDif(), false);
 					delete b;
 					b = next;
+					try{
 					next = lvl->makeBlock(noRandom);
-					coords = b->getBlockCoord();
-					blockType = b->getBlockType();
-					nextBlockType = next->getBlockType();
-					lvl->getGrid()->setLetter(nextBlockType);
-					isGameOver = lvl->getGrid()->gameOver(coords);
-					if (isGameOver){ break; }
+				} catch (const char*){
+					endReached = true;
+					cout << "You reached the end of file. Game is over" << endl;
+					breakNextLoop = true;
+					break;
+					break;
+
+				}
+				coords = b->getBlockCoord();
+				blockType = b->getBlockType();
+				nextBlockType = next->getBlockType();
+				lvl->getGrid()->setLetter(nextBlockType);
+				isGameOver = lvl->getGrid()->gameOver(coords);
+				if (isGameOver){ break; }
 					lvl->getGrid()->update(coords, blockType, lvl->getDif(), false); 
 				}
-				if (isGameOver) { break; }
+				//if (isGameOver) { break; } ??What is this for?
 			} else{
 				b->drop();
 				coords = b->getBlockCoord();
@@ -146,7 +155,14 @@ void Controller::noDisplayGame(){
 				lvl->getGrid()->update(coords, blockType, lvl->getDif(), false);
 				delete b;
 				b = next;
+				try{
 				next = lvl->makeBlock(noRandom);
+			} catch (const char*){
+				endReached = true;
+				cout << "You reached the end of file. Game is over" << endl;
+				break;
+			}   
+				
 				coords = b->getBlockCoord();
 				blockType = b->getBlockType();
 				nextBlockType = next->getBlockType();
@@ -168,6 +184,7 @@ void Controller::noDisplayGame(){
 			}
 			coords = b->getBlockCoord();
 			lvl->getGrid()->update(coords, blockType, lvl->getDif(), false);
+
 		} else if (regex_match(cmd, m, ld)){
 			string s = cmd.substr(0,1);
 			istringstream ss(s);
@@ -214,10 +231,14 @@ void Controller::noDisplayGame(){
 			blockType = b->getBlockType();
 			lvl->getGrid()->update(coords, blockType, lvl->getDif(), false);
 		}
-		cout << lvl->getGrid() << endl;		
+		if (!(endReached)){
+		cout << lvl->getGrid() << endl;
+		}		
 	}
-	delete b;
-	delete next;
+	if (b){ delete b; }
+	if (!(endReached)){
+		delete  next;
+	}
 }
 
 void Controller::startGame(){
@@ -230,6 +251,7 @@ void Controller::startGame(){
 	int columns = 11;
     bool isGameOver = false;
     bool noRandom = false;
+    bool endReached = false;
 	Block * b = lvl->makeBlock();
 	Block * next = lvl->makeBlock();
 	char blockType = b->getBlockType();
@@ -344,7 +366,12 @@ void Controller::startGame(){
 					lvl->getGrid()->rowClear(b->getBlockCoord());
 					delete b;
 					b = next;
+					try{
 					next = lvl->makeBlock(noRandom);
+				} catch(const char*){
+					endReached = true;
+					break;  // FIX THIS
+				}
 					coords = b->getBlockCoord();
 					blockType = b->getBlockType();
 					nextBlockType = next->getBlockType();
@@ -363,10 +390,16 @@ void Controller::startGame(){
 				lvl->getGrid()->rowClear(b->getBlockCoord());
 				delete b;
 				b = next;
+				try{ 
 				next = lvl->makeBlock(noRandom);
+			} catch (const char*){
+				endReached = true;
+				break;
+			}
 				coords = b->getBlockCoord();
 				blockType = b->getBlockType();
 				nextBlockType = next->getBlockType();
+				nextcoords = next->getBlockCoord();
 				lvl->getGrid()->setLetter(nextBlockType);
 				view->drawNextBlock(nextcoords, nextBlockType);
 				isGameOver = lvl->getGrid()->gameOver(coords);
@@ -386,6 +419,7 @@ void Controller::startGame(){
 			}
 			coords = b->getBlockCoord();
 			lvl->getGrid()->update(coords, blockType, lvl->getDif(), false);
+			view->levelChanged();
 		} else if (regex_match(cmd, m, ld)){
 			string s = cmd.substr(0,1);
 			istringstream ss(s);
@@ -399,6 +433,11 @@ void Controller::startGame(){
 			}
 			coords = b->getBlockCoord();
 			lvl->getGrid()->update(coords, blockType, lvl->getDif(), false);
+			view->levelChanged();
+			if(lvl->getDif() == 0){ 
+			      /// THIS MAY SOLVE ERROR WHEN SWITCHING FROM ANY LEVEL TO LEVEL 0 AND GETTING EXCEPTION
+				lvl->readRandomFile("test.txt");
+			}
 		} else if (regex_match(cmd, m, blocks)){
 			delete b;
 			if (cmd == "I") { b = lvl->iBlock(); }
@@ -435,12 +474,16 @@ void Controller::startGame(){
 		cout << lvl->getGrid() << endl;
 		view->print(lvl->getGrid()->getScore(), lvl->getDif());	
 	}
-
-    view->gameOver(lvl->getGrid()->getScore());
+	if (endReached){
+		view->endOfFile(lvl->getGrid()->getScore());
+	}
+	else {
+    	view->gameOver(lvl->getGrid()->getScore());
+    }
     std::this_thread::sleep_for(std::chrono::milliseconds(5000));
 
 	delete b;
-	delete next;
+	if (!(endReached)) { delete next; }
 	delete window;
 	delete view;
 }
