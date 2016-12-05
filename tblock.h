@@ -3,10 +3,10 @@
 #include "grid.h"
 #include "block.h"
 #include "blockcoord.h"
-
+//Interface for Tblock
 class Tblock:public Block {
 	BlockCoord coords;
-	bool isHeavy;
+	bool isHeavy;  
 	Grid *g;
 	int orientation = 0;
 	int levelCreated; //Needed to pass down to blockcells
@@ -23,8 +23,8 @@ public:
 	BlockCoord getBlockCoord() override;
 	bool getHeavy() override;
 	char getBlockType() override;
-	int lowestRowCoord();
-	int numBlocksInLowest(int row);
+	int lowestRowCoord();  
+	int numBlocksInLowest(int row);  
 	BlockCoord hint() override;
 };
 

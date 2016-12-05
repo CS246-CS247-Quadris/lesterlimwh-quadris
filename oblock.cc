@@ -8,7 +8,7 @@ Oblock::Oblock(bool isHeavy, Grid *g, int levelCreated): isHeavy{isHeavy}, g{g},
 	coords = {x1,x2,x3,x4}; // initialize default coords for an Oblock
 }
 
-void Oblock::left(){
+void Oblock::left(){  //Updates the coordinates one position to the left if possible
 	Coord x1 = {(coords.x1.x - 1), coords.x1.y};
 	Coord x2 = {(coords.x2.x - 1), coords.x2.y};
 	Coord x3 = {(coords.x3.x - 1), coords.x3.y};
@@ -23,7 +23,7 @@ void Oblock::left(){
 	}
 }
 
-void Oblock::right(){
+void Oblock::right(){  //Updates the coordinates one position to the right if possible
 	Coord x1 = {(coords.x1.x + 1), coords.x1.y};
 	Coord x2 = {(coords.x2.x + 1), coords.x2.y};
 	Coord x3 = {(coords.x3.x + 1), coords.x3.y};
@@ -38,7 +38,7 @@ void Oblock::right(){
 	}
 }
 
-void Oblock::down() {
+void Oblock::down() {  //Updates the coordinates one position down if possible
 	Coord x1 = {coords.x1.x, (coords.x1.y - 1)};
 	Coord x2 = {coords.x2.x, (coords.x2.y - 1)};
 	Coord x3 = {coords.x3.x, (coords.x3.y - 1)};
@@ -53,19 +53,19 @@ void Oblock::down() {
 	}
 }
 
-void Oblock::counterclockwise() {
+void Oblock::counterclockwise() {  //Rotates the block counterclockwise
 	if (isHeavy){
 		down();
 	}
 }
 
-void Oblock::clockwise() {
+void Oblock::clockwise() {  //Rotates the block clockwise
 	if (isHeavy){
 		down();
 	}
 }
 
-void Oblock::drop() {
+void Oblock::drop() {  //Keeps calling down until it can no longer go down, then drops 
 	Coord x1 = {coords.x1.x, (coords.x1.y - 1)};
 	Coord x2 = {coords.x2.x, (coords.x2.y - 1)};
 	Coord x3 = {coords.x3.x, (coords.x3.y - 1)};
@@ -93,7 +93,7 @@ bool Oblock::getHeavy() { return isHeavy; }
 
 char Oblock::getBlockType() { return name; }
 
-int Oblock::lowestRowCoord() {
+int Oblock::lowestRowCoord() {  //Helper for hint that returns lowest row of a block
 	int lowest = 20;
 	if (coords.x1.y < lowest) {
 		lowest = coords.x1.y;
@@ -110,7 +110,7 @@ int Oblock::lowestRowCoord() {
 	return lowest;
 }
 
-int Oblock::numBlocksInLowest(int row) {
+int Oblock::numBlocksInLowest(int row) {  //Helper for hint that returns num cells in given int row
 	int num = 0;
 	if (coords.x1.y == row) {
 		num++;
@@ -127,9 +127,11 @@ int Oblock::numBlocksInLowest(int row) {
 	return num;
 }
 
-BlockCoord Oblock::hint() {
+//This gives a hint for the user by checking to see first, the lowest possible position the block can be in,
+//and also the number of blocks in the lowest row of the lowest position. When it finds the best spot, it will
+//return coordinates for them
+BlockCoord Oblock::hint() {  
 	int lowestRow = 20;
-	int currCol;
 	int currOrien;
 	int startOrien = orientation;
 	int blocksInLowest = 0;  //Amount of blocks in lowest row
@@ -144,34 +146,33 @@ BlockCoord Oblock::hint() {
 	BlockCoord curr;
 
 	for (int orien = 0; orien < 4; orien++) {
-		std::cout << "orientation is: " << orientation << std::endl;
-		for (int i = 0; i <= 10; ++i) {
+		currOrien = orientation;
+		for (int i = 0; i <= 10; ++i) {  //Go through entire width
 			Coord cx1 = {coords.x1.x,coords.x1.y};
 			Coord cx2 = {coords.x2.x,coords.x2.y};
 			Coord cx3 = {coords.x3.x,coords.x3.y};
 			Coord cx4 = {coords.x4.x,coords.x4.y};
-			curr = {cx1,cx2,cx3,cx4};
+			curr = {cx1,cx2,cx3,cx4};  //Stores coordinates before dropping
 			drop();
 			if (lowestRowCoord() < lowestRow) {
 				lowestRow = lowestRowCoord();
-				std::cout << "lowestRow is: " << lowestRow << std::endl;
+				blocksInLowest = numBlocksInLowest(lowestRow);
 				best = coords;
 			} 
 			if (numBlocksInLowest(lowestRow) > blocksInLowest) {
 				blocksInLowest = numBlocksInLowest(lowestRow);
-				std::cout << "numBlocksInLowest is: " << blocksInLowest << std::endl;
 				best = coords;
 			}
-			coords = curr;
+			coords = curr;  //Return to coords before dropping and move right
 			right();
 			g->update(coords, ' ', 0, true);
 		}
-		for (int i = 10; i >= 0; --i) {
+		for (int i = 10; i >= 0; --i) {  //Go through entire width
 			Coord cx1 = {coords.x1.x,coords.x1.y};
 			Coord cx2 = {coords.x2.x,coords.x2.y};
 			Coord cx3 = {coords.x3.x,coords.x3.y};
 			Coord cx4 = {coords.x4.x,coords.x4.y};
-			curr = {cx1,cx2,cx3,cx4};
+			curr = {cx1,cx2,cx3,cx4};  //Stores coordinates before dropping
 			drop();
 			if (lowestRowCoord() < lowestRow) {
 				lowestRow = lowestRowCoord();
@@ -182,15 +183,16 @@ BlockCoord Oblock::hint() {
 				blocksInLowest = numBlocksInLowest(lowestRow);
 				best = coords;
 			}
-			coords = curr;
+			coords = curr;  //Return to coords before dropping and move left
 			left();
 			g->update(coords, ' ', 0, true);
 		}				
 		clockwise();
+		if (orientation == currOrien) counterclockwise();
 		g->update(coords, ' ', 0, true);
 	}
 	orientation = startOrien;
 	coords = start;
-	g->update(coords, name, levelCreated, false);
+	g->update(coords, name, levelCreated, false);  //Goes back to original start position and updates
 	return best;
 }

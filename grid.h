@@ -6,17 +6,19 @@
 #include "blockcell.h"
 
 class Level;
+
+// Interface for Grid Class
 class Grid{
-	int height,width;
-	int blockNum;
+	int height,width; // The width and the height of the grid
+	int blockNum; 
 	int dif; 
 	char blockLetter;
-	int score = 0;
-	bool isScoreDif = true;
+	int score = 0; // This stores the score of the game
+	bool isScoreDif = true; // This a
 	int lvl4Count = 0;
-	std::vector<int> deletedBlocks;
-	std::vector<BlockCell> scoreRowCheck;
-	std::vector<std::vector <BlockCell>> display;
+	std::vector<int> deletedBlocks; // This is used to calculate score
+	std::vector<BlockCell> scoreRowCheck; // This is used to calculate score
+	std::vector<std::vector <BlockCell>> display; // This is the main display vector for the grid
 
 public:
 	Grid(int dif, int height = 18, int width = 11);
@@ -27,7 +29,6 @@ public:
 	std::vector<int> rowHelper(const BlockCoord &b);
 	std::vector<int> rowClear(const BlockCoord &b);
 	void setLetter(const char letter);
-	void hint();
 	void restart();
 	void addToCount();
 	void addTolvl4Count();
