@@ -152,7 +152,7 @@ vector<int> Grid::rowClear(const BlockCoord &b){
 						break;
 					}
 				}
-				for (int l = whiteAbove; l < height; ++l){
+				for (int l = whiteAbove + 1; l < height; ++l){
 					for (int k = 0; k < width; ++k){
 						display[l][k].isChanged = false;
 					}
