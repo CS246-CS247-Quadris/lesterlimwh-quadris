@@ -34,6 +34,7 @@ public:
 	void addToScore();
 	bool scoreHelper(int n);
 	int getScore() const;
+	void clearHint();
 	void dropStarBlock();
 	void removeBlock(BlockCoord &b, int level);
 	std::string nextBlock() const; // Called when Drop is Called

@@ -170,6 +170,16 @@ vector<int> Grid::rowClear(const BlockCoord &b){
 	return deleted;
 }
 
+void Grid::clearHint() {
+	for (int i = height - 1; i >= 0; --i) {
+		for (int j = 0; j < width; ++j) {
+			if (display[i][j].letter == '?') {
+				display[i][j] = {0,0,' '};
+			}
+		}
+	}
+}
+
 void Grid::dropStarBlock() {//COUNT IS MESSED UP BUT IT KINDA WORKS
 	int starCol = 5;
 	if (lvl4Count != 0 && lvl4Count % 5 == 0) {
