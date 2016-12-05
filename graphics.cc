@@ -6,10 +6,6 @@ using namespace std;
 Graphics::Graphics(Xwindow &window, int rows, int columns, Grid *g): window{window}, rows{rows}, columns{columns}, g{g}{
 	window.drawBigString(300, 50, "Quadris", Xwindow::Black);
 	width = 500/rows;
-	window.drawLine(100, 150, 100, 650);
-	window.drawLine(width * 15 - 10, 150, width * 15 - 10, 650);
-	window.drawLine(100, 150, width * 15 - 10, 150);
-	window.drawLine(100, 650, width * 15 - 10, 650);
 	for (int i = 0; i < rows + 1 ; ++i){
 		window.fillRectangle(90, 150 + i*width, 10, width);
 		window.fillRectangle(width*15 - 10, 150 + i*width, 10, width);
