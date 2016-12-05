@@ -444,10 +444,10 @@ void Controller::startGame(){
 				coords = b->getBlockCoord();
 				lvl->getGrid()->addTolvl4Count();
 				lvl->getGrid()->update(coords, blockType, lvl->getDif(), false);
+				view->print(lvl->getGrid()->getScore(), lvl->getDif());	
 				lvl->getGrid()->rowClear(b->getBlockCoord());
 				delete b;
 				if (endReached == true){
-					cout << "I am breaking now" << endl;
 					break;
 				}
 				b = next;
