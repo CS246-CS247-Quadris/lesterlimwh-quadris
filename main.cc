@@ -10,7 +10,7 @@ using std::istringstream;
 int main(int argc, char * argv[]) {
 
   int level;
-  bool levelSet = false;
+  bool levelSet = false; // levelSet is true only if level is specified as a command line argument
 
   if (argc > 1){
     for (int i = 1; i < argc; ++i){

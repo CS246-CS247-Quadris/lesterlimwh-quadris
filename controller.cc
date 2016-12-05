@@ -16,8 +16,13 @@ Controller::Controller(int levelNum, string file): levelNum{levelNum}, file{file
 
 Controller::~Controller(){ delete lvl; }
 
+// change the file that is read for Level 0 from sequence.txt to newFile
 void Controller::changeFile(string newFile){ file = newFile; }
 
+// noDisplayGame starts a new game without graphics display. 
+// Contains functionality for the following commands: left, right, down, drop, 
+// clockwise, counterclockwise, levelup, leveldown, restart, sequence, norandom, random, and hint.
+// It is called when -text is passed as a command line argument.
 void Controller::noDisplayGame(){
 	if (levelNum == 0){
 		lvl->readInFile();
@@ -179,10 +184,7 @@ void Controller::noDisplayGame(){
 				next = lvl->makeBlock(noRandom);
 			} catch (const char*){
 				endReached = true;
-				
-				//break;
 			}
-				//cout << "Hello I am here" << endl;
 				nextBlockType = next->getBlockType();
 				nextcoords = next->getBlockCoord();
 				lvl->getGrid()->setLetter(nextBlockType);				
@@ -284,7 +286,6 @@ void Controller::noDisplayGame(){
 				seqCommands.push_back(s);
 				s.clear();
 			}
-			cout << "Size of seqCommands = " << seqCommands.size() << endl;
 		}
 		if (seqCounter == seqCommands.size() - 1){
 			readFromSeq = false;
@@ -304,6 +305,9 @@ void Controller::noDisplayGame(){
 	}
 }
 
+// startGame starts a new game with graphics display. 
+// Contains functionality for the following commands: left, right, down, drop, 
+// clockwise, counterclockwise, levelup, leveldown, restart, sequence, norandom, random, and hint.
 void Controller::startGame(){
 	if (levelNum == 0){
 		lvl->readInFile();
@@ -329,7 +333,6 @@ void Controller::startGame(){
 	lvl->getGrid()->update(coords, blockType, lvl->getDif(), false);
 	view->drawNextBlock(nextcoords, nextBlockType);
 	cout << lvl->getGrid() << endl;
-	cout << coords.x1.x << coords.x1.y << endl;
 	view->print(lvl->getGrid()->getScore(), lvl->getDif());
 	std::vector<int> delRows;
 
@@ -472,9 +475,7 @@ void Controller::startGame(){
 				next = lvl->makeBlock(noRandom);
 			} catch (const char*){
 				endReached = true;
-				//break;
 			}
-				//cout << "Hello I am here" << endl;
 				nextBlockType = next->getBlockType();
 				nextcoords = next->getBlockCoord();
 				lvl->getGrid()->setLetter(nextBlockType);
@@ -588,7 +589,7 @@ void Controller::startGame(){
 		}
 		cout << lvl->getGrid() << endl;
 		view->print(lvl->getGrid()->getScore(), lvl->getDif());	
-	} //While loop ends
+	}
 	if (endReached){
 		view->endOfFile(lvl->getGrid()->getScore());
 	}
