@@ -1,7 +1,7 @@
 #ifndef __BLOCK_H__
 #define __BLOCK_H__
 #include "blockcoord.h"
-
+//Abstract class for all Blocks on the grid
 class Block {
 public:
 	virtual void left() = 0;

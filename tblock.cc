@@ -5,10 +5,10 @@ Tblock::Tblock(bool isHeavy, Grid *g, int levelCreated): isHeavy{isHeavy}, g{g},
 	Coord x2{1,16};
 	Coord x3{2,16};
 	Coord x4{1,15};
-	coords = {x1,x2,x3,x4};
+	coords = {x1,x2,x3,x4};  //Start coordinates for T block
 };
 
-void Tblock::left() {
+void Tblock::left() {  //Updates the coordinates one position to the left if possible
 	Coord x1{coords.x1.x-1,coords.x1.y};
 	Coord x2{coords.x2.x-1,coords.x2.y};
 	Coord x3{coords.x3.x-1,coords.x3.y};
@@ -19,12 +19,12 @@ void Tblock::left() {
 	if (g->check(temp)) {
 		coords = temp;
 	} else{
-		g->update(coords, name, levelCreated, false);
+		g->update(coords, name, levelCreated, false);  //If it can't go left, redraw in old place
 	}
 
 }
 
-void Tblock::right() {
+void Tblock::right() {  //Updates the coordinates one position to the right if possible
 	Coord x1{coords.x1.x+1,coords.x1.y};
 	Coord x2{coords.x2.x+1,coords.x2.y};
 	Coord x3{coords.x3.x+1,coords.x3.y};
@@ -35,12 +35,12 @@ void Tblock::right() {
 	if (g->check(temp)) {
 		coords = temp;
 	} else{
-		g->update(coords, name, levelCreated, false);
+		g->update(coords, name, levelCreated, false);  //If it can't go right, redraw in old place
 	}
 
 }
 
-void Tblock::down() {
+void Tblock::down() {  //Updates the coordinates one position down if possible
 	Coord x1{coords.x1.x,coords.x1.y-1};
 	Coord x2{coords.x2.x,coords.x2.y-1};
 	Coord x3{coords.x3.x,coords.x3.y-1};
@@ -51,11 +51,11 @@ void Tblock::down() {
 	if (g->check(temp)) {
 		coords = temp;
 	} else{
-		g->update(coords, name, levelCreated, false);
+		g->update(coords, name, levelCreated, false);  //If it can't go down, redraw in old place
 	}
 }
 
-void Tblock::counterclockwise() {
+void Tblock::counterclockwise() {  //Rotates the block counterclockwise if possible
 	int tempOrientation;
 	BlockCoord temp;
 
@@ -101,7 +101,7 @@ void Tblock::counterclockwise() {
 		coords = temp;
 		orientation = tempOrientation;
 	} else{
-		g->update(coords, name, levelCreated, false);
+		g->update(coords, name, levelCreated, false);  //If it can't rotate counterclockwise, redraw in old place
 	}
 
 	if (isHeavy){
@@ -109,7 +109,7 @@ void Tblock::counterclockwise() {
 	}
 }
 
-void Tblock::clockwise() {
+void Tblock::clockwise() {  //Rotates the block clockwise if possible
 	int tempOrientation;
 	BlockCoord temp;
 
@@ -157,7 +157,7 @@ void Tblock::clockwise() {
 		coords = temp;
 		orientation = tempOrientation;
 	} else{
-		g->update(coords, name, levelCreated, false);
+		g->update(coords, name, levelCreated, false);  //If it can't rotate clockwise, redraw in old place
 	}
 
 	if (isHeavy){
@@ -166,7 +166,7 @@ void Tblock::clockwise() {
 
 }
 
-void Tblock::drop() {
+void Tblock::drop() {  //Keeps calling down until it can no longer go down, then drops 
 	Coord x1 = {coords.x1.x,coords.x1.y-1};
 	Coord x2 = {coords.x2.x,coords.x2.y-1};
 	Coord x3 = {coords.x3.x,coords.x3.y-1};
@@ -188,20 +188,13 @@ void Tblock::drop() {
 	}
 }
 
-BlockCoord Tblock::getBlockCoord() { 
-	/*std::cout << "Current coordinates of this block:" << std::endl;
-	std::cout << "Row = " << coords.x1.y << " " << "Col = " << coords.x1.x << std::endl; 
-	std::cout << "Row = " << coords.x2.y << " " << "Col = " << coords.x2.x << std::endl; 
-	std::cout << "Row = " << coords.x3.y << " " << "Col = " << coords.x3.x << std::endl; 
-	std::cout << "Row = " << coords.x4.y << " " << "Col = " << coords.x4.x << std::endl;*/
-	return coords; 
-}
+BlockCoord Tblock::getBlockCoord() { return coords; }  
 
 bool Tblock::getHeavy() { return isHeavy; }
 
 char Tblock::getBlockType() { return name; }
 
-int Tblock::lowestRowCoord() {
+int Tblock::lowestRowCoord() {  //Helper for hint that returns lowest row of a block
 	int lowest = 20;
 	if (coords.x1.y < lowest) {
 		lowest = coords.x1.y;
@@ -218,7 +211,7 @@ int Tblock::lowestRowCoord() {
 	return lowest;
 }
 
-int Tblock::numBlocksInLowest(int row) {
+int Tblock::numBlocksInLowest(int row) {  //Helper for hint that returns num cells in given int row
 	int num = 0;
 	if (coords.x1.y == row) {
 		num++;
@@ -235,9 +228,12 @@ int Tblock::numBlocksInLowest(int row) {
 	return num;
 }
 
-BlockCoord Tblock::hint() {
+
+//This gives a hint for the user by checking to see first, the lowest possible position the block can be in,
+//and also the number of blocks in the lowest row of the lowest position. When it finds the best spot, it will
+//return coordinates for them
+BlockCoord Tblock::hint() {  
 	int lowestRow = 20;
-	int currCol;
 	int currOrien;
 	int startOrien = orientation;
 	int blocksInLowest = 0;  //Amount of blocks in lowest row
@@ -252,36 +248,33 @@ BlockCoord Tblock::hint() {
 	BlockCoord curr;
 
 	for (int orien = 0; orien < 4; orien++) {
-		std::cout << "orientation is: " << orientation << std::endl;
 		currOrien = orientation;
-		for (int i = 0; i <= 10; ++i) {
+		for (int i = 0; i <= 10; ++i) {  //Go through entire width
 			Coord cx1 = {coords.x1.x,coords.x1.y};
 			Coord cx2 = {coords.x2.x,coords.x2.y};
 			Coord cx3 = {coords.x3.x,coords.x3.y};
 			Coord cx4 = {coords.x4.x,coords.x4.y};
-			curr = {cx1,cx2,cx3,cx4};
+			curr = {cx1,cx2,cx3,cx4};  //Stores coordinates before dropping
 			drop();
 			if (lowestRowCoord() < lowestRow) {
 				lowestRow = lowestRowCoord();
-				std::cout << "lowestRow is: " << lowestRow << std::endl;
 				blocksInLowest = numBlocksInLowest(lowestRow);
 				best = coords;
 			} 
 			if (numBlocksInLowest(lowestRow) > blocksInLowest) {
 				blocksInLowest = numBlocksInLowest(lowestRow);
-				std::cout << "numBlocksInLowest is: " << blocksInLowest << std::endl;
 				best = coords;
 			}
-			coords = curr;
+			coords = curr;  //Return to coords before dropping and move right
 			right();
 			g->update(coords, ' ', 0, true);
 		}
-		for (int i = 10; i >= 0; --i) {
+		for (int i = 10; i >= 0; --i) {  //Go through entire width
 			Coord cx1 = {coords.x1.x,coords.x1.y};
 			Coord cx2 = {coords.x2.x,coords.x2.y};
 			Coord cx3 = {coords.x3.x,coords.x3.y};
 			Coord cx4 = {coords.x4.x,coords.x4.y};
-			curr = {cx1,cx2,cx3,cx4};
+			curr = {cx1,cx2,cx3,cx4};  //Stores coordinates before dropping
 			drop();
 			if (lowestRowCoord() < lowestRow) {
 				lowestRow = lowestRowCoord();
@@ -292,18 +285,16 @@ BlockCoord Tblock::hint() {
 				blocksInLowest = numBlocksInLowest(lowestRow);
 				best = coords;
 			}
-			coords = curr;
+			coords = curr;  //Return to coords before dropping and move left
 			left();
 			g->update(coords, ' ', 0, true);
 		}				
 		clockwise();
-		//g->update(coords, ' ', 0, true);
-		//counterclockwise();
 		if (orientation == currOrien) counterclockwise();
 		g->update(coords, ' ', 0, true);
 	}
 	orientation = startOrien;
 	coords = start;
-	g->update(coords, name, levelCreated, false);
+	g->update(coords, name, levelCreated, false);  //Goes back to original start position and updates
 	return best;
 }
