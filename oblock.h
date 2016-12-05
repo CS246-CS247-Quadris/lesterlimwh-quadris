@@ -3,7 +3,7 @@
 #include "grid.h"
 #include "block.h"
 #include "blockcoord.h"
-
+//Interface for Oblock
 class Oblock:public Block { 
 	BlockCoord coords;
 	bool isHeavy;
