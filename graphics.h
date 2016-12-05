@@ -2,6 +2,8 @@
 #include "blockcoord.h"
 #include <vector>
 #include "grid.h"
+
+// Interface for Graphics Class
 class Graphics{
 	Xwindow &window;
 	int rows;
@@ -11,8 +13,8 @@ class Graphics{
 	int startIndent = 200;
 	double width;
 	Grid *g;
-	bool isScoreDif = 1;
-	bool isLvlDif = 1;
+	bool isScoreDif = true; 
+	bool isLvlDif = true;
 public:
 	Graphics(Xwindow &window, int rows, int columns, Grid *g);
 	~Graphics();

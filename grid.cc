@@ -4,24 +4,33 @@
 #include <algorithm>
 using namespace std;
 
-std::vector<int> deletedBlocks;
+//std::vector<int> deletedBlocks;
 
+// Constructor for Grid
 Grid::Grid(int dif, int height, int width): dif{dif}, height{height}, width{width}, blockNum{0},
                                    display{std::vector<std::vector<BlockCell> >(height, std::vector<BlockCell>(width, {blockNum, dif, ' '}))}{}
 
+// Destructor for Grid
 Grid::~Grid(){}
 
+// Sets the letter of of the Grid to the provided letter
 void Grid::setLetter(const char letter){
 	blockLetter = letter;
 }
 
+// Returns the current score of the game
 int Grid::getScore() const { return score; }
 
-void Grid::addToCount(){ ++blockNum; } // WHEN MAKEBLOCK IS CALLED, AFTER UPDATE IS CALLED, CALL THIS FUNCTION TO INCREASE COUNT
+// When makeBlock is called, after update is called, call this function to increase count
+void Grid::addToCount(){ ++blockNum; } 
 
-void Grid::addTolvl4Count(){ ++lvl4Count; }  //Used to keep track of how many blocks have been created before a row has been cleared
 
-bool Grid::scoreHelper(int n) { //Returns true if given int is within deletedBlocks vec
+//Used to keep track of how many blocks have been created before a row has been cleared
+void Grid::addTolvl4Count(){ ++lvl4Count; }  
+
+
+//Returns true if given int is within deletedBlocks vec
+bool Grid::scoreHelper(int n) { 
 	int len = deletedBlocks.size();
 	for (int i = 0; i < len; i++) {
 		if (n == i) {
@@ -31,6 +40,7 @@ bool Grid::scoreHelper(int n) { //Returns true if given int is within deletedBlo
 	return false;
 }
 
+// This adds to the current score using the requested scoring algorithm
 void Grid::addToScore() {
 	std::vector<int> v; // gets filled with the levels removed blocks were created in
 	bool ingrid;
@@ -60,8 +70,10 @@ void Grid::addToScore() {
 	}
 }
 
+
+// Updates the given coordinates to include the provided letter. Also sets their isChanged parameter to true so 
+// the Graphics will update it
 void Grid::update(const BlockCoord &b, const char c, int level, bool empty ){ //added empty to know if resetting block
-	// CAN BE CHANGED IF WE WANT TO IMPLEMENT BLOCKS OF DIFFERENT SIZES
 	dif = level;
 	if (empty) {
 		display[b.x1.y][b.x1.x] = {0,level,' ', true};
@@ -76,43 +88,44 @@ void Grid::update(const BlockCoord &b, const char c, int level, bool empty ){ //
 	}
 }
 
+// Checks the given coordinates and returns true if the block can be placed there without any conflicts
 bool Grid::check(const BlockCoord &b){
-	if (b.x1.x < 0 || b.x2.x < 0 || b.x3.x < 0 || b.x4.x < 0) { return false; }
-	if (b.x1.y < 0 || b.x2.y < 0 || b.x3.y < 0 || b.x4.y < 0) { return false; }
+	if (b.x1.x < 0 || b.x2.x < 0 || b.x3.x < 0 || b.x4.x < 0) { return false; } // First 4 lines check the extreme ends of the display
+	if (b.x1.y < 0 || b.x2.y < 0 || b.x3.y < 0 || b.x4.y < 0) { return false; } 
 	if (b.x1.x >= width || b.x2.x >= width || b.x3.x >= width || b.x4.x >= width){ return false; }
 	if (b.x1.y >= height || b.x2.y >= height || b.x3.y >= height || b.x4.y >= height){ return false; }
-	if (display[b.x1.y][b.x1.x].letter != ' '){ return false; }
+	if (display[b.x1.y][b.x1.x].letter != ' '){ return false; } // These check to make sure the letters are all spaces 
 	if (display[b.x2.y][b.x2.x].letter != ' '){ return false; }
 	if (display[b.x3.y][b.x3.x].letter != ' '){ return false; }
 	if (display[b.x4.y][b.x4.x].letter != ' '){ return false; }
-
 	return true;
 }
 
-vector<int> Grid::rowHelper(/*int &row1, int &row2, int &row3, int &row4,*/ const BlockCoord &b){
+
+// This is a helper for rowClear. It returns the rows that dropped block is a part of  in reverse sorted order
+vector<int> Grid::rowHelper(const BlockCoord &b){
 	// Use Vector to  store the rows of each coordinate and sort from smallest to greatest
 	vector<int> rows;
-	 //THIS CAN BE CHANGED IF WE DECIDE TO ALLOW FOR BLOCKS OF DIFF SIZE
   	rows.emplace_back(b.x1.y);
   	rows.emplace_back(b.x2.y);
   	rows.emplace_back(b.x3.y);
   	rows.emplace_back(b.x4.y);
   	rows.erase(unique(rows.begin(), rows.end()), rows.end());
-  	sort(rows.begin(), rows.end());
-  	reverse(rows.begin(), rows.end());
+  	sort(rows.begin(), rows.end()); // Sort the vector
+  	reverse(rows.begin(), rows.end()); // Reverse it. This is so the highest row is cleared first so none of the rows below are changed
   	return rows;
 }
 
+// The actual rowClear function. It clears rows that have been filled and calls the addToScore function 
 vector<int> Grid::rowClear(const BlockCoord &b){
-	//cout << "LVL4COUNT IS: " << lvl4Count << endl;
 	vector<int> deleted;
 	scoreRowCheck.clear();
-	vector<int> rows = rowHelper(b);
+	vector<int> rows = rowHelper(b); // Storing the array from rowHelper
 	int size = rows.size();
-	int whiteAbove = 0;
-	bool allWhite = true;
-	if (size >= 1){ isScoreDif = 1;}
+	if (size >= 1){ isScoreDif = 1;} // If the size of the cleared rows vector is 1, then the score will be changed
 	bool isFull = true;
+
+	// Checking if the rows need to be cleared
 	for (int i = 0; i < size; ++i){
 		for (int j = 0; j < width; ++j){
 			if (display[rows[i]][j].letter == ' '){
@@ -123,46 +136,21 @@ vector<int> Grid::rowClear(const BlockCoord &b){
 		if (isFull){
 			lvl4Count = 0;
 			for (int z = 0; z < width; ++z){
-				scoreRowCheck.emplace_back(display[rows[i]][z]);
+				scoreRowCheck.emplace_back(display[rows[i]][z]); // If the row is full, add it to the scoreRowCheck
 			}
 			deleted.emplace_back(rows[i]);
 			display.erase(display.begin() + rows[i]);
-			// ADD SCORE HERE
+			// Dealing with the score
 			score += (dif + 1) * (dif + 1); //Added when row is cleared
 			display.push_back(vector<BlockCell>(width, {0,0,' '})); // 0 BECAUSE NO BLOCK IS ASSIGNED TO THE NEW ROW
-			//for (int k = i; k < size; ++k){ // REDUCES THE VALUE OF EACH ROW IN ROWS SO THAT WE DON'T CHECK THE ROW ABOVE THE ONE WE WANT
-			//	rows[k] = rows[k] - 1;
-			//}
-			//addToScore();
+
+			// This for loop takes every row above the cleared one and sets the isChanged boolean to true. 
+			// This is for the graphics display
 			for (int j = rows[i]; j < height; ++j){
 				for (int k = 0; k < width; ++k){
 					display[j][k].isChanged = true;
 				}
 			}
-			/*if (i == size - 1){
-				for (int j = rows[i]; j < height; ++j){
-					for (int k = 0; k < width; ++k){
-						if (display[j][k].letter != ' '){
-							allWhite = false;
-							break;
-						}
-					}
-					if (allWhite){
-						whiteAbove = j;
-						break;
-					}
-				}
-				for (int l = whiteAbove; l < height; ++l){
-					for (int k = 0; k < width; ++k){
-						display[l][k].isChanged = false;
-					}
-				}
-			}*/
-			/*for (int j = whiteAbove; j < height; ++j){
-				for (int k = 0; j < width; ++k){
-					display[j][k].isChanged = false;
-				}
-			}*/
 		}
 		isFull = true;
 	}
@@ -170,6 +158,7 @@ vector<int> Grid::rowClear(const BlockCoord &b){
 	return deleted;
 }
 
+// This clears the hint after the user makes another manipulation to the block
 void Grid::clearHint() {
 	for (int i = height - 1; i >= 0; --i) {
 		for (int j = 0; j < width; ++j) {
@@ -180,6 +169,8 @@ void Grid::clearHint() {
 	}
 }
 
+
+// Drops a star block on level 4 after 5 blocks have been dropped without a row being cleared
 void Grid::dropStarBlock() {//COUNT IS MESSED UP BUT IT KINDA WORKS
 	int starCol = 5;
 	if (lvl4Count != 0 && lvl4Count % 5 == 0) {
@@ -196,6 +187,7 @@ void Grid::dropStarBlock() {//COUNT IS MESSED UP BUT IT KINDA WORKS
 	}
 }
 
+// Removes a block from the display by updating its BlockCell
 void Grid::removeBlock(BlockCoord &b, int level){
 	display[b.x1.y][b.x1.x] = {0,level,' '};
     display[b.x2.y][b.x2.x] = {0,level,' '};
@@ -203,10 +195,14 @@ void Grid::removeBlock(BlockCoord &b, int level){
     display[b.x4.y][b.x4.x] = {0,level,' '};
 }
 
+
+// Checks if the player has reached the top of the screen
 bool Grid::gameOver(const BlockCoord &b){
 	return !(check(b));
 }
 
+// Displays the nextBlock on the textdisplay by appending to a string depending
+// on the blockLetter
 string Grid::nextBlock() const{
 	string s;
 	if (blockLetter == 'I'){
@@ -244,6 +240,8 @@ string Grid::nextBlock() const{
 	}
 	return s;
 }
+
+// Restarts the game by resetting the score and clearing the grid
 void Grid::restart(){
 	for (int i = height - 1; i >= 0; --i) {
 		for (int j = 0; j < width; ++j) {
@@ -256,23 +254,9 @@ void Grid::restart(){
 	deletedBlocks.clear();
 	scoreRowCheck.clear();
 }
-void Grid::hint(){}
+
+// Outputs the grid
 std::ostream &operator<<(std::ostream &out , const Grid *g){
-    /*    for (int i = 0; i < g->width; ++i){
-         out << '_';
-        }
-        out << endl;
-		for (int i = 0; i < g->height; ++i){
-		for (int j = 0; j < g->width; ++j){
-			out << g->display[i][j].letter << " "; // MAY ADD IF STATEMENTS TO REMOVE " " FOR LAST ENTRY IN ROW
-			}
-		out << endl;
-		}
-        for (int i = 0; i < g->width; ++i){
-         	out << '_';
-        }
-	return out;
-	*/
 	out << "Level: " << g->dif << endl;
 	out << "Score: " << g->score << endl;
 	out << "High Score" << g->score << endl;
