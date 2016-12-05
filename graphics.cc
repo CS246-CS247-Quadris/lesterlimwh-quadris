@@ -6,6 +6,18 @@ using namespace std;
 Graphics::Graphics(Xwindow &window, int rows, int columns, Grid *g): window{window}, rows{rows}, columns{columns}, g{g}{
 	window.drawBigString(300, 50, "Quadris", Xwindow::Black);
 	width = 500/rows;
+	window.drawLine(100, 150, 100, 650);
+	window.drawLine(width * 15 - 10, 150, width * 15 - 10, 650);
+	window.drawLine(100, 150, width * 15 - 10, 150);
+	window.drawLine(100, 650, width * 15 - 10, 650);
+	for (int i = 0; i < rows + 1 ; ++i){
+		window.fillRectangle(90, 150 + i*width, 10, width);
+		window.fillRectangle(width*15 - 10, 150 + i*width, 10, width);
+	}
+	for (int i = 0; i < columns; ++i){
+		window.fillRectangle(100 + i*width, 150, width, 10);
+		window.fillRectangle(100 + i*width, 650, width, 10);
+	}
 }
 
 Graphics::~Graphics(){}
@@ -24,6 +36,7 @@ int Graphics::getColour(const char blockType){
 	else if (blockType == 'Z'){ colour = Xwindow::Yellow; }
 	else if (blockType == 'T'){ colour = Xwindow::Magenta; }
 	else if (blockType == '*'){ colour = Xwindow::Brown; }
+	else if (blockType == '?'){ colour = Xwindow::Black; }
 	else { colour = Xwindow::White; }
 	return colour;
 }
@@ -90,9 +103,6 @@ void Graphics::print(int score, int dif){
 			}
 		}
 	}
-	window.drawLine(100, 150, 100, 650);
-	window.drawLine(width * 15 - 10, 150, width * 15 - 10, 650);
-	window.drawLine(100, 150, width * 15 - 10, 150);
-	window.drawLine(100, 650, width * 15 - 10, 650);
+	
 
 }
