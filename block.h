@@ -13,6 +13,7 @@ public:
 	virtual char getBlockType() = 0;
 	virtual bool getHeavy() = 0;
 	virtual BlockCoord getBlockCoord() = 0;
+	virtual BlockCoord hint() = 0;
 	virtual ~Block() = default;
 };
 

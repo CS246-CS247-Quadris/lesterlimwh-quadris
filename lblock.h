@@ -23,6 +23,9 @@ public:
 	BlockCoord getBlockCoord() override;
 	bool getHeavy() override;
 	char getBlockType() override;
+	int lowestRowCoord();
+	int numBlocksInLowest(int row);
+	BlockCoord hint() override;
 };
 
 #endif

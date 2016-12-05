@@ -57,6 +57,7 @@ void Controller::noDisplayGame(){
 		regex blocks("^[IJLOSTZ]");
 		smatch m;
 		if (regex_match(cmd, m, l)){
+			lvl->getGrid()->clearHint();
 			string s = cmd.substr(0,1);
 			istringstream ss(s);
 			int units;
@@ -73,6 +74,7 @@ void Controller::noDisplayGame(){
 			coords = b->getBlockCoord();
 			lvl->getGrid()->update(coords, blockType, lvl->getDif(), false);
 		} else if (regex_match(cmd, m, r)){
+			lvl->getGrid()->clearHint();
 			string s = cmd.substr(0,1);
 			istringstream ss(s);
 			int units;
@@ -89,6 +91,7 @@ void Controller::noDisplayGame(){
 			coords = b->getBlockCoord();
 			lvl->getGrid()->update(coords, blockType, lvl->getDif(), false);
 		} else if (regex_match(cmd, m, d)){
+			lvl->getGrid()->clearHint();
 			string s = cmd.substr(0,1);
 			istringstream ss(s);
 			int units;
@@ -102,6 +105,7 @@ void Controller::noDisplayGame(){
 			coords = b->getBlockCoord();
 			lvl->getGrid()->update(coords, blockType, lvl->getDif(), false);
 		} else if (regex_match(cmd, m, c)){
+			lvl->getGrid()->clearHint();
 			string s = cmd.substr(0,1);
 			istringstream ss(s);
 			int units;
@@ -115,6 +119,7 @@ void Controller::noDisplayGame(){
 			coords = b->getBlockCoord();
 			lvl->getGrid()->update(coords, blockType, lvl->getDif(), false);
 		} else if (regex_match(cmd, m, cc)){
+			lvl->getGrid()->clearHint();
 			string s = cmd.substr(0,1);
 			istringstream ss(s);
 			int units;
@@ -128,6 +133,7 @@ void Controller::noDisplayGame(){
 			coords = b->getBlockCoord();
 			lvl->getGrid()->update(coords, blockType, lvl->getDif(), false);
 		} else if (regex_match(cmd, m, dr)){
+			lvl->getGrid()->clearHint();
 			string s = cmd.substr(0,1);
 			istringstream ss(s);
 			int units;
@@ -215,6 +221,7 @@ void Controller::noDisplayGame(){
 				lvl->readRandomFile("sequence.txt");
 			}
 		} else if (regex_match(cmd, m, blocks)){
+			lvl->getGrid()->clearHint();
 			coords = b->getBlockCoord();
 			lvl->getGrid()->removeBlock(coords, lvl->getDif());
 			delete b;
@@ -266,6 +273,8 @@ void Controller::noDisplayGame(){
 			coords = b->getBlockCoord();
 			blockType = b->getBlockType();
 			lvl->getGrid()->update(coords, blockType, lvl->getDif(), false);
+		} else if (cmd == "hint"){
+			lvl->getGrid()->update(b->hint(), '?', lvl->getDif(), false);
 		} else if (cmd == "sequence"){
 			readFromSeq = true;
 			cin >> cmd;
@@ -341,6 +350,7 @@ void Controller::startGame(){
 		smatch m;
 
 		if (regex_match(cmd, m, l)){
+			lvl->getGrid()->clearHint();
 			string s = cmd.substr(0,1);
 			istringstream ss(s);
 			int units;
@@ -357,6 +367,7 @@ void Controller::startGame(){
 			coords = b->getBlockCoord();
 			lvl->getGrid()->update(coords, blockType, lvl->getDif(), false);
 		} else if (regex_match(cmd, m, r)){
+			lvl->getGrid()->clearHint();
 			string s = cmd.substr(0,1);
 			istringstream ss(s);
 			int units;
@@ -373,6 +384,7 @@ void Controller::startGame(){
 			coords = b->getBlockCoord();
 			lvl->getGrid()->update(coords, blockType, lvl->getDif(), false);
 		} else if (regex_match(cmd, m, d)){
+			lvl->getGrid()->clearHint();
 			string s = cmd.substr(0,1);
 			istringstream ss(s);
 			int units;
@@ -386,6 +398,7 @@ void Controller::startGame(){
 			coords = b->getBlockCoord();
 			lvl->getGrid()->update(coords, blockType, lvl->getDif(), false);
 		} else if (regex_match(cmd, m, c)){
+			lvl->getGrid()->clearHint();
 			string s = cmd.substr(0,1);
 			istringstream ss(s);
 			int units;
@@ -399,6 +412,7 @@ void Controller::startGame(){
 			coords = b->getBlockCoord();
 			lvl->getGrid()->update(coords, blockType, lvl->getDif(), false);
 		} else if (regex_match(cmd, m, cc)){
+			lvl->getGrid()->clearHint();
 			string s = cmd.substr(0,1);
 			istringstream ss(s);
 			int units;
@@ -412,6 +426,7 @@ void Controller::startGame(){
 			coords = b->getBlockCoord();
 			lvl->getGrid()->update(coords, blockType, lvl->getDif(), false);
 		} else if (regex_match(cmd, m, dr)){
+			lvl->getGrid()->clearHint();
 			string s = cmd.substr(0,1);
 			istringstream ss(s);
 			int units;
@@ -501,6 +516,7 @@ void Controller::startGame(){
 				lvl->readRandomFile("sequence.txt");
 			}
 		} else if (regex_match(cmd, m, blocks)){
+			lvl->getGrid()->clearHint();
 			coords = b->getBlockCoord();
 			lvl->getGrid()->removeBlock(coords, lvl->getDif());
 			delete b;
@@ -552,6 +568,8 @@ void Controller::startGame(){
 			coords = b->getBlockCoord();
 			blockType = b->getBlockType();
 			lvl->getGrid()->update(coords, blockType, lvl->getDif(), false);
+		} else if (cmd == "hint"){
+			lvl->getGrid()->update(b->hint(), '?', lvl->getDif(), false);
 		} else if (cmd == "sequence"){
 			readFromSeq = true;
 			cin >> cmd;
