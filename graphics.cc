@@ -3,6 +3,8 @@
 #include <sstream>
 #include <iostream>
 using namespace std;
+
+// Constructor for Graphics
 Graphics::Graphics(Xwindow &window, int rows, int columns, Grid *g): window{window}, rows{rows}, columns{columns}, g{g}{
 	window.drawBigString(300, 50, "Quadris", Xwindow::Black);
 	width = 500/rows;
@@ -16,12 +18,15 @@ Graphics::Graphics(Xwindow &window, int rows, int columns, Grid *g): window{wind
 	}
 }
 
+// Destructor for Graphics
 Graphics::~Graphics(){}
 
+// If the level has been changed, it sets isLvlDif to true. Used for print
 void Graphics::levelChanged(){
 	isLvlDif = true;
 }
 
+// Decides the colour of the block depending on the letter it contains
 int Graphics::getColour(const char blockType){
 	int colour;
 	if (blockType == 'I'){ colour = Xwindow::Orange; }
@@ -37,6 +42,7 @@ int Graphics::getColour(const char blockType){
 	return colour;
 }
 
+// The screen when the game ends
 void Graphics::gameOver(int score){
 	std::string scoreView;
 	std::stringstream ss{scoreView};
@@ -48,6 +54,7 @@ void Graphics::gameOver(int score){
 	window.drawString(300, 300, ss.str(), Xwindow::White );
 }
 
+// The screen when the game reaches the end of the file
 void Graphics::endOfFile(int score){
 	std::string scoreView;
 	std::stringstream ss{scoreView};
@@ -59,6 +66,8 @@ void Graphics::endOfFile(int score){
 	window.drawString(300, 300, ss.str(), Xwindow::White );
 }
 
+
+// Draws the next block on the screen
 void Graphics::drawNextBlock(const BlockCoord &b, const char BlockType){
 	window.fillRectangle(50, 660, 450,300, Xwindow::White);
 	window.drawBigString(40, 720, "Next Block: ", Xwindow::Black);
@@ -69,6 +78,8 @@ void Graphics::drawNextBlock(const BlockCoord &b, const char BlockType){
 	window.fillRectangle(b.x4.x*width + 100, (17-b.x4.y)*width + 650, width, width, colour );
 } 
 
+
+// Prints the display with the score and level
 void Graphics::print(int score, int dif){
 	int colour;
 	if (g->isScoreDif){
@@ -99,6 +110,4 @@ void Graphics::print(int score, int dif){
 			}
 		}
 	}
-	
-
 }

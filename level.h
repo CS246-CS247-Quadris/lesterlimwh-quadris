@@ -12,15 +12,16 @@
 
 class Block;
 
+// Interface for Level Class
 class Level{
-	static int count;
+	static int count = 0; // Count to keep track of reading through files
 	int dif;
 	int fileSize;
-	Grid *g;
+	Grid *g; // Pointer to grid. Initialized in constructor
 	std::ifstream f;
 	std::string file;
 	std::vector<std::string> seqInput;
-	Block *diff0Block();
+	Block *diff0Block(); 
 	Block *diff1Block();
 	Block *diff2Block();
 	Block *diff3Block();
