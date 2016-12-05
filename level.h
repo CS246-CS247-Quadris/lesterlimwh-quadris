@@ -14,7 +14,7 @@ class Block;
 
 // Interface for Level Class
 class Level{
-	static int count = 0; // Count to keep track of reading through files
+	static int count; // Count to keep track of reading through files
 	int dif;
 	int fileSize;
 	Grid *g; // Pointer to grid. Initialized in constructor

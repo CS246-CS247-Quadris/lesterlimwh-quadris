@@ -2,14 +2,14 @@
 #include <cstdlib>
 #include <vector>
 #include <ctime>
-
+int Level::count = 0;
 // Constructor for Level
 Level::Level(int n): dif{n}{ g = new Grid(dif); }
 
 // Constructor for Level that takes in a file
 Level::Level(int n, std::string &file): dif{n}, file{file}{ 
 	f.open(file);
-/	g = new Grid(dif); 
+	g = new Grid(dif); 
 }  // Call it in the form Level* level = new Level(0, f); Followed by level->readInFile(); followed by level->makeblock()
 
 // Destructor for Level
