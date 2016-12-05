@@ -38,8 +38,7 @@ int main(int argc, char * argv[]) {
     cout << endl;     
   }
 
-  int gameType = 0; // 0 => No Display, 1 => With Display
-  if (level != 0) gameType = 1;
+  int gameType = 1; // 0 => No Display, 1 => With Display
 
   if (level == 0){
     srand(time(NULL));
